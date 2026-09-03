@@ -2,7 +2,6 @@ package shapecreator;
 
 import shapecreator.core.Input;
 import shapecreator.core.RunLoop;
-import shapecreator.core.ShapeController;
 import shapecreator.display.Frame;
 import shapecreator.display.MainPanel;
 import shapecreator.display.SidePanel;
@@ -23,7 +22,6 @@ public class ShapeCreatorLauncher {
 
     public static void main(String[] args){
         Input input = new Input();
-        ShapeController shapeController = new ShapeController();
 
         MainPanel mainPanel = new MainPanel(input);
         SidePanel sidePanel = new SidePanel(input);
@@ -36,7 +34,7 @@ public class ShapeCreatorLauncher {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        RunLoop runLoop = new RunLoop(shapeController, mainPanel);
+        RunLoop runLoop = new RunLoop(mainPanel);
         runLoop.start();
     }
 }

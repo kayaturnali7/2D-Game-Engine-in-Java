@@ -5,12 +5,9 @@ import shapecreator.display.MainPanel;
 public class RunLoop implements Runnable {
     private static final int FPS = 60;
     private Thread mainThread;
-
-    private final ShapeController shapeController;
     private final MainPanel mainPanel;
 
-    public RunLoop(ShapeController shapeController, MainPanel mainPanel){
-        this.shapeController = shapeController;
+    public RunLoop(MainPanel mainPanel){
         this.mainPanel = mainPanel;
     }
 
