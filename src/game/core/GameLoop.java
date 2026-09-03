@@ -2,8 +2,6 @@ package game.core;
 
 import game.display.GamePanel;
 
-// test update
-
 public class GameLoop implements Runnable{
     public static final int FPS = 60;
     private Thread gameThread;
