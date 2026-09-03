@@ -1,7 +1,6 @@
 package shapecreator.core;
 
 import shapecreator.display.MainPanel;
-import shapecreator.model.Shape;
 
 public class RunLoop implements Runnable {
     private static final int FPS = 60;
@@ -31,7 +30,7 @@ public class RunLoop implements Runnable {
 
             if (delta > 1){
 
-                shapeController.update();
+                ShapeController.update();
                 mainPanel.repaint();
 
 

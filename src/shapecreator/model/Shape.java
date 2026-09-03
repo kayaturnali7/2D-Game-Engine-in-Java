@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Shape {
     private String name;
-    private Color color = Color.WHITE;
+    private final Color color = Color.WHITE;
 
     private int screenX;
     private int screenY;
@@ -198,14 +198,6 @@ public class Shape {
 
     public ArrayList<Point> getPoints(){
         return points;
-    }
-
-    public String getName(){
-        return name;
-    }
-
-    public void setName(String name){
-        this.name = name;
     }
 
     public boolean isDrawingBoxes(){

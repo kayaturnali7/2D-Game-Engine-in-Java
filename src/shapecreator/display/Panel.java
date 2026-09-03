@@ -1,15 +1,12 @@
 package shapecreator.display;
 
 import shapecreator.core.Input;
-import shapecreator.core.ShapeController;
 
 import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.Color;
 
 public class Panel extends JPanel{
-
-    public ShapeController shapeController;
 
     public Panel(Input input, int width, int height, Color color){
         this.setPreferredSize(new Dimension(width, height));
