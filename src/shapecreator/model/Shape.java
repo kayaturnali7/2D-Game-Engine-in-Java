@@ -47,7 +47,7 @@ public class Shape {
         addPoint(x-side, y+side);
         addPoint(x+side, y+side);
 
-        currentPoint = points.getFirst();
+        currentPoint = points.get(0);
         updateShape();
         updateCenter();
     }

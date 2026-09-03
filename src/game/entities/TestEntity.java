@@ -9,7 +9,7 @@ import java.awt.Graphics2D;
 public class TestEntity extends Entity {
     public TestEntity(){
         super(7, Color.white, true);
-        moveTo(400,400);
+        moveTo(200,200);
         rotate(180);
     }
 
@@ -26,8 +26,8 @@ public class TestEntity extends Entity {
 
     @Override
     protected ShapeConfig shapeConfig() {
-        int [] xPoints = new int[] {163, -218, -218, -87, -79, -71, -27, 11, 11, 14, 135, 171};
-        int [] yPoints = new int[] {-238, -241, -103, -82, 58, 134, 186, 110, 56, -81, -86, -164};
+        int [] xPoints = new int[] {0, 100, -100};
+        int [] yPoints = new int[] {100, -100, -100};
         return new ShapeConfig(xPoints, yPoints, false, false);
     }
 }

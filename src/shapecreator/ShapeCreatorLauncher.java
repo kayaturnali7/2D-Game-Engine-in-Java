@@ -21,7 +21,7 @@ public class ShapeCreatorLauncher {
     public static final int SIDE_PANEL_WIDTH = 200;
     public static final Color SIDE_PANEL_COLOR = Color.DARK_GRAY;
 
-    static void main(){
+    public static void main(String[] args){
         Input input = new Input();
         ShapeController shapeController = new ShapeController();
 
