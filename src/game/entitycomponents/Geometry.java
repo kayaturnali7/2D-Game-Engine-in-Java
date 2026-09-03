@@ -35,7 +35,6 @@ public class Geometry {
         activeArea = baseArea;
 
         bounds = activeShape.getBounds2D();
-
     }
 
     private void updateActiveShape(){

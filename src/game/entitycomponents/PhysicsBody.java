@@ -49,7 +49,6 @@ public class PhysicsBody {
 
         velocityX = (float) Math.cos(Math.toRadians(direction)) * speed;
         velocityY = (float) Math.sin(Math.toRadians(direction)) * speed;
-
     }
 
     protected void applyDrag(){
