@@ -5,10 +5,10 @@ add new shape /
 add new point 
 move shape /
 move point /
-save/export shape 
-clear shape from screen 
-undo clear 
-toggle point hitboxes visibility 
+save/export shape /
+clear shape from screen /
+undo clear /
+toggle point hitboxes visibility /
 change point hitbox sizes /
 
 required function on side screen:
@@ -20,3 +20,4 @@ create new shape from presets
 change shape color
 toggle point hitbox visibility
 change point hitbox sizes
+change scale of shape
