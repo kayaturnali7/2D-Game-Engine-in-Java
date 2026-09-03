@@ -8,6 +8,7 @@ import game.display.GamePanel;
 
 public class AsteroidsLauncher {
     static void main(){
+        System.out.println("test from school computer");
         LoopManager loopManager = new LoopManager();
         InputManager input = new InputManager();
 
