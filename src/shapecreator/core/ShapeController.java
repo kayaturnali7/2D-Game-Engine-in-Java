@@ -142,8 +142,8 @@ public class ShapeController {
         xList = Util.replaceBrackets(xList);
         yList = Util.replaceBrackets(yList);
 
-        String content = "int [] xPoints = new int[] " + xList + ";\n" +
-                         "int [] yPoints = new int[] " + yList + ";\n";
+        String content = "int [] xPoints = new int[] " + xList + ";" +
+                         "\nint [] yPoints = new int[] " + yList + ";\n\n";
 
         try {
             // Appends the string directly to the file
