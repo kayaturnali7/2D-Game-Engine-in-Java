@@ -19,7 +19,6 @@ public class RunLoop implements Runnable {
         long currentTime;
 
         while (mainThread != null) {
-
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / drawInterval;
 
@@ -29,7 +28,6 @@ public class RunLoop implements Runnable {
 
                 ShapeController.update();
                 mainPanel.repaint();
-
 
                 delta--;
             }
