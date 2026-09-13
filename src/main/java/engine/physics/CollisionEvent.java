@@ -1,4 +1,4 @@
-package game.events;
+package engine.physics;
 
 import engine.ecs.Entity;
 import engine.data.GameEvent;

@@ -1,7 +1,8 @@
-package engine.components;
+package engine.physics;
 
+import engine.components.EventBus;
+import engine.components.GameWorld;
 import engine.ecs.Entity;
-import game.events.CollisionEvent;
 
 import java.awt.geom.Area;
 import java.util.ArrayList;

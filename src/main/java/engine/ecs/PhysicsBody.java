@@ -1,7 +1,7 @@
 package engine.ecs;
 
 import engine.data.Velocity;
-import engine.components.PhysicsEngine;
+import engine.physics.PhysicsEngine;
 import engine.util.MathUtils;
 
 public class PhysicsBody {
