@@ -6,7 +6,7 @@ import engine.components.RenderingEngine;
 
 import java.awt.Graphics2D;
 
-public class LoopManager {
+public class CoreManager {
     private final GameWorld gameWorld = new GameWorld();
     private final PhysicsEngine physicsEngine = new PhysicsEngine();
 

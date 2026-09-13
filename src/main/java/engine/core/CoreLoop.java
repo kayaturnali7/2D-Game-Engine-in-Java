@@ -5,11 +5,11 @@ public class CoreLoop implements Runnable{
     private Thread gameThread;
 
     private final CorePanel panel;
-    private final LoopManager loopManager;
+    private final CoreManager coreManager;
 
-    public CoreLoop(CorePanel panel, LoopManager loopManager){
+    public CoreLoop(CorePanel panel, CoreManager coreManager){
         this.panel = panel;
-        this.loopManager = loopManager;
+        this.coreManager = coreManager;
     }
 
     public void start() {
@@ -33,7 +33,7 @@ public class CoreLoop implements Runnable{
 
             if (delta > 1){
 
-                loopManager.update();
+                coreManager.update();
                 panel.repaint();
 
                 delta--;

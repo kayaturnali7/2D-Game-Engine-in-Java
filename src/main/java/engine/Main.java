@@ -1,25 +1,25 @@
 package engine;
 
 import engine.core.CoreLoop;
-import engine.core.LoopManager;
+import engine.core.CoreManager;
 import engine.components.InputManager;
-import engine.core.CoreFrame;
+import engine.core.CoreWindow;
 import engine.core.CorePanel;
 
 public class Main {
     public static void main(String[] args){
-        LoopManager loopManager = new LoopManager();
+        CoreManager coreManager = new CoreManager();
         InputManager input = new InputManager();
 
-        CoreFrame frame = new CoreFrame();
-        CorePanel panel = new CorePanel(loopManager, input);
+        CoreWindow frame = new CoreWindow();
+        CorePanel panel = new CorePanel(coreManager, input);
 
         frame.add(panel);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        CoreLoop game = new CoreLoop(panel, loopManager);
+        CoreLoop game = new CoreLoop(panel, coreManager);
         game.start();
     }
 }
