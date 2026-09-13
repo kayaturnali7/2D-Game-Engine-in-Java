@@ -6,10 +6,9 @@ import engine.components.RenderingEngine;
 
 import java.awt.Graphics2D;
 
-public class CoreManager {
+public class CoreHandler {
     private final GameWorld gameWorld = new GameWorld();
     private final PhysicsEngine physicsEngine = new PhysicsEngine();
-
     private final RenderingEngine renderingEngine = new RenderingEngine();
 
     public void update(){

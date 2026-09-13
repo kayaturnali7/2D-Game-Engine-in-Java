@@ -15,15 +15,15 @@ public class CorePanel extends JPanel{
     public static final int SCREEN_HEIGHT = 800;
     public static final Color BG_COLOR = Color.black;
 
-    private final CoreManager coreManager;
+    private final CoreHandler coreHandler;
 
-    public CorePanel(CoreManager coreManager, InputManager input){
+    public CorePanel(CoreHandler coreHandler, InputManager input){
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(BG_COLOR);
         this.setFocusable(true);
         this.setDoubleBuffered(true);
 
-        this.coreManager = coreManager;
+        this.coreHandler = coreHandler;
 
         this.addMouseListener(input);
         this.addMouseMotionListener(input);
@@ -38,6 +38,6 @@ public class CorePanel extends JPanel{
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        coreManager.draw(g2d);
+        coreHandler.draw(g2d);
     }
 }
