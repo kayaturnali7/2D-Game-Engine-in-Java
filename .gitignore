@@ -5,6 +5,7 @@ out/
 .kotlin
 .idea/
 *.iml
+/target/
 
 ### Eclipse ###
 .apt_generated
@@ -30,3 +31,5 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+
