@@ -1,15 +1,17 @@
 package engine.core;
 
-public class CoreLoop implements Runnable{
+import engine.display.CorePanel;
+
+public class Loop implements Runnable{
     public static final int FPS = 60;
     private Thread gameThread;
 
     private final CorePanel panel;
-    private final CoreHandler coreHandler;
+    private final Handler handler;
 
-    public CoreLoop(CorePanel panel, CoreHandler coreHandler){
+    public Loop(CorePanel panel, Handler handler){
         this.panel = panel;
-        this.coreHandler = coreHandler;
+        this.handler = handler;
     }
 
     public void start() {
@@ -33,7 +35,7 @@ public class CoreLoop implements Runnable{
 
             if (delta > 1){
 
-                coreHandler.update();
+                handler.update();
                 panel.repaint();
 
                 delta--;

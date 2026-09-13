@@ -1,9 +1,9 @@
 package game.entities;
 
 import engine.data.ShapeConfig;
-import engine.components.EventBus;
-import engine.core.CoreLoop;
-import engine.components.InputManager;
+import engine.event.EventBus;
+import engine.core.Loop;
+import engine.core.Input;
 
 import engine.ecs.*;
 import game.events.LaserFiredEvent;
@@ -31,15 +31,15 @@ public class Player extends Entity {
 
     @Override
     protected void onUpdate() {
-        firing = InputManager.isKeyPressed(KeyEvent.VK_SPACE);
+        firing = Input.isKeyPressed(KeyEvent.VK_SPACE);
 
-        if (InputManager.isKeyPressed(KeyEvent.VK_W)){
+        if (Input.isKeyPressed(KeyEvent.VK_W)){
             applyThrust();
         }
 
-        if (InputManager.isKeyPressed(KeyEvent.VK_A)){
+        if (Input.isKeyPressed(KeyEvent.VK_A)){
             rotate(-ANGULAR_SPEED);
-        } else if (InputManager.isKeyPressed(KeyEvent.VK_D)) {
+        } else if (Input.isKeyPressed(KeyEvent.VK_D)) {
             rotate(ANGULAR_SPEED);
         }
 
@@ -77,7 +77,6 @@ public class Player extends Entity {
 
     @Override
     protected void onDraw(Graphics2D g2d) {
-
     }
 
     private void applyThrust(){
@@ -101,6 +100,6 @@ public class Player extends Entity {
         double direction = getDirection().look();
 
         EventBus.add(new LaserFiredEvent(x,y,direction));
-        cooldownTick = COOLDOWN_TIME * CoreLoop.FPS;
+        cooldownTick = COOLDOWN_TIME * Loop.FPS;
     }
 }

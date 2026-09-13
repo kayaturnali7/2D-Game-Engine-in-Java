@@ -1,6 +1,7 @@
-package engine.core;
+package engine.display;
 
-import engine.components.InputManager;
+import engine.core.Handler;
+import engine.core.Input;
 
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -15,15 +16,15 @@ public class CorePanel extends JPanel{
     public static final int SCREEN_HEIGHT = 800;
     public static final Color BG_COLOR = Color.black;
 
-    private final CoreHandler coreHandler;
+    private final Handler handler;
 
-    public CorePanel(CoreHandler coreHandler, InputManager input){
+    public CorePanel(Handler handler, Input input){
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(BG_COLOR);
         this.setFocusable(true);
         this.setDoubleBuffered(true);
 
-        this.coreHandler = coreHandler;
+        this.handler = handler;
 
         this.addMouseListener(input);
         this.addMouseMotionListener(input);
@@ -38,6 +39,6 @@ public class CorePanel extends JPanel{
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        coreHandler.draw(g2d);
+        handler.draw(g2d);
     }
 }

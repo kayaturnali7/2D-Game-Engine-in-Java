@@ -1,7 +1,7 @@
 package game.entities;
 
 import engine.data.ShapeConfig;
-import engine.core.CoreLoop;
+import engine.core.Loop;
 import engine.ecs.Entity;
 
 import java.awt.Color;
@@ -22,7 +22,7 @@ public class Laser extends Entity {
 
     @Override
     protected void onUpdate() {
-        float lifeTimeFrames = LIFE_TIME * CoreLoop.FPS;
+        float lifeTimeFrames = LIFE_TIME * Loop.FPS;
         if (lifeTick >= lifeTimeFrames){
             kill();
         } else{

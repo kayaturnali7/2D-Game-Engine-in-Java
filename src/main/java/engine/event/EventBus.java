@@ -1,6 +1,4 @@
-package engine.components;
-
-import engine.data.GameEvent;
+package engine.event;
 
 import java.util.ArrayList;
 import java.util.HashMap;

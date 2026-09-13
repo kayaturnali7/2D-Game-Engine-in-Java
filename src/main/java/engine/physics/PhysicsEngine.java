@@ -1,8 +1,8 @@
 package engine.physics;
 
-import engine.components.EventBus;
-import engine.components.GameWorld;
+import engine.event.EventBus;
 import engine.ecs.Entity;
+import engine.scene.Scene;
 
 import java.awt.geom.Area;
 import java.util.ArrayList;
@@ -10,8 +10,6 @@ import java.util.ArrayList;
 
 public class PhysicsEngine {
     public static final float DRAG = 0.98F; // closer to 1 means less drag
-
-    private ArrayList<Entity> entities = GameWorld.getEntities();
 
     public PhysicsEngine(){
         EventBus.subscribe(CollisionEvent.class, event -> onCollision(event.entity(), event.collider()));
@@ -24,13 +22,12 @@ public class PhysicsEngine {
 
     }
 
-    public void update(){
-        entities = GameWorld.getEntities();
-        checkCollisions();
+    public void update(Scene scene){
+        ArrayList<Entity> entities = scene.getEntities();
+        checkCollisions(entities);
     }
 
-
-    private void checkCollisions(){
+    private void checkCollisions(ArrayList<Entity> entities){
         int size = entities.size();
 
         for (int i = 0; i < size; i++){

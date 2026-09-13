@@ -1,3 +1,3 @@
-package engine.data;
+package engine.event;
 
 public interface GameEvent {}

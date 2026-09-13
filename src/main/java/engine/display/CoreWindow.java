@@ -1,4 +1,4 @@
-package engine.core;
+package engine.display;
 
 import javax.swing.JFrame;
 
