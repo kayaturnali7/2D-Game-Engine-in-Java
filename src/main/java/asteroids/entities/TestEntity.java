@@ -16,12 +16,10 @@ public class TestEntity extends Entity {
 
     @Override
     protected void onUpdate() {
-
     }
 
     @Override
     protected void onDraw(Graphics2D g2d) {
-
     }
 
     @Override

@@ -17,7 +17,7 @@ public class Laser extends Entity {
         super(20, Color.white, false);
         moveTo(x,y);
         setRotation(direction);
-        applyVelocity(getMaxSpeed(), direction);
+        setVelocity(getMaxSpeed(), direction);
     }
 
     @Override

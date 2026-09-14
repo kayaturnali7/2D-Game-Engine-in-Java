@@ -10,7 +10,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-
 public class CorePanel extends JPanel{
     public static final int SCREEN_WIDTH = 800;
     public static final int SCREEN_HEIGHT = 800;
@@ -31,7 +30,6 @@ public class CorePanel extends JPanel{
         this.addKeyListener(input);
         this.addMouseWheelListener(input);
     }
-
 
     @Override
     protected void paintComponent(Graphics g){
