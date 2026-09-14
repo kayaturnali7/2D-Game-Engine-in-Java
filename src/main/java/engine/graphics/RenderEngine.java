@@ -1,4 +1,4 @@
-package engine.gfx;
+package engine.graphics;
 
 import engine.entity.Entity;
 import engine.scene.Scene;

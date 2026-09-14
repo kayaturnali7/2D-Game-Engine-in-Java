@@ -1,7 +1,7 @@
 package engine.core;
 
 import engine.physics.PhysicsEngine;
-import engine.gfx.RenderEngine;
+import engine.graphics.RenderEngine;
 import engine.scene.Scene;
 import engine.scene.SceneManager;
 
