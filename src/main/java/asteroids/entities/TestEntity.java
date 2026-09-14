@@ -16,6 +16,7 @@ public class TestEntity extends Entity {
 
     @Override
     protected void onUpdate() {
+
     }
 
     @Override
