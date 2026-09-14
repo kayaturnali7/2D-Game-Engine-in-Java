@@ -1,7 +1,7 @@
 package engine.physics;
 
 import engine.event.EventBus;
-import engine.ecs.Entity;
+import engine.entity.Entity;
 import engine.scene.Scene;
 
 import java.awt.geom.Area;

@@ -1,4 +1,4 @@
-package engine.ecs;
+package engine.entity;
 
 import engine.data.Direction;
 import engine.data.Position;

@@ -1,12 +1,12 @@
-package game.entities;
+package asteroids.entities;
 
 import engine.data.ShapeConfig;
 import engine.event.EventBus;
 import engine.core.Loop;
 import engine.core.Input;
 
-import engine.ecs.*;
-import game.events.LaserFiredEvent;
+import engine.entity.*;
+import asteroids.events.LaserFiredEvent;
 import engine.util.GeneralUtil;
 
 import java.awt.Color;

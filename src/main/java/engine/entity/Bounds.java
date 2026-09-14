@@ -1,4 +1,4 @@
-package engine.ecs;
+package engine.entity;
 
 import engine.display.CorePanel;
 import java.awt.geom.Rectangle2D;

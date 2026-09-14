@@ -1,7 +1,7 @@
-package game.entities;
+package asteroids.entities;
 
 import engine.data.ShapeConfig;
-import engine.ecs.Entity;
+import engine.entity.Entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

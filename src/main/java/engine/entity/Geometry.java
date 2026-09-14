@@ -1,4 +1,4 @@
-package engine.ecs;
+package engine.entity;
 
 import java.awt.Polygon;
 import java.awt.Shape;

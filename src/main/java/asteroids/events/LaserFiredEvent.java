@@ -1,4 +1,4 @@
-package game.events;
+package asteroids.events;
 
 import engine.event.GameEvent;
 

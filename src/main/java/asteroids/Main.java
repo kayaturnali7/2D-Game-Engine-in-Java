@@ -1,9 +1,9 @@
-package game;
+package asteroids;
 
 import engine.core.Engine;
 import engine.scene.Scene;
-import game.scenes.GameScene;
-import game.scenes.MenuScene;
+import asteroids.scenes.GameScene;
+import asteroids.scenes.MenuScene;
 
 import java.util.ArrayList;
 

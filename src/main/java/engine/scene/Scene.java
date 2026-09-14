@@ -1,6 +1,6 @@
 package engine.scene;
 
-import engine.ecs.Entity;
+import engine.entity.Entity;
 
 import java.util.ArrayList;
 

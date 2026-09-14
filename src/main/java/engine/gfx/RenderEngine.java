@@ -1,6 +1,6 @@
 package engine.gfx;
 
-import engine.ecs.Entity;
+import engine.entity.Entity;
 import engine.scene.Scene;
 
 import java.awt.Graphics2D;

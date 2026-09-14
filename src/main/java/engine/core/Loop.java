@@ -34,7 +34,6 @@ public class Loop implements Runnable{
             lastTime = currentTime;
 
             if (delta > 1){
-
                 handler.update();
                 panel.repaint();
 

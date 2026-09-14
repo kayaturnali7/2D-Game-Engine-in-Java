@@ -1,11 +1,9 @@
-package game.scenes;
+package asteroids.scenes;
 
 import engine.event.EventBus;
 import engine.scene.Scene;
-import game.entities.Laser;
-import game.entities.Player;
-import game.entities.TestEntity;
-import game.events.LaserFiredEvent;
+import asteroids.entities.*;
+import asteroids.events.*;
 
 
 public class GameScene extends Scene {

@@ -1,7 +1,7 @@
-package game.scenes;
+package asteroids.scenes;
 
 import engine.scene.Scene;
-import game.entities.TestEntity;
+import asteroids.entities.*;
 
 public class MenuScene extends Scene {
     @Override

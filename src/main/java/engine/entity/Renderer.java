@@ -1,4 +1,4 @@
-package engine.ecs;
+package engine.entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
