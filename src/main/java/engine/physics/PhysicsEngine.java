@@ -7,7 +7,6 @@ import engine.scene.Scene;
 import java.awt.geom.Area;
 import java.util.ArrayList;
 
-
 public class PhysicsEngine {
     public static final float DRAG = 0.98F; // closer to 1 means less drag
 
@@ -52,5 +51,4 @@ public class PhysicsEngine {
         testArea.intersect(e2.getGeometry().area());
         return !testArea.isEmpty();
     }
-
 }
