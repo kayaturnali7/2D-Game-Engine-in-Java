@@ -1,13 +1,10 @@
 package asteroids.entities;
 
 import engine.data.ShapeConfig;
-import engine.event.EventBus;
-import engine.core.Loop;
 import engine.core.Input;
 
 import engine.entity.*;
 import asteroids.events.LaserFiredEvent;
-import engine.util.GeneralUtil;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -93,13 +90,13 @@ public class Player extends Entity {
 
     private void fireLaser(){
         Shape shape = getGeometry().shape();
-        Point2D.Float point = GeneralUtil.getVertex(shape, 0);
+        Point2D.Float point = getVertex(shape, 0);
 
         float x = point.x;
         float y = point.y;
         double direction = getDirection().look();
 
-        EventBus.add(new LaserFiredEvent(x,y,direction));
-        cooldownTick = COOLDOWN_TIME * Loop.FPS;
+        addEvent(new LaserFiredEvent(x,y,direction));
+        cooldownTick = COOLDOWN_TIME * FPS;
     }
 }

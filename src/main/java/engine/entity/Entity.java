@@ -1,14 +1,21 @@
 package engine.entity;
 
 
+import engine.core.Loop;
 import engine.data.Direction;
 import engine.data.Position;
 import engine.data.ShapeConfig;
 import engine.data.Velocity;
+import engine.event.EventBus;
+import engine.event.GameEvent;
+import engine.util.GeneralUtil;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
+import java.awt.geom.Point2D;
+
 public abstract class Entity {
+    protected static final int FPS = Loop.FPS;
+
     private final Transform transform;
     private final Geometry geometry;
     private final PhysicsBody physics;
@@ -144,9 +151,22 @@ public abstract class Entity {
     }
 
     /** Returns if the entity is alive.
-     * @return
+     * @return If the entity is currently alive.
      */
     public boolean isAlive(){
         return alive;
+    }
+
+    protected void addEvent(GameEvent event){
+        EventBus.add(event);
+    }
+
+    /** Returns the specified vertex located in initial x and y coordinate list.
+     * @param shape The swing shape to find the vertex in.
+     * @param targetIndex The index of the vertex you want to get the coordinate of.
+     * @return Returns a point that holds an x and y coordinate.
+     */
+    protected Point2D.Float getVertex(Shape shape, int targetIndex){
+        return GeneralUtil.getVertex(shape, targetIndex);
     }
 }
