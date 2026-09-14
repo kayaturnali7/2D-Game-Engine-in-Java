@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 
 public abstract class Scene {
 
-    protected String sceneName;
+    private final String sceneName;
     private final ArrayList<Entity> entities = new ArrayList<>();
     private final ArrayList<Entity> pending = new ArrayList<>();
 
@@ -62,7 +62,7 @@ public abstract class Scene {
         return entities;
     }
 
-    protected <T extends GameEvent> void subscribeEvent(Class<T> eventClass, Consumer<T> action){
+    protected <T extends GameEvent> void subscribeToEvent(Class<T> eventClass, Consumer<T> action){
         EventBus.subscribe(eventClass, action);
     }
 

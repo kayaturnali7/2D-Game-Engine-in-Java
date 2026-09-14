@@ -9,21 +9,23 @@ import asteroids.events.*;
 import java.util.ArrayList;
 
 public class GameScene extends Scene {
+
+    private final Player player = new Player();
+    private final TestEntity testEntity = new TestEntity();
+    private final ArrayList<Entity> entities = new ArrayList<>();
+
     @Override
     protected SceneConfig onStart() {
-        subscribeEvent(LaserFiredEvent.class, event -> onLaserFired(event.x(), event.y(), event.angle()));
+        subscribeToEvent(LaserFiredEvent.class, event -> onLaserFired(event.x(), event.y(), event.angle()));
 
-        ArrayList<Entity> startEntities = new ArrayList<>();
-        startEntities.add(new Player());
-        startEntities.add(new TestEntity());
+        entities.add(player);
+        entities.add(testEntity);
 
-        return new SceneConfig("Game", startEntities);
+        return new SceneConfig("Game", entities);
     }
 
     @Override
     protected void onUpdate() {
-
-
     }
 
     private void onLaserFired(float x, float y, double direction){
