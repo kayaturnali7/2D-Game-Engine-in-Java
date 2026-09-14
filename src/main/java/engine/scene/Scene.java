@@ -1,16 +1,23 @@
 package engine.scene;
 
+import engine.data.SceneConfig;
 import engine.entity.Entity;
+import engine.event.EventBus;
+import engine.event.GameEvent;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 public abstract class Scene {
 
+    protected String sceneName;
     private final ArrayList<Entity> entities = new ArrayList<>();
     private final ArrayList<Entity> pending = new ArrayList<>();
 
     public Scene(){
-        onStart();
+        sceneName = onStart().name();
+        pending.addAll(onStart().entities());
+
         if (!pending.isEmpty()){
             entities.addAll(pending);
             pending.clear();
@@ -23,7 +30,8 @@ public abstract class Scene {
     }
 
     protected abstract void onUpdate();
-    protected abstract void onStart();
+
+    protected abstract SceneConfig onStart();
 
     private void updateEntities(){
         // update each entity's logic
@@ -52,6 +60,10 @@ public abstract class Scene {
 
     public ArrayList<Entity> getEntities(){
         return entities;
+    }
+
+    protected <T extends GameEvent> void subscribeEvent(Class<T> eventClass, Consumer<T> action){
+        EventBus.subscribe(eventClass, action);
     }
 
 }
