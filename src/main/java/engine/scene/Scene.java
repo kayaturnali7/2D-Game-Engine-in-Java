@@ -1,6 +1,5 @@
 package engine.scene;
 
-import engine.data.SceneConfig;
 import engine.entity.Entity;
 import engine.event.EventBus;
 import engine.event.GameEvent;
@@ -15,8 +14,8 @@ public abstract class Scene {
     private final ArrayList<Entity> pending = new ArrayList<>();
 
     public Scene(){
-        sceneName = onStart().name();
-        pending.addAll(onStart().entities());
+        SceneConfig sceneConfig = onStart();
+        sceneName = sceneConfig.name();
 
         if (!pending.isEmpty()){
             entities.addAll(pending);
