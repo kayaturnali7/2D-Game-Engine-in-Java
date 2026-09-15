@@ -11,8 +11,8 @@ public class GameScene extends Scene {
     protected SceneConfig onStart() {
         subscribeToEvent(LaserFiredEvent.class, event -> onLaserFired(event.x(), event.y(), event.angle()));
 
-       spawnEntity(new Player());
-       spawnEntity(new TestEntity());
+       instantiateEntity(new Player());
+       instantiateEntity(new TestEntity());
 
         return new SceneConfig("Game");
     }
@@ -22,6 +22,6 @@ public class GameScene extends Scene {
     }
 
     private void onLaserFired(float x, float y, double direction){
-        spawnEntity(new Laser(x, y, direction));
+        instantiateEntity(new Laser(x, y, direction));
     }
 }

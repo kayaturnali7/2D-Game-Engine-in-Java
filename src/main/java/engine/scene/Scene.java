@@ -48,7 +48,7 @@ public abstract class Scene {
     }
 
 
-    protected void spawnEntity(Entity entity){
+    protected void instantiateEntity(Entity entity){
         pending.add(entity);
     }
 
