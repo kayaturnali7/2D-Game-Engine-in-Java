@@ -1,4 +1,4 @@
-package engine.display;
+package engine.window;
 
 import engine.core.Handler;
 import engine.core.Input;

@@ -1,6 +1,6 @@
 package engine.core;
 
-import engine.display.CorePanel;
+import engine.window.CorePanel;
 
 public class Loop implements Runnable{
     public static final int FPS = 60;

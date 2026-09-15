@@ -1,6 +1,6 @@
 package engine.entity;
 
-import engine.display.CorePanel;
+import engine.window.CorePanel;
 import java.awt.geom.Rectangle2D;
 
 public class Bounds {

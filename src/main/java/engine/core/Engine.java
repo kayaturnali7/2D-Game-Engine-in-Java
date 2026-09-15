@@ -1,7 +1,7 @@
 package engine.core;
 
-import engine.display.CorePanel;
-import engine.display.CoreWindow;
+import engine.window.CorePanel;
+import engine.window.CoreWindow;
 import engine.scene.Scene;
 
 import java.util.ArrayList;
