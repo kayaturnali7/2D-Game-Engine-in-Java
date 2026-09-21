@@ -1,65 +1,86 @@
 package engine.scene;
 
+import engine.core.Loop;
 import engine.entity.Entity;
 import engine.event.EventBus;
 import engine.event.GameEvent;
+import engine.ui.UserInterface;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
 public abstract class Scene {
+    public static final int FPS = Loop.FPS;
 
-    private final String sceneName;
+    private final String name;
+
     private final ArrayList<Entity> entities = new ArrayList<>();
-    private final ArrayList<Entity> pending = new ArrayList<>();
+    private final ArrayList<UserInterface> userInterfaces = new ArrayList<>();
+
+    private final ArrayList<Entity> pendingEntities = new ArrayList<>();
+    private final ArrayList<UserInterface> pendingUserInterfaces = new ArrayList<>();
 
     public Scene(){
         SceneConfig sceneConfig = onStart();
-        sceneName = sceneConfig.name();
+        name = sceneConfig.name();
 
-        if (!pending.isEmpty()){
-            entities.addAll(pending);
-            pending.clear();
+        if (!pendingEntities.isEmpty()){
+            entities.addAll(pendingEntities);
+            pendingEntities.clear();
         }
     }
 
     public void update(){
         onUpdate();
-        updateEntities();
+
+        for (Entity entity : entities){
+            entity.update();
+        }
+
+        for (UserInterface userInterface : userInterfaces){
+            userInterface.update();
+        }
+
+        updateEntityList();
+        updateUIList();
     }
+
+
 
     protected abstract void onUpdate();
 
     protected abstract SceneConfig onStart();
 
-    private void updateEntities(){
-        // update each entity's logic
-        for (Entity entity : entities){
-            entity.update();
-        }
+    private void updateEntityList(){
+        entities.removeIf(entity -> !entity.isActive());
 
-        cleanup();
-
-        // add any pending entities
-        if (!pending.isEmpty()){
-            entities.addAll(pending);
-            pending.clear();
+        if (!pendingEntities.isEmpty()){
+            entities.addAll(pendingEntities);
+            pendingEntities.clear();
         }
     }
 
+    private void updateUIList(){
+        userInterfaces.removeIf(userInterface -> !userInterface.isActive());
 
-    protected void instantiateEntity(Entity entity){
-        pending.add(entity);
+        if (!pendingUserInterfaces.isEmpty()){
+            userInterfaces.addAll(pendingUserInterfaces);
+            pendingUserInterfaces.clear();
+        }
     }
 
-    private void cleanup(){
-        // clear dead entities
-        entities.removeIf(entity -> !entity.isAlive());
+
+    public void instantiate(SceneComponent component){
+        if (component instanceof UserInterface){
+            pendingUserInterfaces.add((UserInterface) component);
+        } else if (component instanceof Entity){
+            pendingEntities.add((Entity) component);
+        }
     }
 
-    public ArrayList<Entity> getEntities(){
-        return entities;
-    }
+    public ArrayList<Entity> getEntities(){return entities;}
+
+    public ArrayList<UserInterface> getUserInterfaces(){return userInterfaces;}
 
     protected <T extends GameEvent> void subscribeToEvent(Class<T> eventClass, Consumer<T> action){
         EventBus.subscribe(eventClass, action);
