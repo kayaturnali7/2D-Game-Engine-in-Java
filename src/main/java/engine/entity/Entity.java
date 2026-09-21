@@ -8,13 +8,13 @@ import engine.data.ShapeConfig;
 import engine.data.Velocity;
 import engine.event.EventBus;
 import engine.event.GameEvent;
+import engine.scene.SceneComponent;
 import engine.util.GeneralUtil;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-public abstract class Entity {
-    protected static final int FPS = Loop.FPS;
+public abstract class Entity implements SceneComponent {
 
     private final Transform transform;
     private final Geometry geometry;
@@ -23,7 +23,7 @@ public abstract class Entity {
     private final Renderer renderer;
 
     private final int maxSpeed;
-    private boolean alive = true;
+    private boolean active = true;
 
     /** Entity constructor
      */
@@ -146,15 +146,15 @@ public abstract class Entity {
 
     /** Kills the entity. This will remove it from the scenes entity list.
      */
-    public void kill(){
-        alive = false;
+    public void destroy(){
+        active = false;
     }
 
     /** Returns if the entity is alive.
      * @return If the entity is currently alive.
      */
-    public boolean isAlive(){
-        return alive;
+    public boolean isActive(){
+        return active;
     }
 
     protected void addEvent(GameEvent event){
