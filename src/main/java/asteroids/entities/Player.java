@@ -3,8 +3,9 @@ package asteroids.entities;
 import engine.data.ShapeConfig;
 import engine.core.Input;
 
-import engine.entity.*;
 import asteroids.events.LaserFiredEvent;
+import engine.entity.Entity;
+import engine.scene.Scene;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -20,7 +21,6 @@ public class Player extends Entity {
     private float cooldownTick = 0;
     private boolean firing = false;
     private boolean canFire = false;
-
 
     public Player() {
         super(10, Color.white , true);
@@ -97,6 +97,6 @@ public class Player extends Entity {
         double direction = getDirection().look();
 
         addEvent(new LaserFiredEvent(x,y,direction));
-        cooldownTick = COOLDOWN_TIME * FPS;
+        cooldownTick = COOLDOWN_TIME * Scene.FPS;
     }
 }
