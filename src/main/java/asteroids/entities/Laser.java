@@ -24,7 +24,7 @@ public class Laser extends Entity {
     protected void onUpdate() {
         float lifeTimeFrames = LIFE_TIME * Loop.FPS;
         if (lifeTick >= lifeTimeFrames){
-            kill();
+            destroy();
         } else{
             lifeTick += 1;
         }
