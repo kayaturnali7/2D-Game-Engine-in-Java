@@ -10,10 +10,10 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
 public class Panel extends JPanel{
-    private final Manager manager;
+    private final SystemHandler systemHandler;
 
-    public Panel(Manager manager){
-        Scene currentScene = manager.getCurrentScene();
+    public Panel(SystemHandler systemHandler){
+        Scene currentScene = systemHandler.getCurrentScene();
 
         int screenWidth = currentScene.getScreenWidth();
         int screenHeight = currentScene.getScreenHeight();
@@ -26,7 +26,7 @@ public class Panel extends JPanel{
         this.setDoubleBuffered(true);
 
         Input input = new Input();
-        this.manager = manager;
+        this.systemHandler = systemHandler;
 
         this.addMouseListener(input);
         this.addMouseMotionListener(input);
@@ -36,7 +36,7 @@ public class Panel extends JPanel{
 
     @Override
     protected void paintComponent(Graphics g){
-        Scene currentScene = manager.getCurrentScene();;
+        Scene currentScene = systemHandler.getCurrentScene();
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -44,6 +44,6 @@ public class Panel extends JPanel{
         Color bgColor = currentScene.getBgColor();
         g2d.setBackground(bgColor);
 
-        manager.draw(g2d);
+        systemHandler.draw(g2d);
     }
 }

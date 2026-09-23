@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 public abstract class Scene {
-    private String name;
-    private int screenWidth;
-    private int screenHeight;
-    private Color bgColor;
-    private int fps;
+    protected String name;
+    protected int screenWidth;
+    protected int screenHeight;
+    protected Color bgColor;
+    protected int fps;
 
     private final ArrayList<Entity> entities = new ArrayList<>();
     private final ArrayList<UserInterface> userInterfaces = new ArrayList<>();
@@ -23,7 +23,8 @@ public abstract class Scene {
     private final ArrayList<UserInterface> pendingUserInterfaces = new ArrayList<>();
 
     public Scene(){
-        SceneSettings settings = onStart();
+        SceneProperties settings = initialize();
+        onStart();
 
         name = settings.name();
         screenWidth = settings.screenWidth();
@@ -54,7 +55,9 @@ public abstract class Scene {
 
     protected abstract void onUpdate();
 
-    protected abstract SceneSettings onStart();
+    protected abstract void onStart();
+
+    protected abstract SceneProperties initialize();
 
     private void updateEntityList(){
         entities.removeIf(entity -> !entity.isActive());

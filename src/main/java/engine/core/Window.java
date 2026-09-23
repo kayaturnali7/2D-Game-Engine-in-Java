@@ -5,21 +5,17 @@ import javax.swing.JFrame;
 
 public class Window extends JFrame {
 
-    public Window(JPanel panel, Manager manager){
+    public Window(JPanel panel, SystemHandler systemHandler){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(true);
 
-        String sceneName = manager.getCurrentScene().getName();
+        String sceneName = systemHandler.getCurrentScene().getName();
         this.setTitle(sceneName);
 
         this.add(panel);
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-    }
-
-    protected void update(String sceneName){
-        this.pack();
-        this.setTitle(sceneName);
     }
 
 }

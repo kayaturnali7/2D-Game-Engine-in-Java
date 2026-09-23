@@ -2,7 +2,7 @@ package engine.scene;
 
 import java.awt.Color;
 
-public record SceneSettings(
+public record SceneProperties(
         String name,
         int screenWidth,
         int screenHeight,
