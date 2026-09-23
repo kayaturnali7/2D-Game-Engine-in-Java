@@ -10,12 +10,11 @@ import java.util.ArrayList;
 public class Engine {
 
     public Engine(ArrayList<Scene> scenes){
-        InputManager inputManager = new InputManager();
-        SystemHandler handler = new SystemHandler(scenes);
-
-        // Create frame and canvas
+        // Create frame, canvas, input, handler
         JFrame frame = new JFrame();
         Canvas canvas = new Canvas();
+        InputManager inputManager = new InputManager();
+        SystemHandler handler = new SystemHandler(scenes);
 
         // Get the current scene's properties
         Scene currentScene = handler.getCurrentScene();
