@@ -1,8 +1,5 @@
 package engine.entity;
 
-import engine.core.Manager;
-import engine.scene.SceneSettings;
-
 import java.awt.geom.Rectangle2D;
 
 public class Bounds {

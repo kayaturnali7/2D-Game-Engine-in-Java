@@ -1,6 +1,5 @@
 package engine.entity;
 
-import engine.core.Manager;
 import engine.data.Direction;
 import engine.data.Position;
 import engine.data.ShapeConfig;
@@ -9,7 +8,6 @@ import engine.event.EventBus;
 import engine.event.GameEvent;
 import engine.scene.Scene;
 import engine.scene.SceneInterface;
-import engine.scene.SceneSettings;
 import engine.util.GeneralUtil;
 
 import java.awt.Color;
@@ -80,11 +78,11 @@ public abstract class Entity implements SceneInterface {
     protected abstract ShapeConfig shapeConfig();
 
     /** Moves the entity to a specified point (x,y) in the scene.
-     * @param X The x position of the target point.
-     * @param Y The y position of the target point.
+     * @param x The x position of the target point.
+     * @param y The y position of the target point.
      */
-    protected void moveTo(float X, float Y){
-        transform.translateTo(X, Y);
+    protected void moveTo(float x, float y){
+        transform.translateTo(x, y);
     }
 
     /** Sets the entity's move and look rotation to specified angle, in degrees.
@@ -108,7 +106,7 @@ public abstract class Entity implements SceneInterface {
         physics.applyForce(force);
     }
 
-    /** Applies a velocity to a specified angle, in degrees, and speed.
+    /** Applies a velocity to a specified angle and speed.
      * @param direction The angle of the velocity, in degrees.
      * @param speed The magnitude of the velocity.
      */
@@ -149,14 +147,14 @@ public abstract class Entity implements SceneInterface {
         return maxSpeed;
     }
 
-    /** Kills the entity. This will remove it from the scenes entity list.
+    /** Destroys the entity. This will remove it from the scene.
      */
     public void destroy(){
         active = false;
     }
 
-    /** Returns if the entity is alive.
-     * @return If the entity is currently alive.
+    /** Returns if the entity is active.
+     * @return If the entity is currently active.
      */
     public boolean isActive(){
         return active;
