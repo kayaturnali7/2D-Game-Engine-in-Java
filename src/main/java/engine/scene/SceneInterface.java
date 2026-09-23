@@ -2,7 +2,7 @@ package engine.scene;
 
 import java.awt.Graphics2D;
 
-public interface SceneComponent {
+public interface SceneInterface {
 
     void update();
 
