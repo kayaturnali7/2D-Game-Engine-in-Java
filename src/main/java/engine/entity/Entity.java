@@ -56,6 +56,7 @@ public abstract class Entity implements SceneInterface {
         onDraw(g2d);
         renderer.draw(g2d);
     }
+
     private void createShape(){
         Shape shape = shapeInit();
 
@@ -80,28 +81,28 @@ public abstract class Entity implements SceneInterface {
      * @param x The x position of the target point.
      * @param y The y position of the target point.
      */
-    protected void moveTo(float x, float y){
+    public void moveTo(float x, float y){
         transform.translateTo(x, y);
     }
 
     /** Sets the entity's move and look rotation to specified angle, in degrees.
      * @param angle The angle to rotate to, in degrees.
      */
-    protected void setRotation(double angle){
+    public void setRotation(double angle){
         transform.setRotation(angle);
     }
 
     /** Rotates the entity by an amount, in degrees.
      * @param amount The amount to rotate by in degrees.
      */
-    protected void rotate(double amount){
+    public void rotate(double amount){
         transform.rotate(amount);
     }
 
     /** Applies a force to the entity in its current move direction.
      * @param force The amount of force to apply.
      */
-    protected void applyForce(float force){
+    public void applyForce(float force){
         physics.applyForce(force);
     }
 
@@ -109,7 +110,7 @@ public abstract class Entity implements SceneInterface {
      * @param direction The angle of the velocity, in degrees.
      * @param speed The magnitude of the velocity.
      */
-    protected void setVelocity(int speed, double direction){
+    public void setVelocity(int speed, double direction){
         physics.setVelocity(speed, direction);
     }
 

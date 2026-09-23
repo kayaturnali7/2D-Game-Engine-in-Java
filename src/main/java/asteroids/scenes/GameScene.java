@@ -1,5 +1,6 @@
 package asteroids.scenes;
 
+import engine.entity.Entity;
 import engine.scene.SceneProperties;
 import engine.scene.Scene;
 
@@ -10,6 +11,9 @@ import asteroids.events.*;
 import java.awt.Color;
 
 public class GameScene extends Scene {
+
+    private Entity player;
+    private Entity testEntity;
 
     @Override
     protected SceneProperties initialize() {
@@ -26,17 +30,20 @@ public class GameScene extends Scene {
     protected void onStart() {
         subscribeToEvent(LaserFiredEvent.class, event -> onLaserFired(event.x(), event.y(), event.angle()));
 
-        instantiate(new Player(this));
-        instantiate(new TestEntity(this));
+        player = new Player(this);
+        testEntity = new TestEntity(this);
+
+        instantiate(player);
+        instantiate(testEntity);
     }
 
     @Override
     protected void onUpdate() {
+
     }
 
 
     private void onLaserFired(float x, float y, double direction){
         instantiate(new Laser(this, x, y, direction));
-
     }
 }
