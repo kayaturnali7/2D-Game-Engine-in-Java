@@ -48,7 +48,7 @@ public class Player extends Entity {
     }
 
     @Override
-    protected Shape shapeConfig() {
+    protected Shape shapeInit() {
         int side = 60;
         int base = (int) (side * (7.0 / 9.0));
         double height = Math.sqrt((Math.pow(side, 2)) - Math.pow(((double)base / 2), 2));

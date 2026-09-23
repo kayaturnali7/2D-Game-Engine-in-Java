@@ -37,7 +37,7 @@ public class Laser extends Entity {
     }
 
     @Override
-    protected Shape shapeConfig() {
+    protected Shape shapeInit() {
         return new Rectangle(SIZE, SIZE);
     }
 }

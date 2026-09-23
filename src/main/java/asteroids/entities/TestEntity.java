@@ -30,7 +30,7 @@ public class TestEntity extends Entity {
     }
 
     @Override
-    protected Shape shapeConfig() {
+    protected Shape shapeInit() {
         double diameter = 100;
         double offset = -diameter/2;
 

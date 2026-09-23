@@ -57,7 +57,7 @@ public abstract class Entity implements SceneInterface {
         renderer.draw(g2d);
     }
     private void createShape(){
-        Shape shape = shapeConfig();
+        Shape shape = shapeInit();
 
         geometry.createShape(shape);
         renderer.setFill(false);
@@ -74,7 +74,7 @@ public abstract class Entity implements SceneInterface {
 
     /** The initial shape configuration method. Must be filled, and return a valid ShapeConfig for the entity to render properly.
      */
-    protected abstract Shape shapeConfig();
+    protected abstract Shape shapeInit();
 
     /** Moves the entity to a specified point (x,y) in the scene.
      * @param x The x position of the target point.

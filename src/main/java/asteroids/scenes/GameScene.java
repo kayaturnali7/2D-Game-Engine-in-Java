@@ -12,6 +12,17 @@ import java.awt.Color;
 public class GameScene extends Scene {
 
     @Override
+    protected SceneProperties initialize() {
+        name = "Asteroids Remake";
+        screenWidth = 800;
+        screenHeight = 800;
+        bgColor = Color.BLACK;
+        fps = 60;
+
+        return new SceneProperties(name, screenWidth, screenHeight, bgColor, fps);
+    }
+
+    @Override
     protected void onStart() {
         subscribeToEvent(LaserFiredEvent.class, event -> onLaserFired(event.x(), event.y(), event.angle()));
 
@@ -23,16 +34,6 @@ public class GameScene extends Scene {
     protected void onUpdate() {
     }
 
-    @Override
-    protected SceneProperties initialize() {
-        name = "Asteroids Remake";
-        screenWidth = 800;
-        screenHeight = 800;
-        bgColor = Color.BLACK;
-        fps = 60;
-
-        return new SceneProperties(name, screenWidth, screenHeight, bgColor, fps);
-    }
 
     private void onLaserFired(float x, float y, double direction){
         instantiate(new Laser(this, x, y, direction));
