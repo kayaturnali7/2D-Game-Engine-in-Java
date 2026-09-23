@@ -11,13 +11,12 @@ public class RunLoop implements Runnable{
     private final Canvas canvas;
     private final SystemHandler handler;
 
-    private boolean running = true;
+    private boolean  running = true;
 
     public RunLoop(Canvas canvas, SystemHandler handler) {
         this.canvas = canvas;
         this.handler = handler;
     }
-
 
     @Override
     public void run() {
