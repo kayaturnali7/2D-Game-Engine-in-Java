@@ -1,7 +1,6 @@
 package engine.entity;
 
 import engine.data.Velocity;
-import engine.physics.PhysicsEngine;
 import engine.util.MathUtils;
 
 public class PhysicsBody {
