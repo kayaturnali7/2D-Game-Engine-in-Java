@@ -1,23 +1,28 @@
 package engine.core;
 
+import asteroids.scenes.GameScene;
 import engine.physics.PhysicsEngine;
 import engine.graphics.RenderEngine;
 import engine.scene.Scene;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SystemHandler {
     private final PhysicsEngine physicsEngine = new PhysicsEngine();
     private final RenderEngine renderEngine = new RenderEngine();
 
-    private final ArrayList<Scene> scenes = new ArrayList<>();
+    private final Map<String, Scene> scenes = new HashMap<>();
     private Scene currentScene;
 
 
     public SystemHandler(ArrayList<Scene> scenes){
-        this.scenes.addAll(scenes);
-        currentScene = this.scenes.get(0);
+        for (Scene scene: scenes){
+            this.scenes.put(scene.getName(), scene);
+        }
+        this.currentScene = this.scenes.get("Asteroids Remake");
     }
 
     public void update(){
@@ -31,5 +36,9 @@ public class SystemHandler {
 
     public Scene getCurrentScene(){
         return currentScene;
+    }
+
+    public void switchScene(String name){
+        currentScene = scenes.get(name);
     }
 }
