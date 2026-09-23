@@ -1,20 +1,30 @@
 package asteroids.scenes;
 
-import engine.scene.SceneConfig;
+import engine.scene.SceneSettings;
 import engine.scene.Scene;
+
+// Let these be wildcard imports
 import asteroids.entities.*;
 import asteroids.events.*;
+
+import java.awt.Color;
 
 public class GameScene extends Scene {
 
     @Override
-    protected SceneConfig onStart() {
+    protected SceneSettings onStart() {
         subscribeToEvent(LaserFiredEvent.class, event -> onLaserFired(event.x(), event.y(), event.angle()));
 
-       instantiate(new Player());
-       instantiate(new TestEntity());
+        instantiate(new Player(this));
+        instantiate(new TestEntity(this));
 
-        return new SceneConfig("Game");
+        String name = "Asteroids Remake";
+        int screenWidth = 1200;
+        int screenHeight = 600;
+        Color bgColor = Color.BLACK;
+        int fps = 60;
+
+        return new SceneSettings(name, screenWidth, screenHeight, bgColor, fps);
     }
 
     @Override
@@ -22,6 +32,6 @@ public class GameScene extends Scene {
     }
 
     private void onLaserFired(float x, float y, double direction){
-        instantiate(new Laser(x, y, direction));
+        instantiate(new Laser(this, x, y, direction));
     }
 }
