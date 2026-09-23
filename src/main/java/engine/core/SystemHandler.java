@@ -1,12 +1,10 @@
 package engine.core;
 
-import asteroids.scenes.GameScene;
 import engine.physics.PhysicsEngine;
 import engine.graphics.RenderEngine;
 import engine.scene.Scene;
 
 import java.awt.Graphics2D;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +16,7 @@ public class SystemHandler {
     private Scene currentScene;
 
 
-    public SystemHandler(ArrayList<Scene> scenes){
+    public SystemHandler(Scene[] scenes){
         for (Scene scene: scenes){
             this.scenes.put(scene.getName(), scene);
         }

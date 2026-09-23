@@ -5,11 +5,10 @@ import engine.scene.Scene;
 import javax.swing.JFrame;
 import java.awt.Canvas;
 import java.awt.Dimension;
-import java.util.ArrayList;
 
 public class Engine {
 
-    public Engine(ArrayList<Scene> scenes){
+    public Engine(Scene[] scenes){
         // Create frame, canvas, input, handler
         JFrame frame = new JFrame();
         Canvas canvas = new Canvas();
