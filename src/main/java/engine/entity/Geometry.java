@@ -1,6 +1,5 @@
 package engine.entity;
 
-import java.awt.Polygon;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
@@ -25,13 +24,11 @@ public class Geometry {
         updateActiveShape();
     }
 
-    protected void createShape(int[] xPoints, int[] yPoints) {
-        int numPoints = xPoints.length;
-
-        baseShape = new Polygon(xPoints, yPoints, numPoints);
-        activeShape = baseShape;
-
+    protected void createShape(Shape shape) {
+        baseShape = shape;
         baseArea = new Area(baseShape);
+
+        activeShape = baseShape;
         activeArea = baseArea;
 
         bounds = activeShape.getBounds2D();

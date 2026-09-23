@@ -2,7 +2,6 @@ package engine.entity;
 
 import engine.data.Direction;
 import engine.data.Position;
-import engine.data.ShapeConfig;
 import engine.data.Velocity;
 import engine.event.EventBus;
 import engine.event.GameEvent;
@@ -58,11 +57,11 @@ public abstract class Entity implements SceneInterface {
         renderer.draw(g2d);
     }
     private void createShape(){
-        ShapeConfig config = shapeConfig();
+        Shape shape = shapeConfig();
 
-        geometry.createShape(config.xPoints(), config.yPoints());
-        renderer.setFill(config.fillShape());
-        renderer.setDrawBoundaryBox(config.drawBounds());
+        geometry.createShape(shape);
+        renderer.setFill(false);
+        renderer.setDrawBoundaryBox(false);
     }
 
     /** The update function specified by the user. It is called before any of the entity's internal components are updated.
@@ -75,7 +74,7 @@ public abstract class Entity implements SceneInterface {
 
     /** The initial shape configuration method. Must be filled, and return a valid ShapeConfig for the entity to render properly.
      */
-    protected abstract ShapeConfig shapeConfig();
+    protected abstract Shape shapeConfig();
 
     /** Moves the entity to a specified point (x,y) in the scene.
      * @param x The x position of the target point.

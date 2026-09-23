@@ -1,6 +1,5 @@
 package asteroids.entities;
 
-import engine.data.ShapeConfig;
 import engine.core.Input;
 
 import asteroids.events.LaserFiredEvent;
@@ -9,6 +8,7 @@ import engine.scene.Scene;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.Shape;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
@@ -48,7 +48,7 @@ public class Player extends Entity {
     }
 
     @Override
-    protected ShapeConfig shapeConfig() {
+    protected Shape shapeConfig() {
         int side = 60;
         int base = (int) (side * (7.0 / 9.0));
         double height = Math.sqrt((Math.pow(side, 2)) - Math.pow(((double)base / 2), 2));
@@ -68,8 +68,9 @@ public class Player extends Entity {
         // TOP, BOTTOM-LEFT, BOTTOM-RIGHT
         int[] xPoints = new int[]{v1x, v2x, v3x};
         int[] yPoints = new int[]{v1y, v2y, v3y};
+        int numPoints = xPoints.length;
 
-        return new ShapeConfig(xPoints, yPoints, false, false);
+        return new Polygon(xPoints, yPoints, numPoints);
     }
 
     @Override
