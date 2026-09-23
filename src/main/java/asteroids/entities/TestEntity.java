@@ -2,13 +2,14 @@ package asteroids.entities;
 
 import engine.data.ShapeConfig;
 import engine.entity.Entity;
+import engine.scene.Scene;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class TestEntity extends Entity {
-    public TestEntity(){
-        super(7, Color.white, true);
+    public TestEntity(Scene scene){
+        super(scene,7, Color.white, true);
         moveTo(200,200);
         rotate(180);
     }
