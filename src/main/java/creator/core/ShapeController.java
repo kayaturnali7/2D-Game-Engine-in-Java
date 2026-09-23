@@ -117,7 +117,7 @@ public class ShapeController {
 
     public static void export(){
         if (selectedShape == null) return;
-        Path path = Paths.get("src/shapecreator/output/shapes.txt");
+        Path path = Paths.get("src/main/java/creator/output/shapes.txt");
 
         ArrayList<Point> points = selectedShape.getPoints();
 
