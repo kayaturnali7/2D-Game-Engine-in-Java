@@ -1,20 +1,25 @@
 package engine.entity;
 
-
-import engine.core.Loop;
+import engine.core.Manager;
 import engine.data.Direction;
 import engine.data.Position;
 import engine.data.ShapeConfig;
 import engine.data.Velocity;
 import engine.event.EventBus;
 import engine.event.GameEvent;
-import engine.scene.SceneComponent;
+import engine.scene.Scene;
+import engine.scene.SceneInterface;
+import engine.scene.SceneSettings;
 import engine.util.GeneralUtil;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.geom.Point2D;
 
-public abstract class Entity implements SceneComponent {
+public abstract class Entity implements SceneInterface {
+
+    protected Scene scene;
 
     private final Transform transform;
     private final Geometry geometry;
@@ -27,7 +32,8 @@ public abstract class Entity implements SceneComponent {
 
     /** Entity constructor
      */
-    public Entity(int maxSpeed, Color color, boolean hasDrag){
+    public Entity(Scene scene, int maxSpeed, Color color, boolean hasDrag){
+        this.scene = scene;
         this.maxSpeed = maxSpeed;
         this.transform = new Transform(this);
         this.geometry = new Geometry(this);
@@ -41,7 +47,6 @@ public abstract class Entity implements SceneComponent {
      */
     public final void update(){
         onUpdate();
-
         physics.update();
         transform.update();
         geometry.update();

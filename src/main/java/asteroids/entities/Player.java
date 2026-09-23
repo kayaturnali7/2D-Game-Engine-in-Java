@@ -22,8 +22,8 @@ public class Player extends Entity {
     private boolean firing = false;
     private boolean canFire = false;
 
-    public Player() {
-        super(10, Color.white , true);
+    public Player(Scene scene) {
+        super(scene,10, Color.white , true);
     }
 
     @Override
@@ -97,6 +97,6 @@ public class Player extends Entity {
         double direction = getDirection().look();
 
         addEvent(new LaserFiredEvent(x,y,direction));
-        cooldownTick = COOLDOWN_TIME * Scene.FPS;
+        cooldownTick = COOLDOWN_TIME * scene.getFps();
     }
 }

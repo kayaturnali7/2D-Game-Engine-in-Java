@@ -1,8 +1,8 @@
 package asteroids.entities;
 
 import engine.data.ShapeConfig;
-import engine.core.Loop;
 import engine.entity.Entity;
+import engine.scene.Scene;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -13,8 +13,8 @@ public class Laser extends Entity {
 
     private float lifeTick = 0;
 
-    public Laser(float x, float y, double direction ){
-        super(20, Color.white, false);
+    public Laser(Scene scene, float x, float y, double direction ){
+        super(scene, 20, Color.white, false);
         moveTo(x,y);
         setRotation(direction);
         setVelocity(getMaxSpeed(), direction);
@@ -22,7 +22,7 @@ public class Laser extends Entity {
 
     @Override
     protected void onUpdate() {
-        float lifeTimeFrames = LIFE_TIME * Loop.FPS;
+        float lifeTimeFrames = LIFE_TIME * scene.getFps();
         if (lifeTick >= lifeTimeFrames){
             destroy();
         } else{

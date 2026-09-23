@@ -1,13 +1,12 @@
 package engine.entity;
 
-import engine.window.CorePanel;
+import engine.core.Manager;
+import engine.scene.SceneSettings;
+
 import java.awt.geom.Rectangle2D;
 
 public class Bounds {
     private final Entity currentEntity;
-
-    private final int screenWidth = CorePanel.SCREEN_WIDTH;
-    private final int screenHeight = CorePanel.SCREEN_HEIGHT;
 
     private boolean leftBound, rightBound, topBound, bottomBound;
     private boolean outOfBounds;
@@ -33,6 +32,9 @@ public class Bounds {
     }
 
     private void updateBounds(float x, float y, double width, double height){
+        int screenHeight = currentEntity.scene.getScreenHeight();
+        int screenWidth = currentEntity.scene.getScreenWidth();
+
         leftBound = x + width < 0;
         rightBound = x - width > screenWidth;
         topBound = y + height < 0;
@@ -41,6 +43,9 @@ public class Bounds {
     }
 
     private void teleport(float x, float y, double width, double height){
+        int screenHeight = currentEntity.scene.getScreenHeight();
+        int screenWidth = currentEntity.scene.getScreenWidth();
+
         if (leftBound){
             currentEntity.moveTo((float) (screenWidth+width), y);
         } else if (rightBound) {
