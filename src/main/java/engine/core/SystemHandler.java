@@ -25,7 +25,7 @@ public class SystemHandler {
         currentScene.update();
     }
 
-    public void draw(Graphics2D g2d){
+    public void render(Graphics2D g2d){
         renderEngine.render(g2d, currentScene);
     }
 

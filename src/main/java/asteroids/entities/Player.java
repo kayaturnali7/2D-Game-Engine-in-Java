@@ -1,6 +1,6 @@
 package asteroids.entities;
 
-import engine.core.Input;
+import engine.core.InputManager;
 
 import asteroids.events.LaserFiredEvent;
 import engine.entity.Entity;
@@ -28,15 +28,15 @@ public class Player extends Entity {
 
     @Override
     protected void onUpdate() {
-        firing = Input.isKeyPressed(KeyEvent.VK_SPACE);
+        firing = InputManager.isKeyPressed(KeyEvent.VK_SPACE);
 
-        if (Input.isKeyPressed(KeyEvent.VK_W)){
+        if (InputManager.isKeyPressed(KeyEvent.VK_W)){
             applyThrust();
         }
 
-        if (Input.isKeyPressed(KeyEvent.VK_A)){
+        if (InputManager.isKeyPressed(KeyEvent.VK_A)){
             rotate(-ANGULAR_SPEED);
-        } else if (Input.isKeyPressed(KeyEvent.VK_D)) {
+        } else if (InputManager.isKeyPressed(KeyEvent.VK_D)) {
             rotate(ANGULAR_SPEED);
         }
 

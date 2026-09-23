@@ -2,67 +2,54 @@ package engine.core;
 
 import engine.scene.Scene;
 
+import javax.swing.JFrame;
+import java.awt.Canvas;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
-public class Engine implements Runnable {
-    private final SystemHandler systemHandler;
-    private final Thread gameThread;
+public class Engine {
 
-    private final Window window;
-    private final Panel panel;
+    private final InputManager inputManager;
+    private final SystemHandler handler;
+    private final JFrame frame;
+    private final Canvas canvas;
+    private final RunLoop runLoop;
 
     public Engine(ArrayList<Scene> scenes){
-        systemHandler = new SystemHandler(scenes);
+        inputManager = new InputManager();
+        handler = new SystemHandler(scenes);
 
-        panel = new Panel(systemHandler);
-        window = new Window(panel, systemHandler);
+        // Create frame and canvas
+        frame = new JFrame();
+        canvas = new Canvas();
 
-        gameThread = new Thread(this);
-        gameThread.start();
-    }
-
-    private void updateSystems(Scene currentScene){
+        // Get the current scene's properties
+        Scene currentScene = handler.getCurrentScene();
         int screenWidth = currentScene.getScreenWidth();
         int screenHeight = currentScene.getScreenHeight();
         String sceneName = currentScene.getName();
 
-        panel.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        panel.revalidate();
+        // Add all input listeners
+        canvas.addMouseListener(inputManager);
+        canvas.addMouseMotionListener(inputManager);
+        canvas.addMouseWheelListener(inputManager);
+        canvas.addKeyListener(inputManager);
 
-        window.revalidate();
-        window.pack();
+        // Init canvas
+        canvas.setPreferredSize(new Dimension(screenWidth, screenHeight));
+        canvas.setFocusable(true);
 
-        panel.repaint();
-        window.setTitle(sceneName);
-    }
+        // Init frame
+        frame.setTitle(sceneName);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(canvas);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
 
-    @Override
-    public void run() {
-
-        Scene currentScene;
-        int fps;
-        double drawInterval;
-        double delta = 0;
-        long lastTime = System.nanoTime();
-        long currentTime;
-
-        while (gameThread != null) {
-            currentScene = systemHandler.getCurrentScene();
-            fps = currentScene.getFps();
-
-            drawInterval = (double) 1000000000 / fps;
-            currentTime = System.nanoTime();
-            delta += (currentTime - lastTime) / drawInterval;
-
-            lastTime = currentTime;
-
-            if (delta > 1){
-                systemHandler.update();
-                updateSystems(currentScene);
-
-                delta--;
-            }
-        }
+        // Start run loop
+        runLoop = new RunLoop(canvas, handler);
+        Thread gameLoopThread = new Thread(runLoop);
+        gameLoopThread.start();
     }
 }
