@@ -1,18 +1,20 @@
 package engine.scene;
 
-import engine.core.Loop;
 import engine.entity.Entity;
 import engine.event.EventBus;
 import engine.event.GameEvent;
 import engine.ui.UserInterface;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
 public abstract class Scene {
-    public static final int FPS = Loop.FPS;
-
-    private final String name;
+    private String name;
+    private int screenWidth;
+    private int screenHeight;
+    private Color bgColor;
+    private int fps;
 
     private final ArrayList<Entity> entities = new ArrayList<>();
     private final ArrayList<UserInterface> userInterfaces = new ArrayList<>();
@@ -21,8 +23,13 @@ public abstract class Scene {
     private final ArrayList<UserInterface> pendingUserInterfaces = new ArrayList<>();
 
     public Scene(){
-        SceneConfig sceneConfig = onStart();
-        name = sceneConfig.name();
+        SceneSettings settings = onStart();
+
+        name = settings.name();
+        screenWidth = settings.screenWidth();
+        screenHeight = settings.screenHeight();
+        bgColor = settings.bgColor();
+        fps = settings.fps();
 
         if (!pendingEntities.isEmpty()){
             entities.addAll(pendingEntities);
@@ -45,11 +52,9 @@ public abstract class Scene {
         updateUIList();
     }
 
-
-
     protected abstract void onUpdate();
 
-    protected abstract SceneConfig onStart();
+    protected abstract SceneSettings onStart();
 
     private void updateEntityList(){
         entities.removeIf(entity -> !entity.isActive());
@@ -70,7 +75,7 @@ public abstract class Scene {
     }
 
 
-    public void instantiate(SceneComponent component){
+    public void instantiate(SceneInterface component){
         if (component instanceof UserInterface){
             pendingUserInterfaces.add((UserInterface) component);
         } else if (component instanceof Entity){
@@ -86,4 +91,23 @@ public abstract class Scene {
         EventBus.subscribe(eventClass, action);
     }
 
+    public int getScreenWidth(){
+        return screenWidth;
+    }
+
+    public int getScreenHeight(){
+        return screenHeight;
+    }
+
+    public int getFps(){
+        return fps;
+    }
+
+    public Color getBgColor(){
+        return bgColor;
+    }
+
+    public String getName(){
+        return name;
+    }
 }
