@@ -7,15 +7,15 @@ import engine.scene.Scene;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-public class Manager {
+public class SystemHandler {
     private final PhysicsEngine physicsEngine = new PhysicsEngine();
     private final RenderEngine renderEngine = new RenderEngine();
 
-    private ArrayList<Scene> scenes = new ArrayList<>();
+    private final ArrayList<Scene> scenes = new ArrayList<>();
     private Scene currentScene;
 
 
-    public Manager(ArrayList<Scene> scenes){
+    public SystemHandler(ArrayList<Scene> scenes){
         this.scenes.addAll(scenes);
         currentScene = this.scenes.get(0);
     }
@@ -32,6 +32,4 @@ public class Manager {
     public Scene getCurrentScene(){
         return currentScene;
     }
-
-
 }
