@@ -6,7 +6,7 @@ import engine.data.Velocity;
 import engine.event.EventBus;
 import engine.event.GameEvent;
 import engine.scene.Scene;
-import engine.scene.SceneInterface;
+import engine.scene.SceneComponent;
 import engine.util.GeneralUtil;
 
 import java.awt.Color;
@@ -14,7 +14,7 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 
-public abstract class Entity implements SceneInterface {
+public abstract class Entity implements SceneComponent {
 
     protected Scene scene;
 

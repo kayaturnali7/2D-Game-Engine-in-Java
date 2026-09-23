@@ -8,18 +8,6 @@ import java.awt.geom.Area;
 import java.util.ArrayList;
 
 public class PhysicsEngine {
-    public static final float DRAG = 0.98F; // closer to 1 means less drag
-
-    public PhysicsEngine(){
-        EventBus.subscribe(CollisionEvent.class, event -> onCollision(event.entity(), event.collider()));
-    }
-
-    private void onCollision(Entity entity, Entity collider){
-        if (entity.getClass() != collider.getClass()){
-            System.out.println(collider + " is colliding with " + entity);
-        }
-
-    }
 
     public void update(Scene scene){
         ArrayList<Entity> entities = scene.getEntities();

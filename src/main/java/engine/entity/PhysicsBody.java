@@ -52,7 +52,7 @@ public class PhysicsBody {
     }
 
     protected void applyDrag(){
-        float drag = PhysicsEngine.DRAG;
+        float drag = currentEntity.scene.getDrag();
 
         velocityX *= drag;
         velocityY *= drag;

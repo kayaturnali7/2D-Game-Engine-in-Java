@@ -16,6 +16,10 @@ public abstract class Scene {
     protected Color bgColor;
     protected int fps;
 
+    protected float drag;
+    protected float gravity;
+
+
     private final ArrayList<Entity> entities = new ArrayList<>();
     private final ArrayList<UserInterface> userInterfaces = new ArrayList<>();
 
@@ -40,6 +44,7 @@ public abstract class Scene {
 
     public void update(){
         onUpdate();
+        updateLists();
 
         for (Entity entity : entities){
             entity.update();
@@ -48,9 +53,6 @@ public abstract class Scene {
         for (UserInterface userInterface : userInterfaces){
             userInterface.update();
         }
-
-        updateEntityList();
-        updateUIList();
     }
 
     protected abstract void onUpdate();
@@ -59,17 +61,14 @@ public abstract class Scene {
 
     protected abstract SceneProperties initialize();
 
-    private void updateEntityList(){
+    private void updateLists(){
         entities.removeIf(entity -> !entity.isActive());
+        userInterfaces.removeIf(userInterface -> !userInterface.isActive());
 
         if (!pendingEntities.isEmpty()){
             entities.addAll(pendingEntities);
             pendingEntities.clear();
         }
-    }
-
-    private void updateUIList(){
-        userInterfaces.removeIf(userInterface -> !userInterface.isActive());
 
         if (!pendingUserInterfaces.isEmpty()){
             userInterfaces.addAll(pendingUserInterfaces);
@@ -77,8 +76,7 @@ public abstract class Scene {
         }
     }
 
-
-    public void instantiate(SceneInterface component){
+    public void instantiate(SceneComponent component){
         if (component instanceof UserInterface){
             pendingUserInterfaces.add((UserInterface) component);
         } else if (component instanceof Entity){
@@ -112,5 +110,13 @@ public abstract class Scene {
 
     public String getName(){
         return name;
+    }
+
+    public float getDrag(){
+        return drag;
+    }
+
+    public float getGravity(){
+        return gravity;
     }
 }
