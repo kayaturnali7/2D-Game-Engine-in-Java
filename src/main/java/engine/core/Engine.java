@@ -1,25 +1,48 @@
 package engine.core;
 
-import engine.window.CorePanel;
-import engine.window.CoreWindow;
 import engine.scene.Scene;
 
 import java.util.ArrayList;
 
-public class Engine {
-    public static void startEngine(ArrayList<Scene> scenes){
-        Handler handler = new Handler(scenes);
-        Input input = new Input();
+public class Engine implements Runnable {
+    private final Window window;
+    private final Panel panel;
+    private final Thread gameThread;
+    private final Manager manager;
 
-        CoreWindow frame = new CoreWindow();
-        CorePanel panel = new CorePanel(handler, input);
+    public Engine(ArrayList<Scene> scenes){
+        manager = new Manager(scenes);
 
-        frame.add(panel);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        panel = new Panel(manager);
+        window = new Window(panel, manager);
 
-        Loop runLoop = new Loop(panel, handler);
-        runLoop.start();
+        gameThread = new Thread(this);
+        gameThread.start();
+    }
+
+    @Override
+    public void run() {
+        Scene currentScene = manager.getCurrentScene();
+        String sceneName = currentScene.getName();
+        int fps = currentScene.getFps();
+        double drawInterval = (double) 1000000000 / fps ;
+        double delta = 0;
+        long lastTime = System.nanoTime();
+        long currentTime;
+
+        while (gameThread != null) {
+
+            currentTime = System.nanoTime();
+            delta += (currentTime - lastTime) / drawInterval;
+
+            lastTime = currentTime;
+
+            if (delta > 1){
+                manager.update();
+                window.update(sceneName);
+                panel.repaint();
+                delta--;
+            }
+        }
     }
 }
