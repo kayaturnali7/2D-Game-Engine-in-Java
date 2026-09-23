@@ -9,19 +9,13 @@ import java.util.ArrayList;
 
 public class Engine {
 
-    private final InputManager inputManager;
-    private final SystemHandler handler;
-    private final JFrame frame;
-    private final Canvas canvas;
-    private final RunLoop runLoop;
-
     public Engine(ArrayList<Scene> scenes){
-        inputManager = new InputManager();
-        handler = new SystemHandler(scenes);
+        InputManager inputManager = new InputManager();
+        SystemHandler handler = new SystemHandler(scenes);
 
         // Create frame and canvas
-        frame = new JFrame();
-        canvas = new Canvas();
+        JFrame frame = new JFrame();
+        Canvas canvas = new Canvas();
 
         // Get the current scene's properties
         Scene currentScene = handler.getCurrentScene();
@@ -48,7 +42,7 @@ public class Engine {
         frame.setVisible(true);
 
         // Start run loop
-        runLoop = new RunLoop(canvas, handler);
+        RunLoop runLoop = new RunLoop(canvas, handler);
         Thread gameLoopThread = new Thread(runLoop);
         gameLoopThread.start();
     }
