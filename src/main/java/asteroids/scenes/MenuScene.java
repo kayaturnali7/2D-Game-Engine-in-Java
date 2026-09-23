@@ -19,7 +19,7 @@ public class MenuScene extends Scene {
 
     @Override
     protected SceneProperties initialize() {
-        name = "Asteroids Remake";
+        name = "Asteroids Remake Menu";
         screenWidth = 800;
         screenHeight = 800;
         bgColor = Color.BLACK;
