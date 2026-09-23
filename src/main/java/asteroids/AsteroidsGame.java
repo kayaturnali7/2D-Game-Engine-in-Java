@@ -5,14 +5,10 @@ import engine.scene.Scene;
 import asteroids.scenes.GameScene;
 import asteroids.scenes.MenuScene;
 
-import java.util.ArrayList;
-
 public class AsteroidsGame {
     public static void main(String[] args){
-        ArrayList<Scene> scenes = new ArrayList<>();
-        scenes.add(new GameScene());
-        scenes.add(new MenuScene());
-
+        Scene[] scenes = {new GameScene(), new MenuScene()};
+        // change scenes to arrays, not arraylist, also check engine and game code to see if you can cut down on new objects called and arraylist
         new Engine(scenes);
     }
 }
