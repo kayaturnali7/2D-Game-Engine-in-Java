@@ -81,7 +81,7 @@ public abstract class Entity implements SceneComponent {
      * @param x The x position of the target point.
      * @param y The y position of the target point.
      */
-    public void moveTo(float x, float y){
+    public void moveTo(double x, double y){
         transform.translateTo(x, y);
     }
 

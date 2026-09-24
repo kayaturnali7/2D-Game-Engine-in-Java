@@ -18,8 +18,8 @@ public class Bounds {
         double width = bounds.getWidth()/2;
         double height = bounds.getHeight()/2;
 
-        float x = currentEntity.getPosition().x();
-        float y = currentEntity.getPosition().y();
+        double x = currentEntity.getPosition().x();
+        double y = currentEntity.getPosition().y();
 
         updateBounds(x,y,width,height);
 
@@ -28,7 +28,7 @@ public class Bounds {
         }
     }
 
-    private void updateBounds(float x, float y, double width, double height){
+    private void updateBounds(double x, double y, double width, double height){
         int screenHeight = currentEntity.scene.getScreenHeight();
         int screenWidth = currentEntity.scene.getScreenWidth();
 
@@ -39,7 +39,7 @@ public class Bounds {
         outOfBounds = leftBound || rightBound || topBound || bottomBound;
     }
 
-    private void teleport(float x, float y, double width, double height){
+    private void teleport(double x, double y, double width, double height){
         int screenHeight = currentEntity.scene.getScreenHeight();
         int screenWidth = currentEntity.scene.getScreenWidth();
 

@@ -11,8 +11,8 @@ public class Transform {
         currentEntity = entity;
     }
 
-    private float x = 400;
-    private float y = 400;
+    private double x = 400;
+    private double y = 400;
 
     private double lookDirection = 90;
     private double moveDirection = lookDirection;
@@ -27,7 +27,7 @@ public class Transform {
         y -= currentEntity.getVelocity().y();
     }
 
-    protected void translateTo(float x, float y){
+    protected void translateTo(double x, double y){
         this.x = x;
         this.y = y;
     }
