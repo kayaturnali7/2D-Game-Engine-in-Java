@@ -15,7 +15,6 @@ public class SystemHandler {
     private final Map<String, Scene> scenes = new HashMap<>();
     private Scene currentScene;
 
-
     public SystemHandler(Scene[] scenes){
         for (Scene scene: scenes){
             this.scenes.put(scene.getName(), scene);
