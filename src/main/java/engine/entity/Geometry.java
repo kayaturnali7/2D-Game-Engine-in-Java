@@ -1,6 +1,5 @@
 package engine.entity;
 
-import asteroids.entities.Laser;
 import engine.model.Shape;
 
 public class Geometry {
@@ -18,13 +17,6 @@ public class Geometry {
         double direction = entity.getDirection();
 
         shape.update(x,y,direction);
-
-
-        if (entity instanceof Laser){
-            System.out.println(x + " " + y);
-        }
-
-
     }
 
     protected void update(){
