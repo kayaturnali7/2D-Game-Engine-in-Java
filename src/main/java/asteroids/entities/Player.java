@@ -4,21 +4,21 @@ import engine.core.InputManager;
 
 import asteroids.events.LaserFiredEvent;
 import engine.entity.Entity;
+import engine.model.Point;
 import engine.scene.Scene;
+import engine.model.Shape;
+import engine.model.Polygon;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
-import java.awt.Shape;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Point2D;
 
 public class Player extends Entity {
     private static final int ANGULAR_SPEED = 4;
-    private static final float THRUST = 0.17F;
-    private static final float COOLDOWN_TIME = 0.25F;
+    private static final double THRUST = 0.17;
+    private static final double COOLDOWN_TIME = 0.25;
 
-    private float cooldownTick = 0;
+    private double cooldownTick = 0;
     private boolean firing = false;
     private boolean canFire = false;
 
@@ -49,28 +49,20 @@ public class Player extends Entity {
 
     @Override
     protected Shape shapeInit() {
-        int side = 60;
-        int base = (int) (side * (7.0 / 9.0));
-        double height = Math.sqrt((Math.pow(side, 2)) - Math.pow(((double)base / 2), 2));
+        double side = 60;
+        double base = side * (7.0 / 9.0);
+        double height = Math.sqrt((Math.pow(side, 2)) - Math.pow((base / 2), 2));
 
         double dTop = height * ((double) 2 / 3);
         double dBase = height * ((double) 1 / 3);
 
-        int v1x = 0;
-        int v1y = (int) (-dTop);
+        Point v1 = new Point(0, -dTop);
+        Point v2 = new Point(-(base /2), dBase);
+        Point v3 = new Point(base/2, dBase);
 
-        int v2x = -(base / 2);
-        int v2y = (int) (dBase);
+        Point[] vertices = new Point[]{v1, v2, v3};
 
-        int v3x = (base / 2);
-        int v3y = (int) (dBase);
-
-        // TOP, BOTTOM-LEFT, BOTTOM-RIGHT
-        int[] xPoints = new int[]{v1x, v2x, v3x};
-        int[] yPoints = new int[]{v1y, v2y, v3y};
-        int numPoints = xPoints.length;
-
-        return new Polygon(xPoints, yPoints, numPoints);
+        return new Polygon(vertices);
     }
 
     @Override
@@ -78,7 +70,7 @@ public class Player extends Entity {
     }
 
     private void applyThrust(){
-        applyForce(THRUST);
+        applyForce(THRUST, getDirection());
     }
 
     private void updateCooldown(){
@@ -90,12 +82,11 @@ public class Player extends Entity {
     }
 
     private void fireLaser(){
-        Shape shape = getGeometry().shape();
-        Point2D.Float point = getVertex(shape, 0);
+        Point vertex = getVertex(0);
 
-        float x = point.x;
-        float y = point.y;
-        double direction = getDirection().look();
+        double x = vertex.getX();
+        double y = vertex.getY();
+        double direction = getDirection();
 
         addEvent(new LaserFiredEvent(x,y,direction));
         cooldownTick = COOLDOWN_TIME * scene.getFps();
