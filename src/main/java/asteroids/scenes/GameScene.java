@@ -16,14 +16,16 @@ public class GameScene extends Scene {
     private Entity player;
     private Entity testEntity;
 
+    private double angle = 0;
+
     @Override
     protected SceneProperties initialize() {
         name = "Asteroids Remake";
-        screenWidth = 800;
-        screenHeight = 800;
+        screenWidth = 900;
+        screenHeight = 600;
         bgColor = Color.BLACK;
         fps = 60;
-        drag =  0.98F;
+        drag = 0.97;
 
         return new SceneProperties(name, screenWidth, screenHeight, bgColor, fps);
     }
@@ -34,10 +36,10 @@ public class GameScene extends Scene {
         subscribeToEvent(LaserFiredEvent.class, event -> onLaserFired(event.x(), event.y(), event.angle()));
 
         player = new Player(this);
-        testEntity = new TestEntity(this);
+        //testEntity = new TestEntity(this);
 
         instantiate(player);
-        instantiate(testEntity);
+        //instantiate(testEntity);
     }
 
     @Override
@@ -46,7 +48,7 @@ public class GameScene extends Scene {
     }
 
 
-    private void onLaserFired(float x, float y, double direction){
+    private void onLaserFired(double x, double y, double direction){
         instantiate(new Laser(this, x, y, direction));
     }
 
