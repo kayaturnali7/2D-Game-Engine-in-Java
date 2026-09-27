@@ -1,40 +1,20 @@
 package engine.entity;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Shape;
+import engine.model.Shape;
 
 public class Renderer {
-    private final Entity currentEntity;
+    private final Entity entity;
 
-    private boolean drawBoundaryBox;
-    private boolean fill;
-    private final Color color;
-
-    protected Renderer(Entity entity, Color color){
-        currentEntity = entity;
-        this.color = color;
+    protected Renderer(Entity entity){
+        this.entity = entity;
     }
 
     protected void draw(Graphics2D g2d){
-        Shape shape = currentEntity.getGeometry().shape();
+        Shape shape = entity.getShape();
         if (shape == null) return;
 
-        g2d.setColor(color);
-        if (!fill) {g2d.draw(shape);} else {g2d.fill(shape);}
-
-        if (drawBoundaryBox){
-            Shape bounds = currentEntity.getGeometry().bounds();
-            g2d.setColor(Color.RED);
-            g2d.draw(bounds);
-        }
-    }
-
-    protected void setDrawBoundaryBox(boolean value){
-        drawBoundaryBox = value;
-    }
-
-    protected void setFill(boolean value){
-        fill = value;
+        g2d.setColor(shape.getColor());
+        shape.draw(g2d);
     }
 }
