@@ -1,18 +1,16 @@
 package engine.entity;
 
-import engine.data.Direction;
-import engine.data.Position;
-import engine.data.Velocity;
+import engine.data.LinearVelocity;
 import engine.event.EventBus;
 import engine.event.GameEvent;
+import engine.model.Point;
+import engine.model.Polygon;
+import engine.model.Shape;
 import engine.scene.Scene;
 import engine.scene.SceneComponent;
-import engine.util.GeneralUtil;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Shape;
-import java.awt.geom.Point2D;
 
 public abstract class Entity implements SceneComponent {
 
@@ -21,7 +19,7 @@ public abstract class Entity implements SceneComponent {
     private final Transform transform;
     private final Geometry geometry;
     private final PhysicsBody physics;
-    private final Bounds bounds;
+    //private final Bounds bounds;
     private final Renderer renderer;
 
     private final int maxSpeed;
@@ -31,13 +29,15 @@ public abstract class Entity implements SceneComponent {
      */
     public Entity(Scene scene, int maxSpeed, Color color, boolean hasDrag){
         this.scene = scene;
+        Shape shape = shapeInit();
+
         this.maxSpeed = maxSpeed;
         this.transform = new Transform(this);
-        this.geometry = new Geometry(this);
+        this.geometry = new Geometry(this, shape);
         this.physics = new PhysicsBody(this, hasDrag);
-        this.bounds = new Bounds(this);
-        this.renderer = new Renderer(this, color);
-        createShape();
+        //this.bounds = new Bounds(this);
+        this.renderer = new Renderer(this);
+
     }
 
     /** The entity's update call.
@@ -47,7 +47,7 @@ public abstract class Entity implements SceneComponent {
         physics.update();
         transform.update();
         geometry.update();
-        bounds.update();
+        //bounds.update();
     }
 
     /** The entity's render call.
@@ -55,14 +55,6 @@ public abstract class Entity implements SceneComponent {
     public final void draw(Graphics2D g2d){
         onDraw(g2d);
         renderer.draw(g2d);
-    }
-
-    private void createShape(){
-        Shape shape = shapeInit();
-
-        geometry.createShape(shape);
-        renderer.setFill(false);
-        renderer.setDrawBoundaryBox(false);
     }
 
     /** The update function specified by the user. It is called before any of the entity's internal components are updated.
@@ -102,8 +94,8 @@ public abstract class Entity implements SceneComponent {
     /** Applies a force to the entity in its current move direction.
      * @param force The amount of force to apply.
      */
-    public void applyForce(float force){
-        physics.applyForce(force);
+    public void applyForce(double force, double direction){
+        physics.applyForce(force, direction);
     }
 
     /** Applies a velocity to a specified angle and speed.
@@ -117,28 +109,22 @@ public abstract class Entity implements SceneComponent {
     /** Returns the entity's current velocity and its components.
      * @return (velocityX, velocityY, speed)
      */
-    public Velocity getVelocity(){
+    public LinearVelocity getVelocity(){
         return physics.getVelocity();
-    }
-
-    /**
-     * Returns the entity's current geometry.
-     *
-     * @return (activeShape, activeArea, bounds)
-     */
-    public engine.data.Geometry getGeometry(){
-        return geometry.getGeometry();
     }
 
     /** Returns the entity's current directions.
      * @return (lookDirection, moveDirection) in degrees.
      */
-    public Direction getDirection(){return transform.getDirection();}
+    public double getDirection(){return transform.getDirection();}
 
-    /** Returns the entity's current position in the scene.
-     * @return (x,y)
-     */
-    public Position getPosition(){return transform.getPosition();}
+    public double getX(){
+        return transform.getX();
+    }
+
+    public double getY(){
+        return transform.getY();
+    }
 
     /** Returns the entity's max speed.
      * @return maxSpeed
@@ -164,12 +150,14 @@ public abstract class Entity implements SceneComponent {
         EventBus.add(event);
     }
 
-    /** Returns the specified vertex located in initial x and y coordinate list.
-     * @param shape The swing shape to find the vertex in.
-     * @param targetIndex The index of the vertex you want to get the coordinate of.
-     * @return Returns a point that holds an x and y coordinate.
-     */
-    protected Point2D.Float getVertex(Shape shape, int targetIndex){
-        return GeneralUtil.getVertex(shape, targetIndex);
+    public Shape getShape(){
+        return geometry.getShape();
+    }
+
+    public Point getVertex(int index){
+        Shape shape = getShape();
+        if (shape instanceof Polygon){
+            return ((Polygon) shape).getVertex(index);
+        } else return null;
     }
 }
