@@ -16,10 +16,11 @@ public class SystemHandler {
     private Scene currentScene;
 
     public SystemHandler(Scene[] scenes){
+        this.currentScene = scenes[0];
+
         for (Scene scene: scenes){
             this.scenes.put(scene.getName(), scene);
         }
-        this.currentScene = this.scenes.get("Asteroids Remake");
     }
 
     public void update(){
