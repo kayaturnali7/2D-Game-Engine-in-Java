@@ -9,7 +9,6 @@ import engine.model.Shape;
 import engine.scene.Scene;
 import engine.scene.SceneComponent;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 public abstract class Entity implements SceneComponent {
@@ -20,14 +19,13 @@ public abstract class Entity implements SceneComponent {
     private final Geometry geometry;
     private final PhysicsBody physics;
     //private final Bounds bounds;
-    private final Renderer renderer;
 
     private final int maxSpeed;
     private boolean active = true;
 
     /** Entity constructor
      */
-    public Entity(Scene scene, int maxSpeed, Color color, boolean hasDrag){
+    public Entity(Scene scene, int maxSpeed, boolean hasDrag){
         this.scene = scene;
         Shape shape = shapeInit();
 
@@ -36,8 +34,6 @@ public abstract class Entity implements SceneComponent {
         this.geometry = new Geometry(this, shape);
         this.physics = new PhysicsBody(this, hasDrag);
         //this.bounds = new Bounds(this);
-        this.renderer = new Renderer(this);
-
     }
 
     /** The entity's update call.
@@ -54,7 +50,12 @@ public abstract class Entity implements SceneComponent {
      */
     public final void draw(Graphics2D g2d){
         onDraw(g2d);
-        renderer.draw(g2d);
+
+        Shape shape = getShape();
+        if (shape == null) return;
+
+        g2d.setColor(shape.getColor());
+        shape.draw(g2d);
     }
 
     /** The update function specified by the user. It is called before any of the entity's internal components are updated.
