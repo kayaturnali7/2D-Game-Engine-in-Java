@@ -43,6 +43,7 @@ public class Engine extends Canvas implements Runnable{
 
         // init frame
         frame.setTitle(sceneName);
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(this);
         frame.pack();
@@ -57,6 +58,7 @@ public class Engine extends Canvas implements Runnable{
     @Override
     public void run() {
         this.createBufferStrategy(2);
+        BufferStrategy bs = this.getBufferStrategy();
 
         long lastTime = System.nanoTime();
         long lastTimer = System.currentTimeMillis();
@@ -78,8 +80,9 @@ public class Engine extends Canvas implements Runnable{
                 delta--;
             }
 
-            render();
+            render(bs);
             frames++;
+
 
             while (System.currentTimeMillis() - lastTimer > 1000) {
                 lastTimer += 1000;
@@ -90,8 +93,7 @@ public class Engine extends Canvas implements Runnable{
         }
     }
 
-    private void render(){
-        BufferStrategy bs = this.getBufferStrategy();
+    private void render(BufferStrategy bs){
         Graphics2D g2d = (Graphics2D) bs.getDrawGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
