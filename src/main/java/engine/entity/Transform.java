@@ -1,30 +1,34 @@
 package engine.entity;
 
-import engine.data.Direction;
-import engine.data.Position;
-import engine.util.MathUtils;
-
 public class Transform {
-    private final Entity currentEntity;
+
+    private final Entity entity;
+
+    private double x;
+    private double y;
+
+    private double direction;
 
     protected Transform(Entity entity){
-        currentEntity = entity;
+        this.entity = entity;
+
+        this.x = entity.scene.getCenterX();
+        this.y = entity.scene.getCenterY();
+
+        this.direction = 90;
     }
-
-    private double x = 400;
-    private double y = 400;
-
-    private double lookDirection = 90;
-    private double moveDirection = lookDirection;
 
     protected void update(){
         translate();
-        wrapRotations();
+
+        if (direction >= 360){
+            direction = 0;
+        }
     }
 
     protected void translate(){
-        x += currentEntity.getVelocity().x();
-        y -= currentEntity.getVelocity().y();
+        x += entity.getVelocity().x();
+        y -= entity.getVelocity().y();
     }
 
     protected void translateTo(double x, double y){
@@ -33,29 +37,23 @@ public class Transform {
     }
 
     protected void setRotation(double angle){
-        lookDirection = angle;
-        updateMoveDirection();
+        direction = angle;
     }
 
     protected void rotate(double amount){
-        lookDirection -= amount;
-        updateMoveDirection();
+        direction -= amount;
     }
 
-    protected Position getPosition(){
-        return new Position(x,y);
+    protected double getX() {
+        return x;
     }
 
-    protected Direction getDirection(){
-        return new Direction(lookDirection, moveDirection);
+    protected double getY() {
+        return y;
     }
 
-    protected void updateMoveDirection(){
-        moveDirection = lookDirection;
+    protected double getDirection(){
+        return direction;
     }
 
-    private void wrapRotations(){
-        lookDirection = MathUtils.wrapAngle(lookDirection);
-        moveDirection = MathUtils.wrapAngle(moveDirection);
-    }
 }
