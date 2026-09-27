@@ -5,7 +5,6 @@ import engine.model.Circle;
 import engine.scene.Scene;
 import engine.model.Shape;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Laser extends Entity {
@@ -15,7 +14,7 @@ public class Laser extends Entity {
     private float lifeTick = 0;
 
     public Laser(Scene scene, double x, double y, double direction ){
-        super(scene, 20, Color.white, false);
+        super(scene, 20, false);
         moveTo(x,y);
         setRotation(direction);
         setVelocity(getMaxSpeed(), direction);

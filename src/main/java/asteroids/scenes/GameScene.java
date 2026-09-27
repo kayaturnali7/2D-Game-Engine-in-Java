@@ -16,8 +16,6 @@ public class GameScene extends Scene {
     private Entity player;
     private Entity testEntity;
 
-    private double angle = 0;
-
     @Override
     protected SceneProperties initialize() {
         name = "Asteroids Remake";

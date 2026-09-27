@@ -5,13 +5,12 @@ import engine.model.Circle;
 import engine.model.Shape;
 import engine.scene.Scene;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class TestEntity extends Entity {
 
     public TestEntity(Scene scene){
-        super(scene,7, Color.white, true);
+        super(scene,7, true);
     }
 
     double step = 0;

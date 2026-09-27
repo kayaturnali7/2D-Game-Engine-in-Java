@@ -1,5 +1,6 @@
 package engine.scene;
 
+import engine.core.SystemHandler;
 import engine.entity.Entity;
 import engine.event.EventBus;
 import engine.event.GameEvent;

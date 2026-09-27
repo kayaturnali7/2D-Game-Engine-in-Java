@@ -9,7 +9,6 @@ import engine.scene.Scene;
 import engine.model.Shape;
 import engine.model.Polygon;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
@@ -23,7 +22,7 @@ public class Player extends Entity {
     private boolean canFire = false;
 
     public Player(Scene scene) {
-        super(scene,10, Color.white , true);
+        super(scene,10, true);
     }
 
     @Override
