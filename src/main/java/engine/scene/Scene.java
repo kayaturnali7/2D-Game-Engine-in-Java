@@ -13,12 +13,15 @@ public abstract class Scene {
     protected String name;
     protected int screenWidth;
     protected int screenHeight;
+
+    protected int centerX;
+    protected int centerY;
+
     protected Color bgColor;
     protected int fps;
 
-    protected float drag;
-    protected float gravity;
-
+    protected double drag;
+    protected double gravity;
 
     private final ArrayList<Entity> entities = new ArrayList<>();
     private final ArrayList<UserInterface> userInterfaces = new ArrayList<>();
@@ -28,11 +31,14 @@ public abstract class Scene {
 
     public Scene(){
         SceneProperties settings = initialize();
-        onStart();
 
         name = settings.name();
         screenWidth = settings.screenWidth();
         screenHeight = settings.screenHeight();
+
+        centerX = screenWidth/2;
+        centerY = screenHeight/2;
+
         bgColor = settings.bgColor();
         fps = settings.fps();
 
@@ -40,6 +46,8 @@ public abstract class Scene {
             entities.addAll(pendingEntities);
             pendingEntities.clear();
         }
+
+        onStart();
     }
 
     public void update(){
@@ -112,11 +120,19 @@ public abstract class Scene {
         return name;
     }
 
-    public float getDrag(){
+    public double getDrag(){
         return drag;
     }
 
-    public float getGravity(){
+    public double getGravity(){
         return gravity;
+    }
+
+    public int getCenterX(){
+        return centerX;
+    }
+
+    public int getCenterY(){
+        return centerY;
     }
 }
