@@ -1,7 +1,7 @@
 package asteroids.entities;
 
 import engine.entity.Entity;
-import engine.model.Circle;
+import engine.model.Rectangle;
 import engine.model.Shape;
 import engine.scene.Scene;
 
@@ -11,12 +11,13 @@ public class TestEntity extends Entity {
 
     public TestEntity(Scene scene){
         super(scene,7, true);
+        moveTo(0, scene.getCenterY());
+        setVelocity(50,0);
     }
-
-    double step = 0;
 
     @Override
     protected void onUpdate() {
+
     }
 
     @Override
@@ -26,6 +27,9 @@ public class TestEntity extends Entity {
 
     @Override
     protected Shape shapeInit() {
-        return new Circle(50);
+        int width = 50;
+        int height = 50;
+
+        return new Rectangle(width, height);
     }
 }
