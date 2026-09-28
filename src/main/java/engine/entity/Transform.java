@@ -21,7 +21,7 @@ public class Transform {
     protected void update(){
         translate();
 
-        if (direction >= 360){
+        if (Math.abs(direction) >= 360){
             direction = 0;
         }
     }
