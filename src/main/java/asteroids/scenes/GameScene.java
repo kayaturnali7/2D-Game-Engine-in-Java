@@ -34,10 +34,10 @@ public class GameScene extends Scene {
         subscribeToEvent(LaserFiredEvent.class, event -> onLaserFired(event.x(), event.y(), event.angle()));
 
         player = new Player(this);
-        //testEntity = new TestEntity(this);
+        testEntity = new TestEntity(this);
 
         instantiate(player);
-        //instantiate(testEntity);
+        instantiate(testEntity);
     }
 
     @Override
