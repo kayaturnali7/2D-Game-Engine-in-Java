@@ -12,12 +12,11 @@ public class Circle extends Shape {
 
     @Override
     public void draw(Graphics2D g2d){
-        int x = (int) this.getX();
-        int y = (int) this.getY();
-        Color color = this.getColor();
+        int x = (int) this.getX() - (radius/2);
+        int y = (int) this.getY() - (radius/2);
 
-        g2d.setColor(color);
-        g2d.drawOval(x-radius/2,y-radius/2,radius,radius);
+        g2d.setColor(this.getColor());
+        g2d.drawOval(x,y,radius,radius);
     }
 
     public int getRadius() {
