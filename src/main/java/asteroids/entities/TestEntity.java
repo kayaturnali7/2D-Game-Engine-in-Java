@@ -1,6 +1,7 @@
 package asteroids.entities;
 
 import engine.entity.Entity;
+import engine.model.Circle;
 import engine.model.Rectangle;
 import engine.model.Shape;
 import engine.scene.Scene;
@@ -27,9 +28,7 @@ public class TestEntity extends Entity {
 
     @Override
     protected Shape shapeInit() {
-        int width = 50;
-        int height = 50;
 
-        return new Rectangle(width, height);
+        return new Circle(50);
     }
 }
