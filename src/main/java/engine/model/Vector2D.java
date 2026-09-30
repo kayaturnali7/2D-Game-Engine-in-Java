@@ -22,24 +22,51 @@ public class Vector2D {
         this.y = y;
     }
 
-    public double getMagnitude(){
+    public void add(Vector2D v){
+        this.x += v.x;
+        this.y += v.y;
+    }
+
+    public void sub(Vector2D v){
+        this.x -= v.x;
+        this.y -= v.y;
+    }
+
+    public void scale(int amount){
+        this.x *= amount;
+        this.y *= amount;
+    }
+
+    public double magnitude(){
         return Math.sqrt((x*x) + (y*y) );
     }
 
     public Vector2D normalize(){
-        double mag = getMagnitude();
+        double mag = magnitude();
         if (mag == 0){
             return new Vector2D();
         }
         return new Vector2D(x/mag, y/mag);
     }
 
-    public double distanceTo(Vector2D point){
+    public double distance(Vector2D point){
         return MathUtils.distance2D(this, point);
     }
 
-    public double getAngle(){
+    public double dot(Vector2D point){
+        return x * point.x + y * point.y;
+    }
+
+    public double angle(){
         return Math.toDegrees(Math.atan2(y,x));
+    }
+
+    public void setX(double x){
+        this.x = x;
+    }
+
+    public void setY(double y){
+        this.y = y;
     }
 
     public double getX(){
@@ -54,4 +81,11 @@ public class Vector2D {
         return "(" + this.x + "," + this.y + ")";
     }
 
+    public static Vector2D addition(Vector2D v1, Vector2D v2){
+        return new Vector2D(v1.x + v2.x, v1.y + v2.y);
+    }
+
+    public static Vector2D subtraction(Vector2D v1, Vector2D v2){
+        return new Vector2D(v1.x - v2.x, v1.y - v2.y);
+    }
 }

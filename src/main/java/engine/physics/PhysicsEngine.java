@@ -1,10 +1,14 @@
 package engine.physics;
 
+import engine.core.SystemHandler;
 import engine.entity.Entity;
 import engine.model.AABB;
+import engine.model.Shape;
+import engine.model.Vector2D;
 import engine.scene.Scene;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PhysicsEngine {
 
@@ -21,15 +25,15 @@ public class PhysicsEngine {
 
             for (int j = i + 1; j < size; j++){
                 Entity e1 = entities.get(j);
-
+                
                 if (AABBCollision(e1, e2)){
-                    System.out.println(e1 + " colliding with " + e2);
+                    System.out.println("AABB collision");
                 }
             }
         }
     }
 
-    private boolean AABBCollision(Entity e1, Entity e2) {
+    private static boolean AABBCollision(Entity e1, Entity e2) {
         AABB e1Bounds = e1.getBounds();
         AABB e2Bounds = e2.getBounds();
 
@@ -45,4 +49,6 @@ public class PhysicsEngine {
 
         return e1X < e2X + e2Width && e1X + e1Width > e2X && e1Y < e2Y + e2Height && e1Y + e1Height > e2Y;
     }
+
+
 }

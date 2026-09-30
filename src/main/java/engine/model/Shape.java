@@ -83,7 +83,7 @@ public abstract class Shape {
 
     public void draw(Graphics2D g2d){
         onDraw(g2d);
-        //AABB.draw(g2d);
+        AABB.draw(g2d);
     }
 
     private void updateVertices() {
@@ -136,6 +136,8 @@ public abstract class Shape {
     public Vector2D getVertex(int vertex){
         return vertices[vertex];
     }
+
+    public Vector2D[] getVertices(){return vertices;}
 
     public AABB getAABB(){
         return AABB;

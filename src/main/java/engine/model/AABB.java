@@ -9,8 +9,10 @@ public class AABB {
 
     private final Shape shape;
 
-    private int minX;
-    private int minY;
+    private final Vector2D min = new Vector2D();
+    private final Vector2D max = new Vector2D();
+
+    private int x, y;
 
     private int width;
     private int height;
@@ -21,7 +23,7 @@ public class AABB {
 
     public void draw(Graphics2D g2d){
         g2d.setColor(COLOR);
-        g2d.drawRect(minX,minY,width,height);
+        g2d.drawRect((int) min.getX(), (int) min.getY(),width,height);
     }
 
     public void update(){
@@ -59,8 +61,11 @@ public class AABB {
             }
         }
 
-        this.minX = minX;
-        this.minY = minY;
+        min.setLocation(minX, minY);
+        max.setLocation(maxX, maxY);
+
+        x = minX;
+        y = minY;
 
         this.width = maxX - minX;
         this.height = maxY - minY;
@@ -74,11 +79,19 @@ public class AABB {
         return height;
     }
 
+    public Vector2D getMin(){
+        return min;
+    }
+
+    public Vector2D getMax(){
+        return max;
+    }
+
     public int getX(){
-        return minX;
+        return x;
     }
 
     public int getY(){
-        return minY;
+        return y;
     }
 }

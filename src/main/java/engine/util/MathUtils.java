@@ -20,5 +20,7 @@ public class MathUtils {
     public static double sineWave(double angle, double amplitude, double frequency){
         return amplitude * Math.sin(Math.toRadians(angle) * frequency);
     }
+
+
 }
 

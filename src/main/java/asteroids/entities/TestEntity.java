@@ -17,6 +17,7 @@ public class TestEntity extends Entity {
         super(scene,7, true);
         moveTo(0, scene.getCenterY());
         setVelocity(50, 0);
+        setRotation(45);
 
     }
 
@@ -33,6 +34,6 @@ public class TestEntity extends Entity {
     @Override
     protected Shape shapeInit() {
 
-        return new Circle(50, COLOR, false);
+        return new Rectangle(75,75,COLOR);
     }
 }
