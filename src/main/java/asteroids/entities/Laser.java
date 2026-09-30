@@ -5,11 +5,13 @@ import engine.model.Circle;
 import engine.scene.Scene;
 import engine.model.Shape;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Laser extends Entity {
-    private static final int SIZE = 3;
+    private static final int SIZE = 2;
     private static final double LIFE_TIME = 0.6;
+    private static final Color COLOR = Color.WHITE;
 
     private float lifeTick = 0;
 
@@ -37,6 +39,6 @@ public class Laser extends Entity {
 
     @Override
     protected Shape shapeInit() {
-        return new Circle(SIZE);
+        return new Circle(SIZE, COLOR, true);
     }
 }

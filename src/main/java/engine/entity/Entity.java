@@ -3,7 +3,8 @@ package engine.entity;
 import engine.data.LinearVelocity;
 import engine.event.EventBus;
 import engine.event.GameEvent;
-import engine.model.Point;
+import engine.model.AABB;
+import engine.model.Vector2D;
 import engine.model.Polygon;
 import engine.model.Shape;
 import engine.scene.Scene;
@@ -155,10 +156,14 @@ public abstract class Entity implements SceneComponent {
         return geometry.getShape();
     }
 
-    public Point getVertex(int index){
+    public Vector2D getVertex(int index){
         Shape shape = getShape();
         if (shape instanceof Polygon){
             return ((Polygon) shape).getVertex(index);
         } else return null;
+    }
+
+    public AABB getBounds(){
+        return getShape().getAABB();
     }
 }

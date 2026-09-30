@@ -1,18 +1,19 @@
 package engine.model;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Polygon extends Shape {
 
 
-    public Polygon(Point[] vertices) {
-        super(vertices);
+    public Polygon(Vector2D[] vertices, Color color) {
+        super(vertices, color);
     }
 
 
     @Override
-    public void draw(Graphics2D g2d) {
+    public void onDraw(Graphics2D g2d) {
         g2d.setColor(this.getColor());
-        g2d.drawPolygon(xPoints, yPoints, numPoints);
+        g2d.drawPolygon(verticesX, verticesY, numVertices);
     }
 }

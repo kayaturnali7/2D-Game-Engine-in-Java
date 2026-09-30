@@ -4,11 +4,12 @@ import engine.core.InputManager;
 
 import asteroids.events.LaserFiredEvent;
 import engine.entity.Entity;
-import engine.model.Point;
+import engine.model.Vector2D;
 import engine.scene.Scene;
 import engine.model.Shape;
 import engine.model.Polygon;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
@@ -16,6 +17,7 @@ public class Player extends Entity {
     private static final int ANGULAR_SPEED = 4;
     private static final double THRUST = 0.17;
     private static final double COOLDOWN_TIME = 0.25;
+    private static final Color COLOR = Color.WHITE;
 
     private double cooldownTick = 0;
     private boolean firing = false;
@@ -55,17 +57,18 @@ public class Player extends Entity {
         double dTop = height * ((double) 2 / 3);
         double dBase = height * ((double) 1 / 3);
 
-        Point v1 = new Point(0, -dTop);
-        Point v2 = new Point(-(base /2), dBase);
-        Point v3 = new Point(base/2, dBase);
+        Vector2D v1 = new Vector2D(0, -dTop);
+        Vector2D v2 = new Vector2D(-(base /2), dBase);
+        Vector2D v3 = new Vector2D(base/2, dBase);
 
-        Point[] vertices = new Point[]{v1, v2, v3};
+        Vector2D[] vertices = new Vector2D[]{v1, v2, v3};
 
-        return new Polygon(vertices);
+        return new Polygon(vertices, COLOR);
     }
 
     @Override
     protected void onDraw(Graphics2D g2d) {
+
     }
 
     private void applyThrust(){
@@ -81,7 +84,7 @@ public class Player extends Entity {
     }
 
     private void fireLaser(){
-        Point vertex = getVertex(0);
+        Vector2D vertex = getVertex(0);
 
         double x = vertex.getX();
         double y = vertex.getY();

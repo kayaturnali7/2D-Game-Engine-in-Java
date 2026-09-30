@@ -5,124 +5,108 @@ import java.awt.Graphics2D;
 
 public abstract class Shape {
 
-    private double x;
-    private double y;
-    private double angle;
+    private final Vector2D[] baseVertices;
+
     private final Color color;
 
-    private final Point[] originalVertices;
+    private double x, y;
+    private double angle;
 
-    private final Point[] vertices;
+    private Vector2D[] vertices;
+    protected int[] verticesX, verticesY;
+    protected int numVertices;
 
-    protected final int numPoints;
-    protected final int[] xPoints;
-    protected final int[] yPoints;
+    private final AABB AABB = new AABB(this);
 
-    //private final Rectangle AABB;
+    public Shape(Vector2D[] vertices, Color color) {
+        this.color = color;
+        baseVertices = vertices;
 
-    public Shape(Point[] vertices) {
-        this.color = Color.WHITE;
-        this.numPoints = vertices.length;
-        this.originalVertices = vertices;
-
-        this.vertices = new Point[numPoints];
-        for (int i = 0; i < numPoints; i++) {
-            this.vertices[i] = new Point();
-        }
-
-        this.xPoints = new int[numPoints];
-        this.yPoints = new int[numPoints];
-
-        for (int i = 0; i < numPoints; i++){
-            int x = (int) (originalVertices[i].getX());
-            int y = (int) (originalVertices[i].getY());
-
-            xPoints[i] = x;
-            yPoints[i] = y;
-        }
+        build();
     }
 
-    public Shape(int radius){
-        this.color = Color.WHITE;
-        this.numPoints = 32;
-        this.originalVertices = new Point[numPoints];
+    public Shape(int radius, Color color) {
+        this.color = color;
 
-        for (int i = 1; i < numPoints-1; i++){
-            double x = radius * Math.cos(2 * Math.PI * i/32);
-            double y = radius * Math.sin(2 * Math.PI * i/32);
-            originalVertices[i] = new Point(x,y);
+        int n = 16; // amount of points
+        baseVertices = new Vector2D[n];
+
+        for (int i = 1; i < n + 1; i++ ){
+            double x = radius * Math.cos(2 * Math.PI * i / n);
+            double y = radius * Math.sin(2 * Math.PI * i / n);
+
+            baseVertices[i-1] = new Vector2D(x,y);
         }
 
-        this.vertices = originalVertices;
-
-        this.xPoints = new int[numPoints];
-        this.yPoints = new int[numPoints];
-
-        for (int i = 0; i < numPoints; i++){
-            int x = (int) (originalVertices[i].getX());
-            int y = (int) (originalVertices[i].getY());
-
-            xPoints[i] = x;
-            yPoints[i] = y;
-        }
+        build();
     }
 
-    public Shape(int width, int height){
-        this.color = Color.WHITE;
+    public Shape(double width, double height, Color color){
+        this.color = color;
 
-        this.originalVertices = new Point[]{
-                new Point((double) width/2, (double) height/2),
-                new Point((double) -width/2, (double) height/2),
-                new Point((double) -width/2, (double) -height/2),
-                new Point((double) width/2, (double) -height/2),
-        };
-        this.numPoints = originalVertices.length;
+        Vector2D topLeft = new Vector2D(-width/2, height/2);
+        Vector2D topRight = new Vector2D(width/2, height/2);
+        Vector2D bottomRight = new Vector2D(width/2, -height/2);
+        Vector2D bottomLeft = new Vector2D(-width/2, -height/2);
 
-        this.vertices = new Point[numPoints];
-        for (int i = 0; i < numPoints; i++) {
-            this.vertices[i] = new Point();
+        baseVertices = new Vector2D[]{topLeft, bottomLeft, bottomRight, topRight };
+
+        build();
+    }
+
+    private void build(){
+        numVertices = baseVertices.length;
+
+        vertices = new Vector2D[numVertices];
+        for (int i = 0; i < numVertices; i++){
+            vertices[i] = new Vector2D();
         }
 
-        this.xPoints = new int[numPoints];
-        this.yPoints = new int[numPoints];
+        verticesX = new int[numVertices];
+        verticesY = new int[numVertices];
 
-        for (int i = 0; i < numPoints; i++){
-            int x = (int) (originalVertices[i].getX());
-            int y = (int) (originalVertices[i].getY());
+        for (int i = 0; i < numVertices; i++){
+            int x = (int) baseVertices[i].getX();
+            int y = (int) baseVertices[i].getY();
 
-            xPoints[i] = x;
-            yPoints[i] = y;
+            verticesX[i] = x;
+            verticesY[i] = y;
         }
     }
 
     public void update(double x, double y, double direction){
         moveTo(x,y);
-        rotateTo(direction-90);
+        rotateTo(direction-90); //must subtract 90 from direction !!!!
         updateVertices();
+        AABB.update();
     }
 
+    public void draw(Graphics2D g2d){
+        onDraw(g2d);
+        //AABB.draw(g2d);
+    }
 
     private void updateVertices() {
-        double cos = Math.cos(Math.toRadians(-getDirection()));
-        double sin = Math.sin(Math.toRadians(-getDirection()));
+        double cos = Math.cos(Math.toRadians(-angle));
+        double sin = Math.sin(Math.toRadians(-angle));
 
-        for (int i = 0; i < numPoints; i++) {
-            double originalX = originalVertices[i].getX();
-            double originalY = originalVertices[i].getY();
+        for (int i = 0; i < numVertices; i++) {
+            double originalX = baseVertices[i].getX();
+            double originalY = baseVertices[i].getY();
 
             // apply rotation matrix
             double xPrime = originalX * cos - originalY * sin;
             double yPrime = originalX * sin + originalY * cos;
 
-            xPoints[i] = (int) (this.getX() + xPrime);
-            yPoints[i] = (int) (this.getY() + yPrime);
+            verticesX[i] = (int) (this.x + xPrime);
+            verticesY[i] = (int) (this.y + yPrime);
 
-            vertices[i].setLocation(xPoints[i], yPoints[i]);
+            vertices[i].setLocation(verticesX[i], verticesY[i]);
         }
     }
 
 
-    public abstract void draw(Graphics2D g2d);
+    public abstract void onDraw(Graphics2D g2d);
 
     public double getX() {
         return this.x;
@@ -136,7 +120,7 @@ public abstract class Shape {
         return this.color;
     }
 
-    public double getDirection() {
+    public double getAngle() {
         return this.angle;
     }
 
@@ -149,16 +133,11 @@ public abstract class Shape {
         this.y = y;
     }
 
-
-    public Point[] getVertices(){
-        return this.vertices;
+    public Vector2D getVertex(int vertex){
+        return vertices[vertex];
     }
 
-    public Point getVertex(int index){
-        return vertices[index];
-    }
-
-    public String toString() {
-        return "(" + getX() + "," + getY() + ") " + getDirection();
+    public AABB getAABB(){
+        return AABB;
     }
 }

@@ -6,14 +6,18 @@ import engine.model.Rectangle;
 import engine.model.Shape;
 import engine.scene.Scene;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class TestEntity extends Entity {
 
+    private static final Color COLOR = Color.WHITE;
+
     public TestEntity(Scene scene){
         super(scene,7, true);
         moveTo(0, scene.getCenterY());
-        setVelocity(50,0);
+        setVelocity(50, 0);
+
     }
 
     @Override
@@ -29,6 +33,6 @@ public class TestEntity extends Entity {
     @Override
     protected Shape shapeInit() {
 
-        return new Circle(50);
+        return new Circle(50, COLOR, false);
     }
 }
