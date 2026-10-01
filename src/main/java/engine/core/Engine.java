@@ -88,6 +88,7 @@ public class Engine extends Canvas implements Runnable{
 
 
             while (System.currentTimeMillis() - lastTimer > 1000) {
+                System.out.println(frames + " frames");
                 lastTimer += 1000;
                 frames = 0;
                 updates = 0;
