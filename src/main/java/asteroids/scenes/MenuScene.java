@@ -1,11 +1,9 @@
 package asteroids.scenes;
 
-import engine.scene.SceneProperties;
 import engine.scene.Scene;
 
-import java.awt.Color;
-
 public class MenuScene extends Scene {
+
     @Override
     protected void onUpdate() {
 
@@ -18,13 +16,7 @@ public class MenuScene extends Scene {
     }
 
     @Override
-    protected SceneProperties initialize() {
-        name = "Asteroids Remake Menu";
-        screenWidth = 800;
-        screenHeight = 800;
-        bgColor = Color.BLACK;
-        fps = 60;
+    protected void initialize() {
 
-        return new SceneProperties(name, screenWidth, screenHeight, bgColor, fps);
     }
 }

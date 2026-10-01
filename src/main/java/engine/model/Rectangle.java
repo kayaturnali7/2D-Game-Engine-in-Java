@@ -15,7 +15,6 @@ public class Rectangle extends Shape{
 
     @Override
     public void onDraw(Graphics2D g2d) {
-        g2d.setColor(this.getColor());
         g2d.drawPolygon(verticesX,verticesY,numVertices);
     }
 }

@@ -9,11 +9,8 @@ public class PhysicsBody {
     private double velocityX;
     private double velocityY;
 
-    private final boolean hasDrag;
-
-    protected PhysicsBody(Entity entity, boolean hasDrag){
+    protected PhysicsBody(Entity entity){
         this.entity = entity;
-        this.hasDrag = hasDrag;
     }
 
     protected void update(){
@@ -23,10 +20,6 @@ public class PhysicsBody {
         if (velocity > maxSpeed) {
             velocityX = (velocityX / velocity) * maxSpeed;
             velocityY = (velocityY / velocity) * maxSpeed;
-        }
-
-        if (hasDrag){
-            applyDrag(velocity);
         }
     }
 
@@ -46,18 +39,12 @@ public class PhysicsBody {
     }
 
     protected void applyDrag(double velocity){
-        double drag = entity.scene.getDrag();
 
-        velocityX *= drag;
-        velocityY *= drag;
-
-        if (velocity < 0.01) {
-            velocityX = 0;
-            velocityY = 0;
-        }
     }
+
 
     protected LinearVelocity getVelocity(){
         return new LinearVelocity(velocityX, velocityY);
     }
+
 }

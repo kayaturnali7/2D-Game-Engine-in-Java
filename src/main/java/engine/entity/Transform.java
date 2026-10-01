@@ -1,6 +1,6 @@
 package engine.entity;
 
-public class Transform {
+public class Transform{
 
     private final Entity entity;
 
@@ -12,8 +12,8 @@ public class Transform {
     protected Transform(Entity entity){
         this.entity = entity;
 
-        this.x = entity.scene.getCenterX();
-        this.y = entity.scene.getCenterY();
+        this.x = entity.getScene().getCenter().getX();
+        this.y = entity.getScene().getCenter().getY();
 
         this.direction = 90;
     }
@@ -27,8 +27,8 @@ public class Transform {
     }
 
     protected void translate(){
-        x += entity.getVelocity().x();
-        y -= entity.getVelocity().y();
+        x += entity.getVelocity().getX();
+        y -= entity.getVelocity().getY();
     }
 
     protected void translateTo(double x, double y){

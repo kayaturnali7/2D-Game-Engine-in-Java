@@ -5,20 +5,20 @@ import java.awt.Graphics2D;
 
 public abstract class Shape {
 
-    private final Vector2D[] baseVertices;
+    private final Vector2[] baseVertices;
 
     private final Color color;
 
     private double x, y;
     private double angle;
 
-    private Vector2D[] vertices;
+    private Vector2[] vertices;
     protected int[] verticesX, verticesY;
     protected int numVertices;
 
     private final AABB AABB = new AABB(this);
 
-    public Shape(Vector2D[] vertices, Color color) {
+    public Shape(Vector2[] vertices, Color color) {
         this.color = color;
         baseVertices = vertices;
 
@@ -29,13 +29,13 @@ public abstract class Shape {
         this.color = color;
 
         int n = 16; // amount of points
-        baseVertices = new Vector2D[n];
+        baseVertices = new Vector2[n];
 
         for (int i = 1; i < n + 1; i++ ){
             double x = radius * Math.cos(2 * Math.PI * i / n);
             double y = radius * Math.sin(2 * Math.PI * i / n);
 
-            baseVertices[i-1] = new Vector2D(x,y);
+            baseVertices[i-1] = new Vector2(x,y);
         }
 
         build();
@@ -44,12 +44,12 @@ public abstract class Shape {
     public Shape(double width, double height, Color color){
         this.color = color;
 
-        Vector2D topLeft = new Vector2D(-width/2, height/2);
-        Vector2D topRight = new Vector2D(width/2, height/2);
-        Vector2D bottomRight = new Vector2D(width/2, -height/2);
-        Vector2D bottomLeft = new Vector2D(-width/2, -height/2);
+        Vector2 topLeft = new Vector2(-width/2, height/2);
+        Vector2 topRight = new Vector2(width/2, height/2);
+        Vector2 bottomRight = new Vector2(width/2, -height/2);
+        Vector2 bottomLeft = new Vector2(-width/2, -height/2);
 
-        baseVertices = new Vector2D[]{topLeft, bottomLeft, bottomRight, topRight };
+        baseVertices = new Vector2[]{topLeft, bottomLeft, bottomRight, topRight };
 
         build();
     }
@@ -57,9 +57,9 @@ public abstract class Shape {
     private void build(){
         numVertices = baseVertices.length;
 
-        vertices = new Vector2D[numVertices];
+        vertices = new Vector2[numVertices];
         for (int i = 0; i < numVertices; i++){
-            vertices[i] = new Vector2D();
+            vertices[i] = new Vector2();
         }
 
         verticesX = new int[numVertices];
@@ -82,8 +82,9 @@ public abstract class Shape {
     }
 
     public void draw(Graphics2D g2d){
+        g2d.setColor(color);
         onDraw(g2d);
-        AABB.draw(g2d);
+        //AABB.draw(g2d);
     }
 
     private void updateVertices() {
@@ -101,12 +102,12 @@ public abstract class Shape {
             verticesX[i] = (int) (this.x + xPrime);
             verticesY[i] = (int) (this.y + yPrime);
 
-            vertices[i].setLocation(verticesX[i], verticesY[i]);
+            vertices[i].set(verticesX[i], verticesY[i]);
         }
     }
 
 
-    public abstract void onDraw(Graphics2D g2d);
+    protected abstract void onDraw(Graphics2D g2d);
 
     public double getX() {
         return this.x;
@@ -116,28 +117,20 @@ public abstract class Shape {
         return this.y;
     }
 
-    public Color getColor() {
-        return this.color;
-    }
-
-    public double getAngle() {
-        return this.angle;
-    }
-
-    public void rotateTo(double angle){
+    private void rotateTo(double angle){
         this.angle = angle;
     }
 
-    public void moveTo(double x, double y) {
+    private void moveTo(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    public Vector2D getVertex(int vertex){
+    public Vector2 getVertex(int vertex){
         return vertices[vertex];
     }
 
-    public Vector2D[] getVertices(){return vertices;}
+    public Vector2[] getVertices(){return vertices;}
 
     public AABB getAABB(){
         return AABB;

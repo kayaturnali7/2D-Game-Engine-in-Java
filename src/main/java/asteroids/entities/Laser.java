@@ -15,11 +15,20 @@ public class Laser extends Entity {
 
     private float lifeTick = 0;
 
-    public Laser(Scene scene, double x, double y, double direction ){
-        super(scene, 20, false);
+    public Laser(Scene scene, double x, double y, double direction, int index){
+        super(scene, "laser " + index, 20);
         moveTo(x,y);
         setRotation(direction);
         setVelocity(getMaxSpeed(), direction);
+    }
+
+    protected void draw() {
+        double lifeTimeFrames = LIFE_TIME * scene.getFps();
+        if (lifeTick >= lifeTimeFrames){
+            destroy();
+        } else{
+            lifeTick += 1;
+        }
     }
 
     @Override
@@ -41,4 +50,11 @@ public class Laser extends Entity {
     protected Shape shapeInit() {
         return new Circle(SIZE, COLOR, true);
     }
+
+    @Override
+    protected void onCollision(Entity entity) {
+
+    }
+
+
 }

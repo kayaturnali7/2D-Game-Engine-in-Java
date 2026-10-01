@@ -19,7 +19,7 @@ public class SystemHandler {
         this.currentScene = scenes[0];
 
         for (Scene scene: scenes){
-            this.scenes.put(scene.getName(), scene);
+            this.scenes.put(scene.getTitle(), scene);
         }
     }
 

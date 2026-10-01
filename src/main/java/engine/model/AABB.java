@@ -9,8 +9,8 @@ public class AABB {
 
     private final Shape shape;
 
-    private final Vector2D min = new Vector2D();
-    private final Vector2D max = new Vector2D();
+    private final Vector2 min = new Vector2();
+    private final Vector2 max = new Vector2();
 
     private int x, y;
 
@@ -61,8 +61,8 @@ public class AABB {
             }
         }
 
-        min.setLocation(minX, minY);
-        max.setLocation(maxX, maxY);
+        min.set(minX, minY);
+        max.set(maxX, maxY);
 
         x = minX;
         y = minY;
@@ -79,11 +79,11 @@ public class AABB {
         return height;
     }
 
-    public Vector2D getMin(){
+    public Vector2 getMin(){
         return min;
     }
 
-    public Vector2D getMax(){
+    public Vector2 getMax(){
         return max;
     }
 

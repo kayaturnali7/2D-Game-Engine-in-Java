@@ -22,9 +22,6 @@ public class Circle extends Shape {
 
     @Override
     public void onDraw(Graphics2D g2d){
-        Color color = getColor();
-        g2d.setColor(color);
-
         if (smooth){
             int x = (int) getX()-radius;
             int y = (int) getY()-radius;

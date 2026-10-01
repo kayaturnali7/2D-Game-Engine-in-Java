@@ -1,10 +1,16 @@
 package engine.ui;
 
+import engine.scene.Scene;
+import engine.scene.SceneComponent;
+
 import java.awt.Graphics2D;
 
-public abstract class UserInterface {
+public abstract class UserInterface extends SceneComponent {
 
-    private boolean active = true;
+    public UserInterface(Scene scene, String name){
+        super(scene, name);
+
+    }
 
     public final void update(){
         onUpdate();
@@ -12,16 +18,9 @@ public abstract class UserInterface {
 
     public final void draw(Graphics2D g2d){
         onDraw(g2d);
+
     }
 
     protected abstract void onUpdate();
     protected abstract void onDraw(Graphics2D g2d);
-
-    public void destroy(){
-        active = false;
-    }
-
-    public boolean isActive(){
-        return active;
-    }
 }

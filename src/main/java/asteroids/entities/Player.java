@@ -4,7 +4,8 @@ import engine.core.InputManager;
 
 import asteroids.events.LaserFiredEvent;
 import engine.entity.Entity;
-import engine.model.Vector2D;
+import engine.model.Vector2;
+import engine.physics.KinematicBody;
 import engine.scene.Scene;
 import engine.model.Shape;
 import engine.model.Polygon;
@@ -13,7 +14,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
-public class Player extends Entity {
+public class Player extends Entity implements KinematicBody {
     private static final int ANGULAR_SPEED = 4;
     private static final double THRUST = 0.17;
     private static final double COOLDOWN_TIME = 0.25;
@@ -24,28 +25,7 @@ public class Player extends Entity {
     private boolean canFire = false;
 
     public Player(Scene scene) {
-        super(scene,10, true);
-    }
-
-    @Override
-    protected void onUpdate() {
-        firing = InputManager.isKeyPressed(KeyEvent.VK_SPACE);
-
-        if (InputManager.isKeyPressed(KeyEvent.VK_W)){
-            applyThrust();
-        }
-
-        if (InputManager.isKeyPressed(KeyEvent.VK_A)){
-            rotate(-ANGULAR_SPEED);
-        } else if (InputManager.isKeyPressed(KeyEvent.VK_D)) {
-            rotate(ANGULAR_SPEED);
-        }
-
-        if (canFire){
-            fireLaser();
-        }
-
-        updateCooldown();
+        super(scene,"Player", 10);
     }
 
     @Override
@@ -57,13 +37,27 @@ public class Player extends Entity {
         double dTop = height * ((double) 2 / 3);
         double dBase = height * ((double) 1 / 3);
 
-        Vector2D v1 = new Vector2D(0, -dTop);
-        Vector2D v2 = new Vector2D(-(base /2), dBase);
-        Vector2D v3 = new Vector2D(base/2, dBase);
+        Vector2 v1 = new Vector2(0, -dTop);
+        Vector2 v2 = new Vector2(-(base /2), dBase);
+        Vector2 v3 = new Vector2(base/2, dBase);
 
-        Vector2D[] vertices = new Vector2D[]{v1, v2, v3};
+        Vector2[] vertices = new Vector2[]{v1, v2, v3};
 
         return new Polygon(vertices, COLOR);
+    }
+
+    @Override
+    protected void onCollision(Entity entity) {
+
+    }
+
+
+    @Override
+    public void onUpdate() {
+        if (canFire){
+            fireLaser();
+        }
+        updateCooldown();
     }
 
     @Override
@@ -72,7 +66,7 @@ public class Player extends Entity {
     }
 
     private void applyThrust(){
-        applyForce(THRUST, getDirection());
+        applyForce(THRUST, direction);
     }
 
     private void updateCooldown(){
@@ -84,7 +78,7 @@ public class Player extends Entity {
     }
 
     private void fireLaser(){
-        Vector2D vertex = getVertex(0);
+        Vector2 vertex = getVertex(0);
 
         double x = vertex.getX();
         double y = vertex.getY();
@@ -92,5 +86,20 @@ public class Player extends Entity {
 
         addEvent(new LaserFiredEvent(x,y,direction));
         cooldownTick = COOLDOWN_TIME * scene.getFps();
+    }
+
+    @Override
+    public void onInput() {
+        firing = InputManager.isKeyPressed(KeyEvent.VK_SPACE);
+
+        if (InputManager.isKeyPressed(KeyEvent.VK_W)){
+            applyThrust();
+        }
+
+        if (InputManager.isKeyPressed(KeyEvent.VK_A)){
+            rotate(-ANGULAR_SPEED);
+        } else if (InputManager.isKeyPressed(KeyEvent.VK_D)) {
+            rotate(ANGULAR_SPEED);
+        }
     }
 }

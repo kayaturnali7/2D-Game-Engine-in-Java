@@ -1,7 +1,6 @@
 package asteroids.entities;
 
 import engine.entity.Entity;
-import engine.model.Circle;
 import engine.model.Rectangle;
 import engine.model.Shape;
 import engine.scene.Scene;
@@ -13,12 +12,8 @@ public class TestEntity extends Entity {
 
     private static final Color COLOR = Color.WHITE;
 
-    public TestEntity(Scene scene){
-        super(scene,7, true);
-        moveTo(0, scene.getCenterY());
-        setVelocity(50, 0);
-        setRotation(45);
-
+    public TestEntity(Scene scene, String name, Shape shape){
+        super(scene,shape, name, 500);
     }
 
     @Override
@@ -33,7 +28,13 @@ public class TestEntity extends Entity {
 
     @Override
     protected Shape shapeInit() {
-
-        return new Rectangle(75,75,COLOR);
+        return new Rectangle(1,1,COLOR);
     }
+
+    @Override
+    protected void onCollision(Entity entity) {
+
+    }
+
+
 }

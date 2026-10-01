@@ -1,151 +1,148 @@
 package engine.entity;
 
-import engine.data.LinearVelocity;
 import engine.event.EventBus;
 import engine.event.GameEvent;
 import engine.model.AABB;
-import engine.model.Vector2D;
-import engine.model.Polygon;
+import engine.model.Vector2;
 import engine.model.Shape;
+import engine.physics.KinematicBody;
+import engine.physics.PhysicsBody;
+import engine.physics.StaticBody;
 import engine.scene.Scene;
 import engine.scene.SceneComponent;
 
 import java.awt.Graphics2D;
 
-public abstract class Entity implements SceneComponent {
+public abstract class Entity extends SceneComponent implements PhysicsBody {
 
-    protected Scene scene;
+    public final Vector2 position = new Vector2();
+    public double direction;
 
-    private final Transform transform;
-    private final Geometry geometry;
-    private final PhysicsBody physics;
-    //private final Bounds bounds;
+    public final Vector2 velocity = new Vector2();
+    public final Vector2 acceleration = new Vector2();
+
+    private final Shape shape;
 
     private final int maxSpeed;
-    private boolean active = true;
 
-    /** Entity constructor
-     */
-    public Entity(Scene scene, int maxSpeed, boolean hasDrag){
+    public Entity(Scene scene, String name, int maxSpeed){
+        super(scene,name);
         this.scene = scene;
-        Shape shape = shapeInit();
-
+        this.name = name;
         this.maxSpeed = maxSpeed;
-        this.transform = new Transform(this);
-        this.geometry = new Geometry(this, shape);
-        this.physics = new PhysicsBody(this, hasDrag);
-        //this.bounds = new Bounds(this);
+        this.shape = shapeInit();
+
+        //this.transform = new Transform(this);
+        //this.physics = new PhysicsBody(this);
     }
 
-    /** The entity's update call.
-     */
+    public Entity(Scene scene, Shape shape, String name, int maxSpeed){
+        super(scene,name);
+        this.scene = scene;
+        this.name = name;
+        this.maxSpeed = maxSpeed;
+        this.shape = shape;
+
+        //this.transform = new Transform(this);
+        //this.physics = new PhysicsBody(this);
+    }
+
     public final void update(){
         onUpdate();
-        physics.update();
-        transform.update();
-        geometry.update();
-        //bounds.update();
+        onPhysics();
+        if (this instanceof KinematicBody){
+            ((KinematicBody) this).onInput();
+        }
+
+        double x = getPosition().getX();
+        double y = getPosition().getY();
+        shape.update(x,y,direction);
     }
 
-    /** The entity's render call.
-     */
     public final void draw(Graphics2D g2d){
         onDraw(g2d);
 
-        Shape shape = getShape();
-        if (shape == null) return;
-
-        g2d.setColor(shape.getColor());
         shape.draw(g2d);
     }
 
-    /** The update function specified by the user. It is called before any of the entity's internal components are updated.
-     */
-    protected abstract void onUpdate();
+    public void onPhysics(){
+        if (this instanceof StaticBody) return;
 
-    /** The draw function specified by the user. It is called before the entity's internal render method.
-     */
+        velocity.add(acceleration);
+
+        double x = velocity.getX();
+        double y = -velocity.getY();
+
+        position.add(x,y);
+
+        if (velocity.magnitude() > maxSpeed) {
+            double velocityX = (velocity.getX() / velocity.magnitude()) * maxSpeed;
+            double velocityY = (velocity.getY() / velocity.magnitude()) * maxSpeed;
+            velocity.set(velocityX, velocityY);
+        }
+
+        if (velocity.magnitude() < 0.01) {
+            velocity.set(0,0);
+        }
+
+        acceleration.set(0,0);
+    }
+
+    public final void collision(Entity entity){
+        onCollision(entity);
+    }
+
+    protected abstract Shape shapeInit();
+    protected abstract void onCollision(Entity entity);
+    protected abstract void onUpdate();
     protected abstract void onDraw(Graphics2D g2d);
 
-    /** The initial shape configuration method. Must be filled, and return a valid ShapeConfig for the entity to render properly.
-     */
-    protected abstract Shape shapeInit();
-
-    /** Moves the entity to a specified point (x,y) in the scene.
-     * @param x The x position of the target point.
-     * @param y The y position of the target point.
-     */
     public void moveTo(double x, double y){
-        transform.translateTo(x, y);
+        position.set(x,y);
     }
 
-    /** Sets the entity's move and look rotation to specified angle, in degrees.
-     * @param angle The angle to rotate to, in degrees.
-     */
+    public void moveTo(Vector2 vector2){
+        position.set(vector2);
+    }
+
     public void setRotation(double angle){
-        transform.setRotation(angle);
+        direction = angle;
     }
 
-    /** Rotates the entity by an amount, in degrees.
-     * @param amount The amount to rotate by in degrees.
-     */
     public void rotate(double amount){
-        transform.rotate(amount);
+        direction -= amount;
     }
 
-    /** Applies a force to the entity in its current move direction.
-     * @param force The amount of force to apply.
-     */
-    public void applyForce(double force, double direction){
-        physics.applyForce(force, direction);
-    }
-
-    /** Applies a velocity to a specified angle and speed.
-     * @param direction The angle of the velocity, in degrees.
-     * @param speed The magnitude of the velocity.
-     */
     public void setVelocity(int speed, double direction){
-        physics.setVelocity(speed, direction);
+        double x = Math.cos(direction) * speed;
+        double y = Math.sin(direction) * speed;
+        velocity.set(x,y);
     }
 
-    /** Returns the entity's current velocity and its components.
-     * @return (velocityX, velocityY, speed)
-     */
-    public LinearVelocity getVelocity(){
-        return physics.getVelocity();
+    public void applyForce(double force, double direction){
+        double x = Math.cos(Math.toRadians(direction)) * force;
+        double y = -Math.sin(Math.toRadians(direction)) * force;
+        acceleration.set(x,y);
     }
 
-    /** Returns the entity's current directions.
-     * @return (lookDirection, moveDirection) in degrees.
-     */
-    public double getDirection(){return transform.getDirection();}
-
-    public double getX(){
-        return transform.getX();
+    public Vector2 getVelocity(){
+        return velocity;
     }
 
-    public double getY(){
-        return transform.getY();
+    public Vector2 getAcceleration(){
+        return acceleration;
     }
 
-    /** Returns the entity's max speed.
-     * @return maxSpeed
-     */
+    public Vector2 getPosition(){
+        return position;
+    }
+
+    public double getDirection(){
+        return direction;
+    }
+
     public int getMaxSpeed(){
         return maxSpeed;
-    }
-
-    /** Destroys the entity. This will remove it from the scene.
-     */
-    public void destroy(){
-        active = false;
-    }
-
-    /** Returns if the entity is active.
-     * @return If the entity is currently active.
-     */
-    public boolean isActive(){
-        return active;
     }
 
     protected void addEvent(GameEvent event){
@@ -153,14 +150,11 @@ public abstract class Entity implements SceneComponent {
     }
 
     public Shape getShape(){
-        return geometry.getShape();
+        return shape;
     }
 
-    public Vector2D getVertex(int index){
-        Shape shape = getShape();
-        if (shape instanceof Polygon){
-            return ((Polygon) shape).getVertex(index);
-        } else return null;
+    public Vector2 getVertex(int index){
+        return shape.getVertex(index);
     }
 
     public AABB getBounds(){

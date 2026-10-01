@@ -1,8 +1,7 @@
 package asteroids.scenes;
 
 import engine.entity.Entity;
-import engine.physics.CollisionEvent;
-import engine.scene.SceneProperties;
+import engine.model.Circle;
 import engine.scene.Scene;
 
 // Let these be wildcard imports
@@ -16,38 +15,40 @@ public class GameScene extends Scene {
     private Entity player;
     private Entity testEntity;
 
-    @Override
-    protected SceneProperties initialize() {
-        name = "Asteroids Remake";
-        screenWidth = 900;
-        screenHeight = 600;
-        bgColor = Color.BLACK;
-        fps = 60;
-        drag = 0.97;
+    private int laserCount = 0;
 
-        return new SceneProperties(name, screenWidth, screenHeight, bgColor, fps);
+    @Override
+    protected void initialize() {
+        setTitle("Asteroid Remake");
+        setDimension(900,600);
+        setBgColor(Color.BLACK);
+        setFps(60);
+        setDrag(0.97);
     }
 
     @Override
     protected void onStart() {
-        subscribeToEvent(CollisionEvent.class, event -> onCollision(event.e1(), event.e2()));
         subscribeToEvent(LaserFiredEvent.class, event -> onLaserFired(event.x(), event.y(), event.angle()));
 
         player = new Player(this);
-        testEntity = new TestEntity(this);
+        testEntity = new TestEntity(this, "e1", new Circle(50, Color.WHITE, false));
 
         instantiate(player);
         instantiate(testEntity);
+
+        testEntity.moveTo(getTopLeft().getX(), getTopLeft().getY());
+        testEntity.setVelocity(7,-30);
     }
+
 
     @Override
     protected void onUpdate() {
-
     }
 
 
     private void onLaserFired(double x, double y, double direction){
-        instantiate(new Laser(this, x, y, direction));
+        laserCount += 1;
+        instantiate(new Laser(this, x, y, direction, laserCount));
     }
 
     private void onCollision(Entity e1, Entity e2){

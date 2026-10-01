@@ -30,19 +30,19 @@ public class Engine extends Canvas implements Runnable{
 
         // get scene properties
         Scene currentScene = handler.getCurrentScene();
-        int screenWidth = currentScene.getScreenWidth();
-        int screenHeight = currentScene.getScreenHeight();
-        String sceneName = currentScene.getName();
+        int width = currentScene.getWidth();
+        int height = currentScene.getHeight();
+        String title = currentScene.getTitle();
 
         // set size
-        Dimension size = new Dimension(screenWidth, screenHeight);
+        Dimension size = new Dimension(width, height);
         this.setPreferredSize(size);
         this.setMinimumSize(size);
         this.setMaximumSize(size);
         this.setFocusable(true);
 
         // init frame
-        frame.setTitle(sceneName);
+        frame.setTitle(title);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(this);
@@ -75,7 +75,10 @@ public class Engine extends Canvas implements Runnable{
 
             while (delta >= 1){
                 // Update logic here
+
                 handler.update();
+
+
                 updates++;
                 delta--;
             }
@@ -86,7 +89,6 @@ public class Engine extends Canvas implements Runnable{
 
             while (System.currentTimeMillis() - lastTimer > 1000) {
                 lastTimer += 1000;
-                System.out.println(updates + " ups, " + frames + " fps");
                 frames = 0;
                 updates = 0;
             }

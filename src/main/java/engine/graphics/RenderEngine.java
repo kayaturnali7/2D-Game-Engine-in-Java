@@ -10,10 +10,10 @@ import java.util.ArrayList;
 public class RenderEngine {
 
     public void render(Graphics2D g2d, Scene scene){
-        drawEntities(g2d, scene);
+        drawScene(g2d, scene);
     }
 
-    private void drawEntities(Graphics2D g2d, Scene scene){
+    private void drawScene(Graphics2D g2d, Scene scene){
         ArrayList<Entity> entities = scene.getEntities();
         ArrayList<UserInterface> userInterfaces = scene.getUserInterfaces();
 
