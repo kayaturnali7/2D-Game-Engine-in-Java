@@ -1,52 +1,44 @@
 package engine.physics;
 
-import engine.entity.Entity;
-import engine.model.AABB;
-import engine.model.Shape;
-import engine.model.Vector2;
+import engine.actors.Actor;
+import engine.actors.Entity;
+import engine.geometry.Shape;
+import engine.data.Vector2;
 import engine.scene.Scene;
 import java.util.ArrayList;
 
-public class PhysicsEngine {
+public class PhysicsSystem {
 
     public void update(Scene scene){
-        double drag = scene.getDrag();
-
-        ArrayList<Entity> entities = scene.getEntities();
-        for (Entity entity : entities){
-            if (entity instanceof StaticBody) continue;
-            applyDrag(entity, drag);
-            entity.onPhysics();
-        }
-
-        checkCollisions(entities);
+        ArrayList<Collider> colliders = scene.getColliders();
+        checkCollisions(colliders);
     }
 
-    private void checkCollisions(ArrayList<Entity> entities){
-        int size = entities.size();
+    private void checkCollisions(ArrayList<Collider> colliders){
+        int size = colliders.size();
 
         for (int i = 0; i < size; i++){
-            Entity e2 = entities.get(i);
+            Collider e2 = colliders.get(i);
 
             for (int j = i + 1; j < size; j++){
-                Entity e1 = entities.get(j);
-                
-                if (AABBCollision(e1, e2)){
-                    Shape s1 = e1.getShape();
-                    Shape s2 = e2.getShape();
+                Collider e1 = colliders.get(j);
 
+                Shape s1 = e1.getShape();
+                Shape s2 = e2.getShape();
+
+                if (AABBCollision(s1, s2)){
                     if (SATCollision(s1, s2)){
-                        e1.collision(e2);
-                        e2.collision(e1);
+                        e1.onCollision((Actor) e2);
+                        e2.onCollision((Actor) e1);
                     }
                 }
             }
         }
     }
 
-    private static boolean AABBCollision(Entity e1, Entity e2) {
-        AABB e1Bounds = e1.getBounds();
-        AABB e2Bounds = e2.getBounds();
+    public static boolean AABBCollision(Shape s1, Shape s2) {
+        AABB e1Bounds = s1.getAABB();
+        AABB e2Bounds = s2.getAABB();
 
         int e1X = e1Bounds.getX();
         int e1Y = e1Bounds.getY();
@@ -104,7 +96,10 @@ public class PhysicsEngine {
         return true;
     }
 
-    private void applyDrag(Entity entity, double drag){
-        entity.velocity.scale(drag);
+    public static void applyDrag(ArrayList<Actor> actors, double drag){
+        for (Actor actor: actors){
+            if (!(actor instanceof Entity)) return;
+            ((Entity) actor).velocity.scale(drag);
+        }
     }
 }

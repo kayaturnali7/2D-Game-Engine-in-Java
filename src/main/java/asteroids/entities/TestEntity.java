@@ -1,19 +1,19 @@
 package asteroids.entities;
 
-import engine.entity.Entity;
-import engine.model.Rectangle;
-import engine.model.Shape;
+import engine.actors.Actor;
+import engine.actors.Entity;
+import engine.geometry.Shape;
+import engine.physics.Collider;
 import engine.scene.Scene;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 
-public class TestEntity extends Entity {
+public class TestEntity extends Entity implements Collider {
 
     private static final Color COLOR = Color.WHITE;
 
     public TestEntity(Scene scene, String name, Shape shape){
-        super(scene,shape, name, 500);
+        super(scene, name);
     }
 
     @Override
@@ -22,19 +22,12 @@ public class TestEntity extends Entity {
     }
 
     @Override
-    protected void onDraw(Graphics2D g2d) {
-
-    }
-
-    @Override
     protected Shape shapeInit() {
-        return new Rectangle(1,1,COLOR);
+        return null;
     }
 
     @Override
-    protected void onCollision(Entity entity) {
+    public void onCollision(Actor actor) {
 
     }
-
-
 }

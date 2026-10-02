@@ -12,7 +12,7 @@ import java.awt.image.BufferStrategy;
 
 public class Engine extends Canvas implements Runnable{
 
-    private final InputManager inputManager;
+    private final InputSystem inputSystem;
     private final SystemHandler handler;
     private final JFrame frame;
 
@@ -20,9 +20,9 @@ public class Engine extends Canvas implements Runnable{
 
     public Engine(Scene[] scenes ) {
         // create and add input
-        inputManager = new InputManager();
-        this.addMouseListener(inputManager);
-        this.addKeyListener(inputManager);
+        inputSystem = new InputSystem();
+        this.addMouseListener(inputSystem);
+        this.addKeyListener(inputSystem);
 
         // create handler and frame
         handler = new SystemHandler(scenes);

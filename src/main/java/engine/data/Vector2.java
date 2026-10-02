@@ -1,6 +1,6 @@
-package engine.model;
+package engine.data;
 
-import engine.util.MathUtils;
+import engine.util.MathUtil;
 
 public class Vector2 {
 
@@ -65,7 +65,7 @@ public class Vector2 {
     }
 
     public double distance(Vector2 point){
-        return MathUtils.distance2D(this, point);
+        return MathUtil.distance2D(this, point);
     }
 
     public double dot(Vector2 point){

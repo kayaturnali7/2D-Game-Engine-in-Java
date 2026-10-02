@@ -1,7 +1,6 @@
 package asteroids.scenes;
 
-import engine.entity.Entity;
-import engine.model.Circle;
+import engine.actors.Entity;
 import engine.scene.Scene;
 
 // Let these be wildcard imports
@@ -13,7 +12,6 @@ import java.awt.Color;
 public class GameScene extends Scene {
 
     private Entity player;
-    private Entity testEntity;
 
     private int laserCount = 0;
 
@@ -31,13 +29,9 @@ public class GameScene extends Scene {
         subscribeToEvent(LaserFiredEvent.class, event -> onLaserFired(event.x(), event.y(), event.angle()));
 
         player = new Player(this);
-        testEntity = new TestEntity(this, "e1", new Circle(50, Color.WHITE, false));
+        player.moveTo(getCenter());
 
         instantiate(player);
-        instantiate(testEntity);
-
-        testEntity.moveTo(getTopLeft().getX(), getTopLeft().getY());
-        testEntity.setVelocity(7,-30);
     }
 
 

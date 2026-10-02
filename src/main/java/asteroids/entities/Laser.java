@@ -1,14 +1,15 @@
 package asteroids.entities;
 
-import engine.entity.Entity;
-import engine.model.Circle;
+import engine.actors.Actor;
+import engine.actors.Entity;
+import engine.geometry.Circle;
+import engine.physics.Collider;
 import engine.scene.Scene;
-import engine.model.Shape;
+import engine.geometry.Shape;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 
-public class Laser extends Entity {
+public class Laser extends Entity implements Collider {
     private static final int SIZE = 2;
     private static final double LIFE_TIME = 0.6;
     private static final Color COLOR = Color.WHITE;
@@ -16,19 +17,7 @@ public class Laser extends Entity {
     private float lifeTick = 0;
 
     public Laser(Scene scene, double x, double y, double direction, int index){
-        super(scene, "laser " + index, 20);
-        moveTo(x,y);
-        setRotation(direction);
-        setVelocity(getMaxSpeed(), direction);
-    }
-
-    protected void draw() {
-        double lifeTimeFrames = LIFE_TIME * scene.getFps();
-        if (lifeTick >= lifeTimeFrames){
-            destroy();
-        } else{
-            lifeTick += 1;
-        }
+        super(scene, "laser");
     }
 
     @Override
@@ -42,19 +31,13 @@ public class Laser extends Entity {
     }
 
     @Override
-    protected void onDraw(Graphics2D g2d) {
-
-    }
-
-    @Override
     protected Shape shapeInit() {
         return new Circle(SIZE, COLOR, true);
     }
 
+
     @Override
-    protected void onCollision(Entity entity) {
+    public void onCollision(Actor actor) {
 
     }
-
-
 }

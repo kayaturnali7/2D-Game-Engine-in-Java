@@ -1,10 +1,14 @@
 package engine.scene;
 
-import engine.entity.Entity;
+import engine.actors.Entity;
+import engine.actors.Actor;
 import engine.event.EventBus;
 import engine.event.GameEvent;
-import engine.model.Vector2;
-import engine.ui.UserInterface;
+import engine.data.Vector2;
+import engine.actors.UI;
+import engine.physics.Collider;
+import engine.physics.PhysicsBody;
+import engine.render.RenderComponent;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -24,9 +28,14 @@ public abstract class Scene {
     private double drag;
     private double gravity;
 
-    private final ArrayList<Entity> entities = new ArrayList<>();
-    private final ArrayList<UserInterface> userInterfaces = new ArrayList<>();
-    private final ArrayList<SceneComponent> pending = new ArrayList<>();
+    private final ArrayList<Actor> actors = new ArrayList<>();
+    private final ArrayList<Actor> pendingActors = new ArrayList<>();
+
+    private final ArrayList<Collider> colliders = new ArrayList<>();
+    private final ArrayList<Collider> pendingColliders = new ArrayList<>();
+
+    private final ArrayList<RenderComponent> renderComponents = new ArrayList<>();
+    private final ArrayList<RenderComponent> pendingRenderComponents = new ArrayList<>();
 
     public Scene(){
         initialize();
@@ -35,27 +44,33 @@ public abstract class Scene {
     }
 
     private void updateLists(){
-        if (!pending.isEmpty()){
-            for (SceneComponent component : pending){
-                if (component instanceof Entity){
-                    entities.add((Entity) component);
-                } else if (component instanceof UserInterface){
-                    userInterfaces.add((UserInterface) component);
-                }
-            }
-            pending.clear();
+        if(!pendingActors.isEmpty()){
+            actors.addAll(pendingActors);
+            pendingActors.clear();
         }
 
-        entities.removeIf(entity -> !entity.isActive());
-        userInterfaces.removeIf(ui -> !ui.isActive());
+        if (!pendingColliders.isEmpty()){
+            colliders.addAll(pendingColliders);
+            pendingColliders.clear();
+        }
+
+        if(!pendingRenderComponents.isEmpty()){
+            renderComponents.addAll(pendingRenderComponents);
+            pendingRenderComponents.clear();
+        }
+
+        actors.removeIf(actor -> !actor.isActive());
+        colliders.removeIf(collider -> !actors.contains(collider));
+        renderComponents.removeIf(renderComponent -> !actors.contains(renderComponent));
+
+
     }
 
     public void update(){
         onUpdate();
-
-        entities.forEach(Entity::update);
-        userInterfaces.forEach(UserInterface::update);
-
+        for (Actor actor : actors){
+            actor.update();
+        }
         updateLists();
     }
 
@@ -63,13 +78,26 @@ public abstract class Scene {
     protected abstract void onStart();
     protected abstract void initialize();
 
-    public void instantiate(SceneComponent component){
-        pending.add(component);
+    public void instantiate(Actor actor){
+        pendingActors.add(actor);
+
+        if (actor instanceof Collider){
+            pendingColliders.add((Collider) actor);
+        }
+
+        if (actor instanceof RenderComponent) {
+            pendingRenderComponents.add((RenderComponent) actor);
+        }
+
+        System.out.println("\"" + actor.getName() + "\"" + " instantiated in scene: " + this);
     }
 
-    public ArrayList<Entity> getEntities(){return entities;}
+    public ArrayList<Actor> getActors(){return actors;}
 
-    public ArrayList<UserInterface> getUserInterfaces(){return userInterfaces;}
+    public ArrayList<RenderComponent> getRenderComponents(){return renderComponents;}
+
+    public ArrayList<Collider> getColliders(){return colliders;}
+
 
     protected <T extends GameEvent> void subscribeToEvent(Class<T> eventClass, Consumer<T> action){
         EventBus.subscribe(eventClass, action);

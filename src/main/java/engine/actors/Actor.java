@@ -1,17 +1,25 @@
-package engine.scene;
+package engine.actors;
 
+import engine.scene.Scene;
 
-public abstract class SceneComponent{
+public abstract class Actor {
 
-    protected Scene scene;
-    private boolean active = true;
+    protected final Scene scene;
 
     protected String name;
+    private boolean active = true;
 
-    public SceneComponent(Scene scene, String name){
+    public Actor(Scene scene, String name){
         this.scene = scene;
         this.name = name;
+
     }
+
+    public void update(){
+        onUpdate();
+    }
+
+    protected abstract void onUpdate();
 
     public boolean isActive(){
         return active;

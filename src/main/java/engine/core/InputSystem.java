@@ -8,7 +8,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
-public class InputManager implements MouseListener, MouseMotionListener, KeyListener, MouseWheelListener{
+public class InputSystem implements MouseListener, MouseMotionListener, KeyListener, MouseWheelListener{
 
     public static final boolean[] keys = new boolean[256];
     public static final boolean[] mouseButtons = new boolean[8];

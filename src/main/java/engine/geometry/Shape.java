@@ -1,4 +1,7 @@
-package engine.model;
+package engine.geometry;
+
+import engine.data.Vector2;
+import engine.physics.AABB;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -13,6 +16,7 @@ public abstract class Shape {
     private double angle;
 
     private Vector2[] vertices;
+
     protected int[] verticesX, verticesY;
     protected int numVertices;
 
@@ -134,5 +138,18 @@ public abstract class Shape {
 
     public AABB getAABB(){
         return AABB;
+    }
+
+    public Color getColor(){
+        return color;
+    }
+
+    public int[] getVerticesX(){
+        return verticesX;
+    }
+
+
+    public int[] getVerticesY(){
+        return verticesY;
     }
 }

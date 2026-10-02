@@ -1,7 +1,7 @@
 package engine.core;
 
-import engine.physics.PhysicsEngine;
-import engine.graphics.RenderEngine;
+import engine.physics.PhysicsSystem;
+import engine.render.RenderSystem;
 import engine.scene.Scene;
 
 import java.awt.Graphics2D;
@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SystemHandler {
-    private final PhysicsEngine physicsEngine = new PhysicsEngine();
-    private final RenderEngine renderEngine = new RenderEngine();
+    private final PhysicsSystem physicsSystem = new PhysicsSystem();
+    private final RenderSystem renderSystem = new RenderSystem();
 
     private final Map<String, Scene> scenes = new HashMap<>();
     private Scene currentScene;
@@ -24,19 +24,19 @@ public class SystemHandler {
     }
 
     public void update(){
-        physicsEngine.update(currentScene);
         currentScene.update();
+        physicsSystem.update(currentScene);
     }
 
     public void render(Graphics2D g2d){
-        renderEngine.render(g2d, currentScene);
+        renderSystem.render(g2d, currentScene);
     }
 
     public Scene getCurrentScene(){
         return currentScene;
     }
 
-    public void switchScene(String name){
-        currentScene = scenes.get(name);
+    public void switchScene(String sceneName){
+        currentScene = scenes.get(sceneName);
     }
 }

@@ -1,0 +1,62 @@
+What a game engine needs:
+
+Input -> key & mouse inputs
+Processing -> handles the entire engine & game logic
+Output -> drawing the game to the screen 
+
+Package and Class Structure:
+Core
+Engine
+Input (Stores any key or mouse inputs)
+System Manager (Gets the current scene from the scene system, feeds it into the other systems
+Scene System (Allows swapping of the current scene) 
+Scene
+Stores pending and active actors
+Has methods to manipulate the scene, its environment, and its actors
+Handles the updating logic of its actors
+Physics System
+Checks collision
+Stores physics calculations
+Applies environmental forces like drag and gravity
+Updates the physic bodies
+Audio System
+Plays audio
+Render System
+Draws active actors of the scene
+Assets
+Models (shapes)
+Shape
+Rectangle
+Circle
+ConvexPolygon
+AABB
+Data (i.e. vector2)
+Vector2
+Used for storing position and velocity (what a vector does) 
+VertexList
+ONLY stores vertices
+Holds methods like getMax, getMix
+Holds separate x and y arrays
+Basically like a custom ArrayList class 
+
+Actors
+Actor
+The BASE Actor that anything added to the scene that has logic extends
+Stores the position, name, state
+Has the REQUIRED update() methods
+Has the REQUIRED onUpdate() method for the user to implement custom logic
+Entity (extends Actor implements RenderComponent)
+Anything that is a physical object
+i.e. Player, Enemy, Particle, Light 
+
+Items (extends Actor)
+Anything that has logic, but does not need to be drawn
+i.e. timer, marker, 
+UI (extends Actor implements RenderComponent)
+Any GUI
+
+RenderComponent 
+An interface that determines whether the actor should be drawn to the screen
+Util
+Math
+Stores math functions that aren't given in default math library. i.e. Distance2D, Pythagorean Theorem

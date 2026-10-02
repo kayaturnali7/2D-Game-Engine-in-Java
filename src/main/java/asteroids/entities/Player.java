@@ -1,20 +1,20 @@
 package asteroids.entities;
 
-import engine.core.InputManager;
+import engine.actors.Actor;
+import engine.core.InputSystem;
 
-import asteroids.events.LaserFiredEvent;
-import engine.entity.Entity;
-import engine.model.Vector2;
-import engine.physics.KinematicBody;
+import engine.actors.Entity;
+import engine.data.Vector2;
+import engine.physics.Collider;
+import engine.physics.PhysicsBody;
 import engine.scene.Scene;
-import engine.model.Shape;
-import engine.model.Polygon;
+import engine.geometry.Shape;
+import engine.geometry.ConvexPolygon;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
-public class Player extends Entity implements KinematicBody {
+public class Player extends Entity implements Collider {
     private static final int ANGULAR_SPEED = 4;
     private static final double THRUST = 0.17;
     private static final double COOLDOWN_TIME = 0.25;
@@ -25,7 +25,27 @@ public class Player extends Entity implements KinematicBody {
     private boolean canFire = false;
 
     public Player(Scene scene) {
-        super(scene,"Player", 10);
+        super(scene,"Player");
+    }
+
+    @Override
+    protected void onUpdate() {
+        firing = InputSystem.isKeyPressed(KeyEvent.VK_SPACE);
+
+        if (InputSystem.isKeyPressed(KeyEvent.VK_W)) {
+            applyThrust();
+        }
+
+        if (InputSystem.isKeyPressed(KeyEvent.VK_A)) {
+            rotate(ANGULAR_SPEED);
+        } else if (InputSystem.isKeyPressed(KeyEvent.VK_D)) {
+            rotate(-ANGULAR_SPEED);
+        }
+
+        if (canFire){
+            fireLaser();
+        }
+        updateCooldown();
     }
 
     @Override
@@ -43,30 +63,12 @@ public class Player extends Entity implements KinematicBody {
 
         Vector2[] vertices = new Vector2[]{v1, v2, v3};
 
-        return new Polygon(vertices, COLOR);
+        return new ConvexPolygon(vertices, COLOR);
     }
 
-    @Override
-    protected void onCollision(Entity entity) {
-
-    }
-
-
-    @Override
-    public void onUpdate() {
-        if (canFire){
-            fireLaser();
-        }
-        updateCooldown();
-    }
-
-    @Override
-    protected void onDraw(Graphics2D g2d) {
-
-    }
 
     private void applyThrust(){
-        applyForce(THRUST, direction);
+        applyForce(THRUST,getDirection());
     }
 
     private void updateCooldown(){
@@ -78,28 +80,12 @@ public class Player extends Entity implements KinematicBody {
     }
 
     private void fireLaser(){
-        Vector2 vertex = getVertex(0);
-
-        double x = vertex.getX();
-        double y = vertex.getY();
-        double direction = getDirection();
-
-        addEvent(new LaserFiredEvent(x,y,direction));
         cooldownTick = COOLDOWN_TIME * scene.getFps();
+        System.out.println("Firing laser");
     }
 
     @Override
-    public void onInput() {
-        firing = InputManager.isKeyPressed(KeyEvent.VK_SPACE);
+    public void onCollision(Actor actor) {
 
-        if (InputManager.isKeyPressed(KeyEvent.VK_W)){
-            applyThrust();
-        }
-
-        if (InputManager.isKeyPressed(KeyEvent.VK_A)){
-            rotate(-ANGULAR_SPEED);
-        } else if (InputManager.isKeyPressed(KeyEvent.VK_D)) {
-            rotate(ANGULAR_SPEED);
-        }
     }
 }
