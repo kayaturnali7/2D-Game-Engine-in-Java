@@ -2,7 +2,7 @@ package engine.physics;
 
 import engine.data.Vector2;
 import engine.geometry.Shape;
-import engine.util.MathUtil;
+import engine.util.GeometryUtil;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -34,8 +34,8 @@ public class AABB {
         int[] verticesX = shape.getVerticesX();
         int[] verticesY = shape.getVerticesY();
 
-        Vector2 min = MathUtil.getMin(verticesX, verticesY);
-        Vector2 max = MathUtil.getMin(verticesX, verticesY);
+        Vector2 min = GeometryUtil.minimumVertex(verticesX, verticesY);
+        Vector2 max = GeometryUtil.maximumVertex(verticesX, verticesY);
 
         this.min.set(min);
         this.max.set(max);

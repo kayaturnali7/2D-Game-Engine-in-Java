@@ -12,5 +12,7 @@ public interface RenderComponent {
         shape.draw(g2d);
     }
 
+
+
     Shape getShape();
 }

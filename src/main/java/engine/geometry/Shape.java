@@ -2,35 +2,42 @@ package engine.geometry;
 
 import engine.data.Vector2;
 import engine.physics.AABB;
+import engine.render.RenderComponent;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public abstract class Shape {
+public abstract class Shape implements RenderComponent {
 
     private final Vector2[] baseVertices;
 
-    private final Color color;
-
-    private double x, y;
+    private double x,y;
     private double angle;
 
-    private Vector2[] vertices;
+    private final Color color;
+    private final ShapeType type;
 
-    protected int[] verticesX, verticesY;
+    //private Vector2[] vertices;
+
+    private int[][] vertices = new int[][]{};
+
+    private int[] verticesX;
+    private int[] verticesY;
+
     protected int numVertices;
 
     private final AABB AABB = new AABB(this);
 
     public Shape(Vector2[] vertices, Color color) {
         this.color = color;
+        this.type = ShapeType.POLYGON;
         baseVertices = vertices;
-
         build();
     }
 
     public Shape(int radius, Color color) {
         this.color = color;
+        this.type = ShapeType.CIRCLE;
 
         int n = 16; // amount of points
         baseVertices = new Vector2[n];
@@ -47,6 +54,7 @@ public abstract class Shape {
 
     public Shape(double width, double height, Color color){
         this.color = color;
+        this.type = ShapeType.RECTANGLE;
 
         Vector2 topLeft = new Vector2(-width/2, height/2);
         Vector2 topRight = new Vector2(width/2, height/2);
@@ -79,9 +87,9 @@ public abstract class Shape {
     }
 
     public void update(double x, double y, double direction){
-        moveTo(x,y);
-        rotateTo(direction-90); //must subtract 90 from direction !!!!
-        updateVertices();
+        this.x = x;
+        this.y = y;
+        angle = direction;
         AABB.update();
     }
 
@@ -92,43 +100,25 @@ public abstract class Shape {
     }
 
     private void updateVertices() {
-        double cos = Math.cos(Math.toRadians(-angle));
-        double sin = Math.sin(Math.toRadians(-angle));
 
-        for (int i = 0; i < numVertices; i++) {
-            double originalX = baseVertices[i].getX();
-            double originalY = baseVertices[i].getY();
+    }
 
-            // apply rotation matrix
-            double xPrime = originalX * cos - originalY * sin;
-            double yPrime = originalX * sin + originalY * cos;
+    public double getX(){
+        return x;
+    }
 
-            verticesX[i] = (int) (this.x + xPrime);
-            verticesY[i] = (int) (this.y + yPrime);
 
-            vertices[i].set(verticesX[i], verticesY[i]);
-        }
+    public double getY(){
+        return y;
+    }
+
+
+    public double getAngle(){
+        return angle;
     }
 
 
     protected abstract void onDraw(Graphics2D g2d);
-
-    public double getX() {
-        return this.x;
-    }
-
-    public double getY() {
-        return this.y;
-    }
-
-    private void rotateTo(double angle){
-        this.angle = angle;
-    }
-
-    private void moveTo(double x, double y) {
-        this.x = x;
-        this.y = y;
-    }
 
     public Vector2 getVertex(int vertex){
         return vertices[vertex];
@@ -147,7 +137,6 @@ public abstract class Shape {
     public int[] getVerticesX(){
         return verticesX;
     }
-
 
     public int[] getVerticesY(){
         return verticesY;

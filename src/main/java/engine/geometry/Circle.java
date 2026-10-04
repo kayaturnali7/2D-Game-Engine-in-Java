@@ -22,13 +22,12 @@ public class Circle extends Shape {
 
     @Override
     public void onDraw(Graphics2D g2d){
-        if (smooth){
-            int x = (int) getX()-radius;
-            int y = (int) getY()-radius;
 
-            g2d.drawOval(x,y,radius*2,radius*2);
-        } else g2d.drawPolygon(verticesX, verticesY, numVertices);
 
+    }
+
+    public boolean isSmooth(){
+        return smooth;
     }
 
     public int getRadius() {
