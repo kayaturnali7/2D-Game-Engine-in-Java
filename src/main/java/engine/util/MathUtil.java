@@ -16,5 +16,9 @@ public class MathUtil {
 
         return Math.sqrt(((x2-x1)*(x2-x1)) + ((y2-y1)*(y2-y1)));
     }
+
+    public static double dot(double a1, double a2, double b1, double b2) {
+        return (a1 * a2) + (b1 * b2);
+    }
 }
 

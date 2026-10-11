@@ -5,8 +5,6 @@ import engine.core.InputSystem;
 
 import engine.actors.Entity;
 import engine.data.Vector2;
-import engine.physics.Collider;
-import engine.physics.PhysicsBody;
 import engine.scene.Scene;
 import engine.geometry.Shape;
 import engine.geometry.ConvexPolygon;
@@ -15,10 +13,9 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 
 public class Player extends Entity implements Collider {
-    private static final int ANGULAR_SPEED = 4;
+    private static final double SHOOT_COOLDOWN = 0.25;
+    private static final int ROTATION_SPEED = 4;
     private static final double THRUST = 0.17;
-    private static final double COOLDOWN_TIME = 0.25;
-    private static final Color COLOR = Color.WHITE;
 
     private double cooldownTick = 0;
     private boolean firing = false;
@@ -37,9 +34,9 @@ public class Player extends Entity implements Collider {
         }
 
         if (InputSystem.isKeyPressed(KeyEvent.VK_A)) {
-            rotate(ANGULAR_SPEED);
+            rotate(ROTATION_SPEED);
         } else if (InputSystem.isKeyPressed(KeyEvent.VK_D)) {
-            rotate(-ANGULAR_SPEED);
+            rotate(-ROTATION_SPEED);
         }
 
         if (canFire){
@@ -61,14 +58,17 @@ public class Player extends Entity implements Collider {
         Vector2 v2 = new Vector2(-(base /2), dBase);
         Vector2 v3 = new Vector2(base/2, dBase);
 
-        Vector2[] vertices = new Vector2[]{v1, v2, v3};
+        int[][] vertices = new int[][]{
+                {(int) v1.getX(), (int) v2.getX(), (int) v3.getX()},
+                {(int) v1.getY(), (int) v2.getY(), (int) v3.getY()}
+        };
 
-        return new ConvexPolygon(vertices, COLOR);
+        return new ConvexPolygon(vertices, Color.white);
     }
 
 
     private void applyThrust(){
-        applyForce(THRUST,getDirection());
+        applyForce(direction,THRUST);
     }
 
     private void updateCooldown(){
@@ -80,12 +80,17 @@ public class Player extends Entity implements Collider {
     }
 
     private void fireLaser(){
-        cooldownTick = COOLDOWN_TIME * scene.getFps();
+        cooldownTick = SHOOT_COOLDOWN * scene.getFps();
         System.out.println("Firing laser");
     }
 
     @Override
     public void onCollision(Actor actor) {
 
+    }
+
+    @Override
+    public Shape getShape() {
+        return null;
     }
 }

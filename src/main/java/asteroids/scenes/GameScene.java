@@ -21,7 +21,6 @@ public class GameScene extends Scene {
         setDimension(900,600);
         setBgColor(Color.BLACK);
         setFps(60);
-        setDrag(0.97);
     }
 
     @Override
@@ -29,7 +28,7 @@ public class GameScene extends Scene {
         subscribeToEvent(LaserFiredEvent.class, event -> onLaserFired(event.x(), event.y(), event.angle()));
 
         player = new Player(this);
-        player.moveTo(getCenter());
+        player.moveTo(getCenter().getX(), getCenter().getY());
 
         instantiate(player);
     }

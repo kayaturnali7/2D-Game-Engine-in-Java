@@ -1,35 +1,35 @@
 package engine.physics;
 
 import engine.actors.Actor;
-import engine.actors.Entity;
+import engine.geometry.AABB;
 import engine.geometry.Shape;
-import engine.data.Vector2;
 import engine.scene.Scene;
+
 import java.util.ArrayList;
 
 public class PhysicsSystem {
 
     public void update(Scene scene){
-        ArrayList<Collider> colliders = scene.getColliders();
-        checkCollisions(colliders);
+        ArrayList<Actor> actors = scene.getActors();
+        checkCollisions(actors);
     }
 
-    private void checkCollisions(ArrayList<Collider> colliders){
-        int size = colliders.size();
+    private void checkCollisions(ArrayList<Actor> actors){
+        int size = actors.size();
 
         for (int i = 0; i < size; i++){
-            Collider e2 = colliders.get(i);
+            Actor e2 = actors.get(i);
 
             for (int j = i + 1; j < size; j++){
-                Collider e1 = colliders.get(j);
+                Actor e1 = actors.get(j);
 
-                Shape s1 = e1.getShape();
-                Shape s2 = e2.getShape();
+                Shape s1 = e1.shape;
+                Shape s2 = e2.shape;
 
                 if (AABBCollision(s1, s2)){
                     if (SATCollision(s1, s2)){
-                        e1.onCollision((Actor) e2);
-                        e2.onCollision((Actor) e1);
+                        e1.onCollision(e2);
+                        e2.onCollision(e1);
                     }
                 }
             }
@@ -37,8 +37,8 @@ public class PhysicsSystem {
     }
 
     public static boolean AABBCollision(Shape s1, Shape s2) {
-        AABB e1Bounds = s1.getAABB();
-        AABB e2Bounds = s2.getAABB();
+        AABB e1Bounds = s1.AABB;
+        AABB e2Bounds = s2.AABB;
 
         int e1X = e1Bounds.getX();
         int e1Y = e1Bounds.getY();
@@ -64,15 +64,19 @@ public class PhysicsSystem {
                 s2 = shape1;
             }
 
-            Vector2[] vertices1 = s1.getVertices();
-            Vector2[] vertices2 = s2.getVertices();
+            int[] s1VerticesX = s1.getVerticesX();
+            int[] s1VerticesY = s2.getVerticesY();
+            int s1VerticesSize = s1.numVertices;
 
-            for (int a = 0; a < vertices1.length; a++){
-                int b = (a + 1) % vertices1.length;
-                Vector2 axisProj = new Vector2(
-                        vertices1[a].getY() - vertices1[b].getY(),
-                        vertices1[b].getX() - vertices1[a].getX()
-                );
+            int[] s2VerticesX = s1.getVerticesX();
+            int[] s2VerticesY = s2.getVerticesY();
+            int s2VerticesSize = s1.numVertices;
+
+            for (int a = 0; a < s1VerticesSize; a++){
+                int b = (a + 1) % s1VerticesSize;
+
+                double axisProjX = s1VerticesY[a] - s1VerticesY[b];
+                double axisProjY = s1VerticesX[b] - s1VerticesX[a];
 
                 double min_r1 = Double.POSITIVE_INFINITY, max_r1 = Double.NEGATIVE_INFINITY;
                 for (Vector2 vertex : vertices1) {
@@ -96,10 +100,4 @@ public class PhysicsSystem {
         return true;
     }
 
-    public static void applyDrag(ArrayList<Actor> actors, double drag){
-        for (Actor actor: actors){
-            if (!(actor instanceof Entity)) return;
-            ((Entity) actor).velocity.scale(drag);
-        }
-    }
 }

@@ -3,7 +3,6 @@ package asteroids.entities;
 import engine.actors.Actor;
 import engine.actors.Entity;
 import engine.geometry.Circle;
-import engine.physics.Collider;
 import engine.scene.Scene;
 import engine.geometry.Shape;
 
@@ -32,12 +31,17 @@ public class Laser extends Entity implements Collider {
 
     @Override
     protected Shape shapeInit() {
-        return new Circle(SIZE, COLOR, true);
+        return new Circle(SIZE, 16, COLOR);
     }
 
 
     @Override
     public void onCollision(Actor actor) {
 
+    }
+
+    @Override
+    public Shape getShape() {
+        return null;
     }
 }

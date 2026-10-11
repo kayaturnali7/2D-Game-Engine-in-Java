@@ -1,14 +1,12 @@
 package asteroids.entities;
 
-import engine.actors.Actor;
 import engine.actors.Entity;
 import engine.geometry.Shape;
-import engine.physics.Collider;
 import engine.scene.Scene;
 
 import java.awt.Color;
 
-public class TestEntity extends Entity implements Collider {
+public class TestEntity extends Entity {
 
     private static final Color COLOR = Color.WHITE;
 
@@ -24,10 +22,5 @@ public class TestEntity extends Entity implements Collider {
     @Override
     protected Shape shapeInit() {
         return null;
-    }
-
-    @Override
-    public void onCollision(Actor actor) {
-
     }
 }

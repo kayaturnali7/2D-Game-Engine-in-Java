@@ -1,20 +1,25 @@
 package engine.geometry;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 
-public class Rectangle extends Shape{
-    protected int width;
-    protected int height;
+public class Rectangle extends Shape {
+    protected final int width;
+    protected final int height;
 
-    public Rectangle(int width, int height, Color color){
-        super(width, height, color);
+    public Rectangle(int width, int height, Color color) {
+        super(new int[][]{
+                {-width, -width, width, width},
+                {height, -height, -height, height}
+        },color);
         this.width = width;
         this.height = height;
     }
 
-    @Override
-    public void onDraw(Graphics2D g2d) {
-        g2d.drawPolygon(verticesX,verticesY,numVertices);
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

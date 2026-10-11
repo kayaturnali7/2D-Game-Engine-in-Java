@@ -46,4 +46,21 @@ public class GeometryUtil {
         return new Vector2(maxX,maxY);
     }
 
+    public static int[][] generateCircleVertices(int radius, int resolution) {
+        int[][] vertices = new int[2][resolution];
+
+        for (int i = 1; i < resolution + 1; i++ ){
+            int x = (int) (radius * Math.cos(2 * Math.PI * i / resolution));
+            int y = (int) (radius * Math.sin(2 * Math.PI * i / resolution));
+
+            vertices[0][i-1] = x;
+            vertices[1][i-1] = y;
+        }
+
+        return vertices;
+    }
+
+
+
+
 }

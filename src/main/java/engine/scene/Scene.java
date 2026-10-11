@@ -1,14 +1,9 @@
 package engine.scene;
 
-import engine.actors.Entity;
 import engine.actors.Actor;
 import engine.event.EventBus;
 import engine.event.GameEvent;
 import engine.data.Vector2;
-import engine.actors.UI;
-import engine.physics.Collider;
-import engine.physics.PhysicsBody;
-import engine.render.RenderComponent;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -25,17 +20,11 @@ public abstract class Scene {
     private Color bgColor;
     private int fps;
 
-    private double drag;
+    private EnvironmentTypes environment;
     private double gravity;
 
     private final ArrayList<Actor> actors = new ArrayList<>();
     private final ArrayList<Actor> pendingActors = new ArrayList<>();
-
-    private final ArrayList<Collider> colliders = new ArrayList<>();
-    private final ArrayList<Collider> pendingColliders = new ArrayList<>();
-
-    private final ArrayList<RenderComponent> renderComponents = new ArrayList<>();
-    private final ArrayList<RenderComponent> pendingRenderComponents = new ArrayList<>();
 
     public Scene(){
         initialize();
@@ -48,22 +37,7 @@ public abstract class Scene {
             actors.addAll(pendingActors);
             pendingActors.clear();
         }
-
-        if (!pendingColliders.isEmpty()){
-            colliders.addAll(pendingColliders);
-            pendingColliders.clear();
-        }
-
-        if(!pendingRenderComponents.isEmpty()){
-            renderComponents.addAll(pendingRenderComponents);
-            pendingRenderComponents.clear();
-        }
-
         actors.removeIf(actor -> !actor.isActive());
-        colliders.removeIf(collider -> !actors.contains(collider));
-        renderComponents.removeIf(renderComponent -> !actors.contains(renderComponent));
-
-
     }
 
     public void update(){
@@ -81,23 +55,11 @@ public abstract class Scene {
     public void instantiate(Actor actor){
         pendingActors.add(actor);
 
-        if (actor instanceof Collider){
-            pendingColliders.add((Collider) actor);
-        }
-
-        if (actor instanceof RenderComponent) {
-            pendingRenderComponents.add((RenderComponent) actor);
-        }
-
-        System.out.println("\"" + actor.getName() + "\"" + " instantiated in scene: " + this);
+        System.out.println("\"" + actor.getName() + "\"" + " instantiated in scene: " + this.title);
+        System.out.println(actors);
     }
 
     public ArrayList<Actor> getActors(){return actors;}
-
-    public ArrayList<RenderComponent> getRenderComponents(){return renderComponents;}
-
-    public ArrayList<Collider> getColliders(){return colliders;}
-
 
     protected <T extends GameEvent> void subscribeToEvent(Class<T> eventClass, Consumer<T> action){
         EventBus.subscribe(eventClass, action);
@@ -129,14 +91,6 @@ public abstract class Scene {
 
     public int getFps(){
         return fps;
-    }
-
-    public void setDrag(double drag){
-        this.drag = drag;
-    }
-
-    public double getDrag(){
-        return drag;
     }
 
     public void setBgColor(Color color){

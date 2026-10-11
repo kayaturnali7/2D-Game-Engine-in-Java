@@ -1,133 +1,46 @@
 package engine.geometry;
 
 import engine.data.Vector2;
-import engine.physics.AABB;
-import engine.render.RenderComponent;
+import engine.util.VectorMath;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 
-public abstract class Shape implements RenderComponent {
+public abstract class Shape {
+    private final int[][] baseVertices;
+    public final int numVertices;
 
-    private final Vector2[] baseVertices;
-
-    private double x,y;
-    private double angle;
+    private final int[] verticesX;
+    private final int[] verticesY;
 
     private final Color color;
-    private final ShapeType type;
 
-    //private Vector2[] vertices;
+    public final AABB AABB = new AABB();
 
-    private int[][] vertices = new int[][]{};
+    public Shape(int[][] vertices, Color color) {
+        this.baseVertices = vertices;
+        this.numVertices = baseVertices[0].length;
 
-    private int[] verticesX;
-    private int[] verticesY;
-
-    protected int numVertices;
-
-    private final AABB AABB = new AABB(this);
-
-    public Shape(Vector2[] vertices, Color color) {
+        this.verticesX = new int[numVertices];
+        this.verticesY = new int[numVertices];
         this.color = color;
-        this.type = ShapeType.POLYGON;
-        baseVertices = vertices;
-        build();
     }
 
-    public Shape(int radius, Color color) {
-        this.color = color;
-        this.type = ShapeType.CIRCLE;
-
-        int n = 16; // amount of points
-        baseVertices = new Vector2[n];
-
-        for (int i = 1; i < n + 1; i++ ){
-            double x = radius * Math.cos(2 * Math.PI * i / n);
-            double y = radius * Math.sin(2 * Math.PI * i / n);
-
-            baseVertices[i-1] = new Vector2(x,y);
-        }
-
-        build();
-    }
-
-    public Shape(double width, double height, Color color){
-        this.color = color;
-        this.type = ShapeType.RECTANGLE;
-
-        Vector2 topLeft = new Vector2(-width/2, height/2);
-        Vector2 topRight = new Vector2(width/2, height/2);
-        Vector2 bottomRight = new Vector2(width/2, -height/2);
-        Vector2 bottomLeft = new Vector2(-width/2, -height/2);
-
-        baseVertices = new Vector2[]{topLeft, bottomLeft, bottomRight, topRight };
-
-        build();
-    }
-
-    private void build(){
-        numVertices = baseVertices.length;
-
-        vertices = new Vector2[numVertices];
-        for (int i = 0; i < numVertices; i++){
-            vertices[i] = new Vector2();
-        }
-
-        verticesX = new int[numVertices];
-        verticesY = new int[numVertices];
+    private void updateVertices(double x, double y, double direction){
+        double cos = Math.cos(Math.toRadians(direction));
+        double sin = Math.sin(Math.toRadians(direction));
 
         for (int i = 0; i < numVertices; i++){
-            int x = (int) baseVertices[i].getX();
-            int y = (int) baseVertices[i].getY();
+            double initialX = baseVertices[0][i];
+            double initialY = baseVertices[1][i];
 
-            verticesX[i] = x;
-            verticesY[i] = y;
+            verticesX[i] = (int) x + (int) VectorMath.rotationX(initialX, initialY, cos, sin);
+            verticesY[i] = (int) y + (int) VectorMath.rotationY(initialX, initialY, cos, sin);
         }
     }
 
     public void update(double x, double y, double direction){
-        this.x = x;
-        this.y = y;
-        angle = direction;
-        AABB.update();
-    }
-
-    public void draw(Graphics2D g2d){
-        g2d.setColor(color);
-        onDraw(g2d);
-        //AABB.draw(g2d);
-    }
-
-    private void updateVertices() {
-
-    }
-
-    public double getX(){
-        return x;
-    }
-
-
-    public double getY(){
-        return y;
-    }
-
-
-    public double getAngle(){
-        return angle;
-    }
-
-
-    protected abstract void onDraw(Graphics2D g2d);
-
-    public Vector2 getVertex(int vertex){
-        return vertices[vertex];
-    }
-
-    public Vector2[] getVertices(){return vertices;}
-
-    public AABB getAABB(){
-        return AABB;
+        updateVertices(x,y,direction+90);
+        AABB.update(verticesX, verticesY);
     }
 
     public Color getColor(){
@@ -140,5 +53,12 @@ public abstract class Shape implements RenderComponent {
 
     public int[] getVerticesY(){
         return verticesY;
+    }
+
+    public Vector2 getVertex(int index) {
+        double x = verticesX[index];
+        double y = verticesY[index];
+
+        return new Vector2(x,y);
     }
 }

@@ -1,54 +1,44 @@
 package engine.render;
 
+import engine.actors.Actor;
+import engine.geometry.Shape;
+import engine.geometry.AABB;
 import engine.scene.Scene;
-import engine.geometry.*; // keep this wildcard
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 public class RenderSystem {
 
     public void render(Graphics2D g2d, Scene scene){
+        ArrayList<Actor> actors = scene.getActors();
 
+        for (Actor actor : actors){
+            Shape shape = actor.shape;
+            if (shape == null) continue;
+
+            drawShape(g2d, shape);
+        }
     }
 
-    private void drawRect(Graphics2D g2d, Rectangle rect){
-        int[] verticesX = rect.getVerticesX();
-        int[] verticesY = rect.getVerticesY();
-        int numVertices = verticesX.length;
+    private void drawShape(Graphics2D g2d, Shape shape){
+        int[] verticesX = shape.getVerticesX();
+        int[] verticesY = shape.getVerticesY();
+        int numVertices = shape.numVertices;
 
+        g2d.setColor(Color.WHITE);
         g2d.drawPolygon(verticesX,verticesY,numVertices);
     }
 
-    private void drawCircle(Graphics2D g2d, Circle circle){
-        boolean smooth = circle.isSmooth();
+    private void drawAABB(Graphics2D g2d, AABB aabb){
+        int x = aabb.getX();
+        int y = aabb.getY();
+        int width = aabb.getWidth();
+        int height = aabb.getHeight();
 
-        if (smooth){
-            int radius = circle.getRadius();
-            int x = (int) (circle.getX() - radius);
-            int y = (int) (circle.getY() - radius);
-            int diameter = radius*2;
-
-            g2d.drawOval(x,y,diameter,diameter);
-        } else {
-            int[] verticesX = circle.getVerticesX();
-            int[] verticesY = circle.getVerticesY();
-            g2d.drawPolygon(verticesX, verticesY, verticesX.length);
-        }
-
-    }
-
-    private void updateShape(Shape shape){
-
-        for (int i = 0; i < numVertices; i++) {
-            double initialX = baseVertices[i].getX();
-            double initialY = baseVertices[i].getY();
-
-
-            verticesX[i] = (int) (this.x + xPrime);
-            verticesY[i] = (int) (this.y + yPrime);
-
-            vertices[i].set(verticesX[i], verticesY[i]);
-        }
+        g2d.setColor(Color.RED);
+        g2d.drawRect(x, y ,width,height);
     }
 
 

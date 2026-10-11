@@ -1,18 +1,9 @@
-package engine.physics;
+package engine.geometry;
 
 import engine.data.Vector2;
-import engine.geometry.Shape;
 import engine.util.GeometryUtil;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-
 public class AABB {
-
-    private static final Color COLOR = Color.RED;
-
-    private final Shape shape;
-
     private final Vector2 min = new Vector2();
     private final Vector2 max = new Vector2();
 
@@ -21,19 +12,7 @@ public class AABB {
     private int width;
     private int height;
 
-    public AABB(Shape shape) {
-        this.shape = shape;
-    }
-
-    public void draw(Graphics2D g2d){
-        g2d.setColor(COLOR);
-        g2d.drawRect((int) min.getX(), (int) min.getY(),width,height);
-    }
-
-    public void update(){
-        int[] verticesX = shape.getVerticesX();
-        int[] verticesY = shape.getVerticesY();
-
+    protected void update(int[] verticesX, int[] verticesY){
         Vector2 min = GeometryUtil.minimumVertex(verticesX, verticesY);
         Vector2 max = GeometryUtil.maximumVertex(verticesX, verticesY);
 

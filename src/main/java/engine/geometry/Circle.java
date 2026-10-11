@@ -1,33 +1,16 @@
 package engine.geometry;
 
+import engine.util.GeometryUtil;
+
 import java.awt.Color;
-import java.awt.Graphics2D;
 
 public class Circle extends Shape {
 
     private final int radius;
-    private final boolean smooth;
 
-    public Circle(int radius, Color color) {
-        super(radius, color);
+    public Circle(int radius, int resolution, Color color) {
+        super(GeometryUtil.generateCircleVertices(radius, resolution), color);
         this.radius = radius;
-        this.smooth = true;
-    }
-
-    public Circle(int radius, Color color, boolean smooth) {
-        super(radius, color);
-        this.radius = radius;
-        this.smooth = smooth;
-    }
-
-    @Override
-    public void onDraw(Graphics2D g2d){
-
-
-    }
-
-    public boolean isSmooth(){
-        return smooth;
     }
 
     public int getRadius() {
