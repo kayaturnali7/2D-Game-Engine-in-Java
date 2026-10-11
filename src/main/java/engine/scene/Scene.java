@@ -1,13 +1,10 @@
 package engine.scene;
 
 import engine.actors.Actor;
-import engine.event.EventBus;
-import engine.event.GameEvent;
 import engine.data.Vector2;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.function.Consumer;
 
 public abstract class Scene {
     private String title;
@@ -60,10 +57,6 @@ public abstract class Scene {
     }
 
     public ArrayList<Actor> getActors(){return actors;}
-
-    protected <T extends GameEvent> void subscribeToEvent(Class<T> eventClass, Consumer<T> action){
-        EventBus.subscribe(eventClass, action);
-    }
 
     public void setDimension(int width, int height){
         this.width = width;

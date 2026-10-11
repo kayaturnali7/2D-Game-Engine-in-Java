@@ -64,12 +64,12 @@ public class PhysicsSystem {
                 s2 = shape1;
             }
 
-            int[] s1VerticesX = s1.getVerticesX();
-            int[] s1VerticesY = s2.getVerticesY();
+            int[] s1VerticesX = s1.verticesX;
+            int[] s1VerticesY = s2.verticesY;
             int s1VerticesSize = s1.numVertices;
 
-            int[] s2VerticesX = s1.getVerticesX();
-            int[] s2VerticesY = s2.getVerticesY();
+            int[] s2VerticesX = s1.verticesX;
+            int[] s2VerticesY = s2.verticesY;
             int s2VerticesSize = s1.numVertices;
 
             for (int a = 0; a < s1VerticesSize; a++){

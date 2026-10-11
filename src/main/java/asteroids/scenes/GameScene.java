@@ -25,7 +25,6 @@ public class GameScene extends Scene {
 
     @Override
     protected void onStart() {
-        subscribeToEvent(LaserFiredEvent.class, event -> onLaserFired(event.x(), event.y(), event.angle()));
 
         player = new Player(this);
         player.moveTo(getCenter().getX(), getCenter().getY());

@@ -9,8 +9,8 @@ public abstract class Shape {
     private final int[][] baseVertices;
     public final int numVertices;
 
-    private final int[] verticesX;
-    private final int[] verticesY;
+    public final int[] verticesX;
+    public final int[] verticesY;
 
     private final Color color;
 
@@ -45,14 +45,6 @@ public abstract class Shape {
 
     public Color getColor(){
         return color;
-    }
-
-    public int[] getVerticesX(){
-        return verticesX;
-    }
-
-    public int[] getVerticesY(){
-        return verticesY;
     }
 
     public Vector2 getVertex(int index) {

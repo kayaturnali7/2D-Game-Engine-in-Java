@@ -23,12 +23,8 @@ public class RenderSystem {
     }
 
     private void drawShape(Graphics2D g2d, Shape shape){
-        int[] verticesX = shape.getVerticesX();
-        int[] verticesY = shape.getVerticesY();
-        int numVertices = shape.numVertices;
-
         g2d.setColor(Color.WHITE);
-        g2d.drawPolygon(verticesX,verticesY,numVertices);
+        g2d.drawPolygon(shape.verticesX, shape.verticesY, shape.numVertices);
     }
 
     private void drawAABB(Graphics2D g2d, AABB aabb){

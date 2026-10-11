@@ -13,7 +13,7 @@ public class Laser extends Entity implements Collider {
     private static final double LIFE_TIME = 0.6;
     private static final Color COLOR = Color.WHITE;
 
-    private float lifeTick = 0;
+    private int lifeTick = 0;
 
     public Laser(Scene scene, double x, double y, double direction, int index){
         super(scene, "laser");
