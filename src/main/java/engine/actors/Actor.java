@@ -25,8 +25,8 @@ public abstract class Actor {
     }
 
     public final void update(){
-        coreUpdate();
         onUpdate();
+        coreUpdate();
         shape.update(x, y, direction);
     }
 

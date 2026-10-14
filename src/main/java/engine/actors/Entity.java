@@ -1,19 +1,18 @@
 package engine.actors;
 
-import engine.data.Vector2;
 import engine.scene.Scene;
 
-public abstract class Entity extends Actor{
+public abstract class Entity extends Actor {
 
-    private double vx, vy;
-    private double ax, ay;
+    public double vx, vy;
+    public double ax, ay;
 
     public Entity(Scene scene, String name){
         super(scene, name);
     }
 
     @Override
-    public void coreUpdate(){
+    public void coreUpdate() {
         vx += ax;
         vy += ay;
 
@@ -24,7 +23,7 @@ public abstract class Entity extends Actor{
         ay = 0;
     }
 
-    public void applyForce(double direction, double magnitude){
+    public void applyForce(double direction, double magnitude) {
         double x = Math.cos(Math.toRadians(direction)) * magnitude;
         double y = Math.sin(Math.toRadians(direction)) * magnitude;
 
@@ -32,11 +31,17 @@ public abstract class Entity extends Actor{
         ay += y;
     }
 
-    public void setVelocity(Vector2 velocity){
-        velocity.set(velocity);
+    public void setVelocityComponents(double vx, double vy) {
+        this.vx = vy;
+        this.vy = vy;
     }
 
-    public void setVelocity(double direction, double magnitude) {
+    public void multiplyVelocityComponents(double scale){
+        this.vx *= scale;
+        this.vy *= scale;
+    }
+
+    public void setVelocityVector(double direction, double magnitude) {
         double x = Math.cos(Math.toRadians(direction)) * magnitude;
         double y = Math.sin(Math.toRadians(direction)) * magnitude;
 

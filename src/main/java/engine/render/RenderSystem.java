@@ -19,6 +19,8 @@ public class RenderSystem {
             if (shape == null) continue;
 
             drawShape(g2d, shape);
+            AABB aabb = shape.AABB;
+            drawAABB(g2d, aabb);
         }
     }
 

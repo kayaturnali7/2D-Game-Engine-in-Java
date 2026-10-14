@@ -12,7 +12,7 @@ import engine.geometry.ConvexPolygon;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 
-public class Player extends Entity implements Collider {
+public class Player extends Entity {
     private static final double SHOOT_COOLDOWN = 0.25;
     private static final int ROTATION_SPEED = 4;
     private static final double THRUST = 0.17;
@@ -87,10 +87,5 @@ public class Player extends Entity implements Collider {
     @Override
     public void onCollision(Actor actor) {
 
-    }
-
-    @Override
-    public Shape getShape() {
-        return null;
     }
 }

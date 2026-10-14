@@ -8,7 +8,7 @@ import engine.geometry.Shape;
 
 import java.awt.Color;
 
-public class Laser extends Entity implements Collider {
+public class Laser extends Entity{
     private static final int SIZE = 2;
     private static final double LIFE_TIME = 0.6;
     private static final Color COLOR = Color.WHITE;
@@ -38,10 +38,5 @@ public class Laser extends Entity implements Collider {
     @Override
     public void onCollision(Actor actor) {
 
-    }
-
-    @Override
-    public Shape getShape() {
-        return null;
     }
 }

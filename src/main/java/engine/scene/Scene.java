@@ -1,6 +1,7 @@
 package engine.scene;
 
 import engine.actors.Actor;
+import engine.actors.Entity;
 import engine.data.Vector2;
 
 import java.awt.Color;
@@ -20,8 +21,11 @@ public abstract class Scene {
     private EnvironmentTypes environment;
     private double gravity;
 
-    private final ArrayList<Actor> actors = new ArrayList<>();
+    protected final ArrayList<Actor> actors = new ArrayList<>();
     private final ArrayList<Actor> pendingActors = new ArrayList<>();
+
+    protected final ArrayList<Entity> entities = new ArrayList<>();
+    private final ArrayList<Entity> pendingEntities = new ArrayList<>();
 
     public Scene(){
         initialize();
@@ -34,6 +38,14 @@ public abstract class Scene {
             actors.addAll(pendingActors);
             pendingActors.clear();
         }
+
+        if(!pendingEntities.isEmpty()){
+            entities.addAll(pendingEntities);
+            pendingActors.clear();
+        }
+
+
+        entities.removeIf(entity -> !entity.isActive());
         actors.removeIf(actor -> !actor.isActive());
     }
 
@@ -43,6 +55,7 @@ public abstract class Scene {
             actor.update();
         }
         updateLists();
+
     }
 
     protected abstract void onUpdate();
@@ -51,12 +64,18 @@ public abstract class Scene {
 
     public void instantiate(Actor actor){
         pendingActors.add(actor);
+        if (actor instanceof Entity){
+            pendingEntities.add((Entity) actor);
+        }
 
         System.out.println("\"" + actor.getName() + "\"" + " instantiated in scene: " + this.title);
         System.out.println(actors);
+
     }
 
     public ArrayList<Actor> getActors(){return actors;}
+
+    public ArrayList<Entity> getEntities(){return entities;}
 
     public void setDimension(int width, int height){
         this.width = width;

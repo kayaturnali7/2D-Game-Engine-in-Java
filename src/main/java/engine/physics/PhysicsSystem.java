@@ -4,6 +4,7 @@ import engine.actors.Actor;
 import engine.geometry.AABB;
 import engine.geometry.Shape;
 import engine.scene.Scene;
+import engine.util.MathUtil;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,7 @@ public class PhysicsSystem {
                     if (SATCollision(s1, s2)){
                         e1.onCollision(e2);
                         e2.onCollision(e1);
+                        System.out.println("Collision with " + e1 + " " + e2);
                     }
                 }
             }
@@ -65,31 +67,37 @@ public class PhysicsSystem {
             }
 
             int[] s1VerticesX = s1.verticesX;
-            int[] s1VerticesY = s2.verticesY;
-            int s1VerticesSize = s1.numVertices;
+            int[] s1VerticesY = s1.verticesY;
+            int s1numVertices = s1.numVertices;
 
-            int[] s2VerticesX = s1.verticesX;
+            int[] s2VerticesX = s2.verticesX;
             int[] s2VerticesY = s2.verticesY;
-            int s2VerticesSize = s1.numVertices;
+            int s2numVertices = s2.numVertices;
 
-            for (int a = 0; a < s1VerticesSize; a++){
-                int b = (a + 1) % s1VerticesSize;
+            for (int a = 0; a < s1numVertices; a++){
+                int b = (a + 1) % s1numVertices;
 
                 double axisProjX = s1VerticesY[a] - s1VerticesY[b];
                 double axisProjY = s1VerticesX[b] - s1VerticesX[a];
 
                 double min_r1 = Double.POSITIVE_INFINITY, max_r1 = Double.NEGATIVE_INFINITY;
-                for (Vector2 vertex : vertices1) {
-                    double q = vertex.dot(axisProj);
+                for (int i = 0; i < s1numVertices; i++){
+                    int x = s1VerticesX[i];
+                    int y = s1VerticesY[i];
+
+                    double q = MathUtil.dot(x, axisProjX, y, axisProjY);
                     min_r1 = Math.min(min_r1, q);
                     max_r1 = Math.max(max_r1, q);
                 }
 
                 double min_r2 = Double.POSITIVE_INFINITY, max_r2 = Double.NEGATIVE_INFINITY;
-                for (Vector2 vector2 : vertices2) {
-                    double q = vector2.dot(axisProj);
-                    min_r2 = Math.min(min_r2, q);
-                    max_r2 = Math.max(max_r2, q);
+                for (int i = 0; i < s2numVertices; i++){
+                    int x = s2VerticesX[i];
+                    int y = s2VerticesY[i];
+
+                    double q = MathUtil.dot(x, axisProjX, y, axisProjY);
+                    min_r1 = Math.min(min_r2, q);
+                    max_r1 = Math.max(max_r2, q);
                 }
 
                 if (!(max_r2 >= min_r1 && max_r1 >= min_r2)){

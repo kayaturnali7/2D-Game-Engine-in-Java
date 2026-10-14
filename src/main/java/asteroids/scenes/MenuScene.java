@@ -4,6 +4,7 @@ import engine.scene.Scene;
 
 public class MenuScene extends Scene {
 
+
     @Override
     protected void onUpdate() {
 
