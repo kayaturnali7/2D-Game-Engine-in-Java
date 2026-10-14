@@ -31,16 +31,6 @@ public abstract class Entity extends Actor {
         ay += y;
     }
 
-    public void setVelocityComponents(double vx, double vy) {
-        this.vx = vy;
-        this.vy = vy;
-    }
-
-    public void multiplyVelocityComponents(double scale){
-        this.vx *= scale;
-        this.vy *= scale;
-    }
-
     public void setVelocityVector(double direction, double magnitude) {
         double x = Math.cos(Math.toRadians(direction)) * magnitude;
         double y = Math.sin(Math.toRadians(direction)) * magnitude;

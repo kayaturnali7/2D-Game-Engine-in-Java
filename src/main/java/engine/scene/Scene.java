@@ -18,8 +18,6 @@ public abstract class Scene {
     private Color bgColor;
     private int fps;
 
-    private EnvironmentTypes environment;
-    private double gravity;
 
     protected final ArrayList<Actor> actors = new ArrayList<>();
     private final ArrayList<Actor> pendingActors = new ArrayList<>();

@@ -12,7 +12,7 @@ public class PhysicsSystem {
 
     public void update(Scene scene){
         ArrayList<Actor> actors = scene.getActors();
-        checkCollisions(actors);
+        checkCollisions(actors);   
     }
 
     private void checkCollisions(ArrayList<Actor> actors){

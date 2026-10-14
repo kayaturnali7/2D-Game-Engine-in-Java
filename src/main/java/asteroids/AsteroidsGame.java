@@ -9,6 +9,5 @@ public class AsteroidsGame {
     public static void main(String[] args){
         Scene[] scenes = {new GameScene(), new MenuScene()};
         new Engine(scenes);
-
     }
 }
