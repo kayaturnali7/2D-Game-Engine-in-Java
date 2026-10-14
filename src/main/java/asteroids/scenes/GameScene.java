@@ -44,7 +44,6 @@ public class GameScene extends Scene {
         player.vx *= drag;
         player.vy *= drag;
 
-
     }
 
 

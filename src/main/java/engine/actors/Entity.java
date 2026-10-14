@@ -12,7 +12,7 @@ public abstract class Entity extends Actor {
     }
 
     @Override
-    public void coreUpdate() {
+    protected  void coreUpdate() {
         vx += ax;
         vy += ay;
 
