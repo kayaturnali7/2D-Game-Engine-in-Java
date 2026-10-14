@@ -1,7 +1,7 @@
 package asteroids.entities;
 
 import engine.actors.Actor;
-import engine.core.InputSystem;
+import engine.core.InputHandler;
 
 import engine.actors.Entity;
 import engine.data.Vector2;
@@ -27,15 +27,15 @@ public class Player extends Entity {
 
     @Override
     protected void onUpdate() {
-        firing = InputSystem.isKeyPressed(KeyEvent.VK_SPACE);
+        firing = InputHandler.isKeyPressed(KeyEvent.VK_SPACE);
 
-        if (InputSystem.isKeyPressed(KeyEvent.VK_W)) {
+        if (InputHandler.isKeyPressed(KeyEvent.VK_W)) {
             applyThrust();
         }
 
-        if (InputSystem.isKeyPressed(KeyEvent.VK_A)) {
+        if (InputHandler.isKeyPressed(KeyEvent.VK_A)) {
             rotate(ROTATION_SPEED);
-        } else if (InputSystem.isKeyPressed(KeyEvent.VK_D)) {
+        } else if (InputHandler.isKeyPressed(KeyEvent.VK_D)) {
             rotate(-ROTATION_SPEED);
         }
 
