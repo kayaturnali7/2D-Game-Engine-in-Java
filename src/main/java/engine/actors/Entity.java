@@ -31,7 +31,7 @@ public abstract class Entity extends Actor {
         ay += y;
     }
 
-    public void setVelocityVector(double direction, double magnitude) {
+    public void setVelocity(double direction, double magnitude) {
         double x = Math.cos(Math.toRadians(direction)) * magnitude;
         double y = Math.sin(Math.toRadians(direction)) * magnitude;
 

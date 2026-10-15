@@ -96,8 +96,8 @@ public class PhysicsSystem {
                     int y = s2VerticesY[i];
 
                     double q = MathUtil.dot(x, axisProjX, y, axisProjY);
-                    min_r1 = Math.min(min_r2, q);
-                    max_r1 = Math.max(max_r2, q);
+                    min_r2 = Math.min(min_r2, q);
+                    max_r2 = Math.max(max_r2, q);
                 }
 
                 if (!(max_r2 >= min_r1 && max_r1 >= min_r2)){

@@ -10,47 +10,34 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 
-public class Engine extends Canvas implements Runnable{
+public class Engine extends Canvas implements Runnable {
 
-    private final InputHandler inputSystem;
+    private final InputHandler inputHandler = new InputHandler();
+    private final JFrame frame = new JFrame();
     private final SystemHandler handler;
-    private final JFrame frame;
 
     private boolean running = true;
 
-    public Engine(Scene[] scenes ) {
-        // create and add input
-        inputSystem = new InputHandler();
-        this.addMouseListener(inputSystem);
-        this.addKeyListener(inputSystem);
+    public Engine(Scene[] scenes) {
+        this.addMouseListener(inputHandler);
+        this.addKeyListener(inputHandler);
 
-        // create handler and frame
         handler = new SystemHandler(scenes);
-        frame = new JFrame();
-
-        // get scene properties
         Scene currentScene = handler.getCurrentScene();
-        int width = currentScene.getWidth();
-        int height = currentScene.getHeight();
-        String title = currentScene.getTitle();
 
-        // set size
-        Dimension size = new Dimension(width, height);
+        Dimension size = new Dimension(currentScene.getWidth(), currentScene.getHeight());
         this.setPreferredSize(size);
-        this.setMinimumSize(size);
-        this.setMaximumSize(size);
         this.setFocusable(true);
 
-        // init frame
-        frame.setTitle(title);
+        frame.setTitle(currentScene.getTitle());
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(this);
+
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        // start loop
         Thread gameLoopThread = new Thread(this);
         gameLoopThread.start();
     }
@@ -66,8 +53,7 @@ public class Engine extends Canvas implements Runnable{
         double ns = 1000000000 / 60.0;
         double delta = 0;
         int frames = 0;
-        int updates = 0;
-
+    
         while(running){
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
@@ -78,20 +64,16 @@ public class Engine extends Canvas implements Runnable{
 
                 handler.update();
 
-
-                updates++;
                 delta--;
             }
 
             render(bs);
             frames++;
 
-
             while (System.currentTimeMillis() - lastTimer > 1000) {
                 System.out.println(frames + " frames");
                 lastTimer += 1000;
                 frames = 0;
-                updates = 0;
             }
         }
     }
