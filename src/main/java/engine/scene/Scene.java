@@ -18,7 +18,6 @@ public abstract class Scene {
     private Color bgColor;
     private int fps;
 
-
     protected final ArrayList<Actor> actors = new ArrayList<>();
     private final ArrayList<Actor> pendingActors = new ArrayList<>();
 
@@ -65,10 +64,6 @@ public abstract class Scene {
         if (actor instanceof Entity){
             pendingEntities.add((Entity) actor);
         }
-
-        System.out.println("\"" + actor.getName() + "\"" + " instantiated in scene: " + this.title);
-        System.out.println(actors);
-
     }
 
     public ArrayList<Actor> getActors(){return actors;}

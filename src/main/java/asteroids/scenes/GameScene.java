@@ -10,7 +10,7 @@ import java.awt.Color;
 
 public class GameScene extends Scene {
 
-    private final double drag = 0.97;
+    private final double DRAG = 0.97;
 
     private Entity player;
     private Entity testEntity;
@@ -41,9 +41,10 @@ public class GameScene extends Scene {
 
     @Override
     protected void onUpdate() {
-        player.vx *= drag;
-        player.vy *= drag;
+        player.vx *= DRAG;
+        player.vy *= DRAG;
 
+        
     }
 
 

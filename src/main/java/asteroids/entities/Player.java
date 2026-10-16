@@ -81,7 +81,6 @@ public class Player extends Entity {
 
     private void fireLaser(){
         cooldownTick = SHOOT_COOLDOWN * scene.getFps();
-        System.out.println("Firing laser"); 
     }
 
     @Override

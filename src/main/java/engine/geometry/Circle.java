@@ -12,6 +12,4 @@ public class Circle extends Shape {
         super(GeometryUtil.generateCircleVertices(radius, resolution), color);
         this.radius = radius;
     }
-
-
 }

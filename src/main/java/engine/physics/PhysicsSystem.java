@@ -31,7 +31,6 @@ public class PhysicsSystem {
                     if (SATCollision(s1, s2)){
                         e1.onCollision(e2);
                         e2.onCollision(e1);
-                        System.out.println("Collision with " + e1 + " " + e2);
                     }
                 }
             }
