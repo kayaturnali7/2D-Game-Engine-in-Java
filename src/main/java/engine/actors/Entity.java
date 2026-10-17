@@ -1,18 +1,22 @@
 package engine.actors;
 
 import engine.data.Vector2;
-import engine.actors.Actor;
+import engine.scene.Scene;
 
-public class Entity extends Actor {
+public abstract class Entity extends Actor {
 
     public final Vector2 velocity = new Vector2(0,0);
     private final Vector2 acceleration = new Vector2(0,0);
 
-    public final Shape shape;
-
-    protected void update(Vector2 pos) {
+    public Entity(Scene scene, String name) {
+        super(scene, name);
+    }
+    
+    @Override 
+    public void update() {
+        onUpdate();
         velocity.add(acceleration);
-        pos.add(velocity);
+        position.add(velocity);
         acceleration.set(0,0);
 
         shape.update(position, direction);

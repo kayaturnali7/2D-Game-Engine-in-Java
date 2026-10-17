@@ -28,6 +28,6 @@ public class TestEntity extends Entity {
 
     @Override
     public void onCollision(Actor actor) {
-
+        
     }
 }

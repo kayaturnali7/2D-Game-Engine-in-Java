@@ -4,6 +4,7 @@ import engine.actors.Actor;
 import engine.geometry.Circle;
 import engine.scene.Scene;
 import engine.geometry.Shape;
+import engine.core.Engine;
 
 import java.awt.Color;
 
@@ -20,7 +21,7 @@ public class Laser extends Actor{
 
     @Override
     protected void onUpdate() {
-        double lifeTimeFrames = LIFE_TIME * scene.getFps();
+        double lifeTimeFrames = LIFE_TIME * Engine.FPS;
         if (lifeTick >= lifeTimeFrames){
             destroy();
         } else{

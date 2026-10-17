@@ -12,6 +12,8 @@ import java.awt.image.BufferStrategy;
 
 public class Engine extends Canvas implements Runnable {
 
+    public static final int FPS = 60;
+
     private final InputHandler inputHandler = new InputHandler();
     private final JFrame frame = new JFrame();
     private final SystemHandler handler;
@@ -25,11 +27,11 @@ public class Engine extends Canvas implements Runnable {
         handler = new SystemHandler(scenes);
         Scene currentScene = handler.getCurrentScene();
 
-        Dimension size = new Dimension(currentScene.getWidth(), currentScene.getHeight());
+        Dimension size = new Dimension(currentScene.dimension.width, currentScene.dimension.height);
         this.setPreferredSize(size);
         this.setFocusable(true);
 
-        frame.setTitle(currentScene.getTitle());
+        frame.setTitle(currentScene.title);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(this);
@@ -50,7 +52,7 @@ public class Engine extends Canvas implements Runnable {
         long lastTime = System.nanoTime();
         long lastTimer = System.currentTimeMillis();
 
-        double ns = 1000000000 / 60.0;
+        double ns = 1000000000 / FPS;
         double delta = 0;
         int frames = 0;
     
@@ -70,7 +72,11 @@ public class Engine extends Canvas implements Runnable {
             render(bs);
             frames++;
 
-            //printFPS(frames, lastTimer);
+            while (System.currentTimeMillis() - lastTimer > 1000) {
+                System.out.println(frames + " frames");
+                lastTimer += 1000;
+                frames = 0;
+            }
         }
     }
 
@@ -86,14 +92,6 @@ public class Engine extends Canvas implements Runnable {
 
         g2d.dispose();
         bs.show();
-    }
-
-    private void printFPS(int f, long lt) {
-         while (System.currentTimeMillis() - lt > 1000) {
-                System.out.println(f + " frames");
-                lt += 1000;
-                f = 0;
-            }
     }
 }
 

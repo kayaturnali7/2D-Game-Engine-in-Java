@@ -11,6 +11,8 @@ public abstract class Actor {
     public Vector2 position = new Vector2(0,0);
     public double direction = 0;
 
+    public final Shape shape;
+
     public final String name;
     private boolean active = true;
 
@@ -20,8 +22,9 @@ public abstract class Actor {
         shape = shapeInit();
     }
 
-    public final void update(){    
-        
+    public void update(){    
+        onUpdate();
+        shape.update(position, direction);  
     }
 
     public final void collision(Actor actor) {
@@ -29,6 +32,7 @@ public abstract class Actor {
     }
 
     protected abstract Shape shapeInit();
+    protected abstract void onUpdate();
     public abstract void onCollision(Actor actor);
 
     public boolean isActive(){

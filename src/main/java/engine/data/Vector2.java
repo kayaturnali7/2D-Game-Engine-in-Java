@@ -12,6 +12,15 @@ public class Vector2 {
         this.y = y;
     }
 
+    public double getX() {
+        return x;
+    }
+
+    
+    public double getY() {
+        return y;
+    }
+
     public void set(double x, double y) {
         this.x = x;
         this.y = y;
@@ -28,10 +37,9 @@ public class Vector2 {
     }
 
     public void add(double x, double y) {
-        this.x += v.x;
-        this.y += v.y;
+        this.x += x;
+        this.y += y;
     }
-
 
     public void sub(Vector2 v){
         this.x -= v.x;
@@ -45,7 +53,6 @@ public class Vector2 {
 
     public double magnitude() {
         return Math.sqrt((x*x) + (y*y) );
-        
     }
 
     public Vector2 normalize() {

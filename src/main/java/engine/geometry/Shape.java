@@ -5,7 +5,7 @@ import engine.util.VectorMath;
 
 import java.awt.Color;
 
-public abstract class Shape {
+public class Shape {
     private final int[][] baseVertices;
     public final int numVertices;
 

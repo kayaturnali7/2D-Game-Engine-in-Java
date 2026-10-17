@@ -15,24 +15,21 @@ public class GameScene extends Scene {
     private Entity player;
     private Entity testEntity;
 
-    private int laserCount = 0;
-
     @Override
     protected void initialize() {
         setTitle("Asteroid Remake");
         setDimension(900,600);
         setBgColor(Color.BLACK);
-        setFps(60);
     }
 
     @Override
     protected void onStart() {
 
         player = new Player(this);
-        player.moveTo(getCenter().getX(), getCenter().getY());
+        player.moveTo(dimension.width/2, dimension.height/2);
 
-        testEntity = new TestEntity(this, "t");
-        testEntity.moveTo(200,200);
+        testEntity = new TestEntity(this, "Test Entity");
+        testEntity.moveTo(dimension.width/2, dimension.height/2);
 
         instantiate(player);
         instantiate(testEntity);
@@ -41,12 +38,7 @@ public class GameScene extends Scene {
 
     @Override
     protected void onUpdate() {
-        player.vx *= DRAG;
-        player.vy *= DRAG;
-    }
-
-
-    private void onCollision(Entity e1, Entity e2){
-
+        player.velocity.scale(DRAG);
+        testEntity.velocity.scale(DRAG);
     }
 }

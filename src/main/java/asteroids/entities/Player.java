@@ -3,16 +3,17 @@ package asteroids.entities;
 import engine.actors.Actor;
 import engine.core.InputHandler;
 
-import engine.actors.PhysicsBody;
 import engine.data.Vector2;
 import engine.scene.Scene;
+import engine.actors.Entity;
 import engine.geometry.Shape;
 import engine.geometry.ConvexPolygon;
+import engine.core.Engine;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 
-public class Player extends PhysicsBody {
+public class Player extends Entity {
     private static final double SHOOT_COOLDOWN = 0.25;
     private static final int ROTATION_SPEED = 4;
     private static final double THRUST = 0.17;
@@ -81,7 +82,7 @@ public class Player extends PhysicsBody {
     }
 
     private void fireLaser(){
-        cooldownTick = SHOOT_COOLDOWN * scene.getFps();
+        cooldownTick = SHOOT_COOLDOWN * Engine.FPS;
     }
 
     @Override

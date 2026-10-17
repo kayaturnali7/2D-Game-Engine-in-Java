@@ -1,34 +1,26 @@
 package engine.scene;
 
 import engine.actors.Actor;
-import engine.data.Vector2;
-import engine.scene.ArrayTypes;
+import engine.actors.Entity;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
+import java.awt.Dimension;
 
 public abstract class Scene {
 
-    private final String title;
-    public final int width, height;
+    public String title;
+    public Dimension dimension = new Dimension();
+    public Color bgColor;
 
-    private Color bgColor;
-    private int fps;
+    protected final ArrayList<Actor> actors = new ArrayList<>();
+    private final ArrayList<Actor> pendingActors = new ArrayList<>();
 
-    protected final HashMap<ArrayTypes, ArrayList<T>> active = new HashMap<>();
-    protected final HashMap<ArrayTypes, ArrayList<T>> pending = new HashMap<>();
-
-    public static <K,V> void addValue(HashMap<K, ArrayList<V>> map, K key, V value) {
-        map.computeIfAbsent(key, k -> new ArrayList<>()).add(value);
-    }
-
+    protected final ArrayList<Entity> entities = new ArrayList<>();
+    private final ArrayList<Entity> pendingEntities = new ArrayList<>();
 
     public Scene(){
-        
-        addValue(active, ArrayTypes.ACTOR, Actor.class);
-        System.out.println(active);
-
         initialize();
         onStart();
         updateLists();
@@ -52,11 +44,10 @@ public abstract class Scene {
 
     public void update(){
         onUpdate();
-        for (Actor actor : actors){
+        updateLists();
+        for (Actor actor : actors) {
             actor.update();
         }
-        updateLists();
-
     }
 
     protected abstract void onUpdate();
@@ -75,31 +66,11 @@ public abstract class Scene {
     public ArrayList<Entity> getEntities(){return entities;}
 
     public void setDimension(int width, int height){
-        this.width = width;
-        this.height = height;
-
-        this.center = new Vector2((double) width /2, (double) height /2);
-        this.north = new Vector2((double) width /2, 0);
-        this.east = new Vector2(width, (double) height /2);
-        this.south = new Vector2((double) width /2, height);
-        this.west = new Vector2(0, (double) height /2);
-
-        this.topLeft = new Vector2(0,0);
-        this.topRight = new Vector2(width,0);
-        this.bottomLeft = new Vector2(0,height);
-        this.bottomRight = new Vector2(width,height);
+        dimension.setSize(width, height);
     }
 
     public void setTitle(String title){
         this.title = title;
-    }
-
-    public void setFps(int fps){
-        this.fps = fps;
-    }
-
-    public int getFps(){
-        return fps;
     }
 
     public void setBgColor(Color color){

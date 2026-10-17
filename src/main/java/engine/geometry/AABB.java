@@ -4,8 +4,8 @@ import engine.data.Vector2;
 import engine.util.GeometryUtil;
 
 public class AABB {
-    private final Vector2 min = new Vector2();
-    private final Vector2 max = new Vector2();
+    private final Vector2 min = new Vector2(0,0);
+    private final Vector2 max = new Vector2(0,0);
 
     private int x, y;
 
