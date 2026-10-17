@@ -70,11 +70,7 @@ public class Engine extends Canvas implements Runnable {
             render(bs);
             frames++;
 
-            while (System.currentTimeMillis() - lastTimer > 1000) {
-                System.out.println(frames + " frames");
-                lastTimer += 1000;
-                frames = 0;
-            }
+            //printFPS(frames, lastTimer);
         }
     }
 
@@ -91,4 +87,14 @@ public class Engine extends Canvas implements Runnable {
         g2d.dispose();
         bs.show();
     }
+
+    private void printFPS(int f, long lt) {
+         while (System.currentTimeMillis() - lt > 1000) {
+                System.out.println(f + " frames");
+                lt += 1000;
+                f = 0;
+            }
+    }
 }
+
+

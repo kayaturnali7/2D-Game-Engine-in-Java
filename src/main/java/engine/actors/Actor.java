@@ -2,40 +2,32 @@ package engine.actors;
 
 import engine.geometry.Shape;
 import engine.scene.Scene;
+import engine.data.Vector2;
 
 public abstract class Actor {
 
     public final Scene scene;
-    public final Shape shape;
 
-    protected double x;
-    protected double y;
+    public Vector2 position = new Vector2(0,0);
+    public double direction = 0;
 
-    protected double direction;
-
-    protected final String name;
+    public final String name;
     private boolean active = true;
 
     public Actor(Scene scene, String name){
         this.scene = scene;
-        this.x = scene.getCenter().getX();
-        this.y = scene.getCenter().getY();
         this.name = name;
         shape = shapeInit();
     }
 
-    public final void update(){
-        onUpdate();
-        coreUpdate();
-        shape.update(x, y, direction);
+    public final void update(){    
+        
     }
 
     public final void collision(Actor actor) {
         onCollision(actor);
     }
 
-    protected abstract void onUpdate();
-    protected abstract void coreUpdate();
     protected abstract Shape shapeInit();
     public abstract void onCollision(Actor actor);
 
@@ -51,21 +43,8 @@ public abstract class Actor {
         return name;
     }
 
-    public Scene getScene(){return scene;}
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {return y;}
-
-    public double getDirection() {
-        return direction;
-    }
-
     public void moveTo(double x, double y) {
-        this.x = x;
-        this.y = y;
+        position.set(x,y);
     }
 
     public void rotate(double amount) {

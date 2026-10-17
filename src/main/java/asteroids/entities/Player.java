@@ -3,7 +3,7 @@ package asteroids.entities;
 import engine.actors.Actor;
 import engine.core.InputHandler;
 
-import engine.actors.Entity;
+import engine.actors.PhysicsBody;
 import engine.data.Vector2;
 import engine.scene.Scene;
 import engine.geometry.Shape;
@@ -12,10 +12,11 @@ import engine.geometry.ConvexPolygon;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 
-public class Player extends Entity {
+public class Player extends PhysicsBody {
     private static final double SHOOT_COOLDOWN = 0.25;
     private static final int ROTATION_SPEED = 4;
     private static final double THRUST = 0.17;
+    
 
     private double cooldownTick = 0;
     private boolean firing = false;

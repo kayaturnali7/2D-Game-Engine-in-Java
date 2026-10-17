@@ -1,30 +1,34 @@
 package engine.scene;
 
 import engine.actors.Actor;
-import engine.actors.Entity;
 import engine.data.Vector2;
+import engine.scene.ArrayTypes;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class Scene {
-    private String title;
 
-    private int width, height;
-    private Vector2 center;
-    private Vector2 north, east, south, west;
-    private Vector2 topLeft, topRight, bottomLeft, bottomRight;
+    private final String title;
+    public final int width, height;
 
     private Color bgColor;
     private int fps;
 
-    protected final ArrayList<Actor> actors = new ArrayList<>();
-    private final ArrayList<Actor> pendingActors = new ArrayList<>();
+    protected final HashMap<ArrayTypes, ArrayList<T>> active = new HashMap<>();
+    protected final HashMap<ArrayTypes, ArrayList<T>> pending = new HashMap<>();
 
-    protected final ArrayList<Entity> entities = new ArrayList<>();
-    private final ArrayList<Entity> pendingEntities = new ArrayList<>();
+    public static <K,V> void addValue(HashMap<K, ArrayList<V>> map, K key, V value) {
+        map.computeIfAbsent(key, k -> new ArrayList<>()).add(value);
+    }
+
 
     public Scene(){
+        
+        addValue(active, ArrayTypes.ACTOR, Actor.class);
+        System.out.println(active);
+
         initialize();
         onStart();
         updateLists();
@@ -100,39 +104,5 @@ public abstract class Scene {
 
     public void setBgColor(Color color){
         this.bgColor = color;
-    }
-
-    public Vector2 getCenter(){
-        return center;
-    }
-
-    public Vector2 getNorth(){
-        return north;
-    }
-
-    public Vector2 getEast() {return east;}
-
-    public Vector2 getSouth() {return south;}
-
-    public Vector2 getWest() {return west;}
-
-    public Vector2 getTopLeft() {return topLeft;}
-
-    public Vector2 getTopRight() {return topRight;}
-
-    public Vector2 getBottomLeft() {return bottomLeft;}
-
-    public Vector2 getBottomRight() {return bottomRight;}
-
-    public int getWidth(){
-        return width;
-    }
-
-    public int getHeight(){
-        return height;
-    }
-
-    public String getTitle(){
-        return title;
     }
 }

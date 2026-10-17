@@ -1,41 +1,43 @@
 package engine.actors;
 
-import engine.scene.Scene;
+import engine.data.Vector2;
+import engine.actors.Actor;
 
-public abstract class Entity extends Actor {
+public class Entity extends Actor {
 
-    public double vx, vy;
-    public double ax, ay;
+    public final Vector2 velocity = new Vector2(0,0);
+    private final Vector2 acceleration = new Vector2(0,0);
 
-    public Entity(Scene scene, String name){
-        super(scene, name);
-    }
+    public final Shape shape;
 
-    @Override
-    protected  void coreUpdate() {
-        vx += ax;
-        vy += ay;
+    protected void update(Vector2 pos) {
+        velocity.add(acceleration);
+        pos.add(velocity);
+        acceleration.set(0,0);
 
-        x += vx;
-        y += vy;
-
-        ax = 0;
-        ay = 0;
+        shape.update(position, direction);
     }
 
     public void applyForce(double direction, double magnitude) {
-        double x = Math.cos(Math.toRadians(direction)) * magnitude;
-        double y = Math.sin(Math.toRadians(direction)) * magnitude;
+        double ax = Math.cos(Math.toRadians(direction)) * magnitude;
+        double ay = Math.sin(Math.toRadians(direction)) * magnitude;
 
-        ax += x;
-        ay += y;
+        acceleration.add(ax,ay);
+    }
+
+    public void applyForce(Vector2 v) {
+        acceleration.add(v);
     }
 
     public void setVelocity(double direction, double magnitude) {
-        double x = Math.cos(Math.toRadians(direction)) * magnitude;
-        double y = Math.sin(Math.toRadians(direction)) * magnitude;
+        double vx = Math.cos(Math.toRadians(direction)) * magnitude;
+        double vy = Math.sin(Math.toRadians(direction)) * magnitude;
 
-        vx = x;
-        vy = y;
+        velocity.set(vx,vy);
+    }
+
+    public void setVelocity(Vector2 v) {
+        velocity.set(v);
     }
 }
+

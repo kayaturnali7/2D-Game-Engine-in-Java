@@ -1,14 +1,13 @@
 package asteroids.entities;
 
 import engine.actors.Actor;
-import engine.actors.Entity;
 import engine.geometry.Circle;
 import engine.scene.Scene;
 import engine.geometry.Shape;
 
 import java.awt.Color;
 
-public class Laser extends Entity{
+public class Laser extends Actor{
     private static final int SIZE = 2;
     private static final double LIFE_TIME = 0.6;
     private static final Color COLOR = Color.WHITE;

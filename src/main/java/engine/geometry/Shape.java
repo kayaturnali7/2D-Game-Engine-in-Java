@@ -38,8 +38,8 @@ public abstract class Shape {
         }
     }
 
-    public void update(double x, double y, double direction){
-        updateVertices(x,y,direction+90);
+    public void update(Vector2 position, double direction){
+        updateVertices(position.x, position.y, direction+90);
         AABB.update(verticesX, verticesY);
     }
 

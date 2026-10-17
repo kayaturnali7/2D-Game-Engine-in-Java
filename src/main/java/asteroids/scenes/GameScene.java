@@ -43,8 +43,6 @@ public class GameScene extends Scene {
     protected void onUpdate() {
         player.vx *= DRAG;
         player.vy *= DRAG;
-
-        
     }
 
 
